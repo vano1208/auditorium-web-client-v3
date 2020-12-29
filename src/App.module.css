@@ -1,0 +1,12 @@
+@import-normalize ;
+
+.container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    font-family: Roboto;
+}
+
+main {
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}

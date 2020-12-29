@@ -1,0 +1,27 @@
+.caviarClassroomsList {
+    list-style-type: none;
+    margin-left: 10px;
+    padding: 8px;
+}
+
+.caviarClassroomsList li {
+    display: inline-block;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 3px;
+    padding: 0 5px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    transition: all .2s linear;
+    color: #1e2c4f;
+    font-family: "Roboto Light";
+}
+
+.caviarClassroomsList li:hover {
+    background-color: dodgerblue;
+    color: white;
+    cursor: pointer;
+}
+
+.released {
+    background-color: #6BFF98;
+}

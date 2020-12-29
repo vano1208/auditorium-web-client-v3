@@ -1,0 +1,72 @@
+.cell {
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.cell:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.cellHeader {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 8px;
+}
+
+.cellName {
+  color: #fff;
+  font-family: "Roboto Black";
+  font-size: 1.8rem;
+  border-radius: 8px;
+  padding: 6px;
+  width: 3.2rem;
+  text-align: center;
+}
+
+.occupant h2 {
+  margin: 0;
+  padding: 0;
+  color: #1e2c4f;
+  text-transform: uppercase;
+  font-family: "Roboto Medium";
+  line-height: 1.4;
+  font-size: 1.1rem;
+}
+
+.occupantType {
+  color: #5c5c5c;
+  font-family: "Roboto Light";
+  font-size: 1rem;
+}
+
+.occupantTypeIndicator {
+  content: "";
+  display: inline-block;
+  border-radius: 50px;
+  width: 10px;
+  height: 10px;
+  margin-right: 8px;
+}
+
+.message {
+  display: block;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.04);
+  color: #454545;
+  font-family: "Roboto Light";
+  line-height: 1.5;
+  font-size: 0.9rem;
+  margin: -8px;
+}
+
+.message span {
+  font-family: "Roboto Medium";
+}
+
+.instruments {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
