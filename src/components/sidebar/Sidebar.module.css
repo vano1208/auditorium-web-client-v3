@@ -7,6 +7,13 @@ aside {
     transition: all .2s ease-out;
 }
 
+.fixed {
+    position: fixed;
+    width: inherit;
+    overflow: hidden;
+    height: 100vh;
+}
+
 .logo h1{
     text-transform: uppercase;
     color: #fff;

@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import Tag from "../../tag/Tag";
 import ClassroomSchedule from "../../classroomSchedule/ClassroomSchedule";
 import Instrument from "../../instrument/Instrument";
-import Button from "../../button/Button";
 import OccupationInfo from "./occupationInfo/OccupationInfo";
 import OccupantRegistration from "./occupantRegistration/OccupantRegistration";
 
@@ -43,27 +42,27 @@ const PopupClassroom: React.FC<PropTypes> = ({
                 ? " — " + popupClassroom.chair
                 : "")}
             {popupClassroom.isWing ? (
-              <Tag text="Флігель" color="#63ff97" />
+              <Tag text="Флігель" />
             ) : null}
             {popupClassroom.special ? (
-              <Tag text="Спеціалізована (ф-но)" color="#69b7ff" />
+              <Tag text="Спеціалізована (ф-но)" />
             ) : null}
           </h2>
         </div>
         <div className={styles.modalBody}>
           <ClassroomSchedule schedule={popupClassroom.schedule} />
-          <div className={styles.instruments}>
+          <div className={popupClassroom.instruments.length!==0?styles.instruments:""}>
             {popupClassroom.instruments.map((instrument) => (
-              <Instrument withName instrument={instrument} />
+              <Instrument key={instrument.id} withName instrument={instrument} />
             ))}
           </div>
           {popupClassroom.occupied ? (
             <OccupationInfo occupied={popupClassroom.occupied} classroom={popupClassroom}/>
           ) : <OccupantRegistration classroom={popupClassroom}/>}
         </div>
-        <div className={styles.modalFooter}>
-          <Button>Заблокувати аудиторію</Button>
-        </div>
+        {/*<div className={styles.modalFooter}>*/}
+        {/*  <Button>Заблокувати аудиторію</Button>*/}
+        {/*</div>*/}
       </div>
     </div>
   );

@@ -4,3 +4,17 @@
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 16px;
 }
+
+.classroomsContainer {
+    margin-top: 16px;
+}
+
+.classroomsHeader {
+    background-color: #1e2c4f;
+    color: #fff;
+    font-family: "Roboto Thin";
+    font-weight: 100;
+    font-size: 2rem;
+    margin-top: -16px;
+    padding: 16px;
+}

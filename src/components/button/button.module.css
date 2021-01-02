@@ -2,15 +2,16 @@
     background-color: #1e2c4f;
     border-radius: 8px;
     padding: 8px;
-    margin: 8px 4px;
+    margin-left: 8px;
     color: #fff;
     cursor: pointer;
     border: none;
-    transition: all .2s ease-in;
+    transition: all .1s linear;
 }
 
 .button:hover, .button.focus  {
     border: none;
+    background-color: #006fd6;
 }
 
 .button:focus {

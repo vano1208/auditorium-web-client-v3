@@ -8,7 +8,7 @@ const Register = () => {
   const { loading, error, data } = useQuery(GET_REGISTER, {
     fetchPolicy: "network-only",
     variables: {
-      date: new Date().setHours(0, 0, 0, 0),
+      date: new Date("12.08.2020").setHours(0, 0, 0, 0),
     },
   });
   if (loading) return <h1>Loading</h1>;

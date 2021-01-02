@@ -35,7 +35,7 @@
   top: 20%;
   margin: auto;
   padding: 0;
-  width: 80%;
+  width: 60%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   animation-name: animatetop;
   animation-duration: 0.4s;
@@ -85,8 +85,24 @@
 }
 
 .instruments {
+  margin: 16px 0;
+  padding: 8px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  position: relative;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, .2);
+}
+
+.instruments::before {
+  content: "Інструменти";
+  color: #1e2c4f;
+  font-family: "Roboto Medium";
+  background-color: #fff;
+  padding: 4px;
+  position: absolute;
+  top: -15px;
+  left: 16px;
 }
 
 

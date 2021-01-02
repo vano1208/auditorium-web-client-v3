@@ -34,7 +34,7 @@ export const getPossiblyOccupied = (schedule: Array<any>) => {
     };
   });
   return timeSnippets
-    .map((el: any) => current > el.from < el.to)
+    .map((el: any) => current > el.from && current < el.to)
     .every((el: any) => el === true);
 };
 

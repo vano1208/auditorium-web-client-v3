@@ -16,7 +16,7 @@ type PropTypes = {
 };
 
 const GridElement: React.FC<PropTypes> = ({ classroom, onClose }) => {
-  const { name: classroomName, chair, special, occupied, disabled } = classroom;
+  const { name: classroomName, occupied} = classroom;
   const occupationTime = occupied
     ? new Date(occupied.until).getHours() +
       ":" +
@@ -27,11 +27,22 @@ const GridElement: React.FC<PropTypes> = ({ classroom, onClose }) => {
     history.push("/auditoriums/" + classroomName);
     onClose("block");
   };
-  const fullName = occupied?.user.nameTemp===null?[
-    occupied?.user.lastName,
-    occupied?.user.firstName.charAt(0) + ".",
-    occupied?.user.patronymic?.charAt(0) + ".",
-  ].join(" "):occupied?.user.nameTemp;
+  const tempName = (str: string) => {
+    if(str!==undefined) {
+    let array = str.split(" ");
+    let name1 = array[1].charAt(0) + ".";
+    let name2 = array[2] ? array[2].charAt(0) + "." : "";
+    return [array[0], name1, name2].join(" ");
+    } else return ""
+  };
+  const fullName =
+    occupied?.user.nameTemp === null
+      ? [
+          occupied?.user.lastName,
+          occupied?.user.firstName.charAt(0) + ".",
+          occupied?.user.patronymic?.charAt(0) + ".",
+        ].join(" ")
+      : tempName(occupied?.user.nameTemp as string);
   return (
     <div
       onClick={onClick}
@@ -63,9 +74,7 @@ const GridElement: React.FC<PropTypes> = ({ classroom, onClose }) => {
         {occupied ? (
           <div className={styles.occupant}>
             <div>
-              <h2>
-                {fullName}
-              </h2>
+              <h2>{fullName}</h2>
             </div>
 
             <div className={styles.occupantType}>

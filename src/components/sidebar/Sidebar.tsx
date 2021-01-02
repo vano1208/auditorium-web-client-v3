@@ -23,6 +23,7 @@ const Sidebar: React.FC<PropTypes> = (props) => {
       className={styles.sidebar}
       style={collapsed ? { width: "54px" } : { width: "230px" }}
     >
+      <div className={styles.fixed}>
       <div className={styles.logo}>
         <h1>{collapsed ? "Au" : "Auditorium"}</h1>
       </div>
@@ -43,7 +44,7 @@ const Sidebar: React.FC<PropTypes> = (props) => {
             if (value === index + 1)
               return (
                 <>
-                  <li>
+                  <li key={item.path}>
                     {collapsed ? (
                       linkItem
                     ) : (
@@ -62,7 +63,7 @@ const Sidebar: React.FC<PropTypes> = (props) => {
               );
           }
           return (
-            <li>
+            <li key={item.path}>
               {collapsed ? (
                 linkItem
               ) : (
@@ -90,12 +91,14 @@ const Sidebar: React.FC<PropTypes> = (props) => {
         className={styles.knmauLink}
         href="https://knmau.com.ua/"
         target="_blank"
-        style={collapsed?{width: "35px"}:{width: "208px"}}
+        rel="noreferrer"
+        style={collapsed ? { width: "35px" } : { width: "208px" }}
       >
         {collapsed
           ? "НМАУ"
           : "Національна Музична Академія України ім. П. І. Чайковського"}
       </a>
+      </div>
     </aside>
   );
 };

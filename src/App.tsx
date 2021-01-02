@@ -15,10 +15,10 @@ import { GET_CLASSROOMS } from "./api/operations/queries/classrooms";
 import { Classroom } from "./models/models";
 import ClassroomsGrid from "./components/classroomsGrid/classroomsGrid/ClassroomsGrid";
 import { Route } from "react-router-dom";
-import Caviar from "./components/classroomsGrid/caviar/Caviar";
 import Register from "./components/register/Register";
 import Users from "./components/users/Users";
 import Schedule from "./components/schedule/Schedule";
+import ClassroomsGridSkeleton from "./components/classroomsGrid/classroomsGrid/ClassroomsGridSkeleton";
 
 function App() {
   const menuElements = [
@@ -75,27 +75,22 @@ function App() {
     },
     fetchPolicy: "network-only",
   });
-  let filter = "ALL";
-  let classroomsFilter =
-    filter === "FREE"
-      ? (classroom: Classroom) => classroom.occupied === null
-      : filter === "SPECIAL"
-      ? (classroom: Classroom) => classroom.special !== null
-      : filter === "CHAIR"
-      ? (classroom: Classroom) => classroom.chair !== null
-      : () => true;
-  if (loading) return <h1>Loading</h1>;
-  if (error) return <h1>error</h1>;
-  const classrooms = data.classrooms
-    .slice()
-    .sort((a: Classroom, b: Classroom) => Number(a.name) - Number(b.name));
+  let classrooms;
+  if (!loading && !error) {
+    classrooms = data.classrooms
+      .slice()
+      .sort((a: Classroom, b: Classroom) => Number(a.name) - Number(b.name));
+  }
   return (
     <div className={styles.container}>
       <Sidebar divider={[4, 9]} children={menuElements} />
       <main>
         <Route path="/auditoriums/:classroomId?">
-          <Caviar classroomsFilter={classroomsFilter} classrooms={classrooms} />
-          <ClassroomsGrid classrooms={classrooms} />
+          {!loading && !error ? (
+            <ClassroomsGrid classrooms={classrooms} />
+          ) : (
+            <ClassroomsGridSkeleton />
+          )}
         </Route>
         <Route path="/register">
           <Register />

@@ -56,23 +56,26 @@ const OccupationInfo: React.FC<PropTypes> = ({ occupied, classroom }) => {
         <div className={styles.until}>
           Зайнято до {getTimeHHMM(new Date(occupied.until))}
         </div>
+          <div className={styles.buttons}>
+          <Button
+              type="button"
+              onClick={() => {
+                  freeClassroom().then((r) => getClassrooms());
+              }}
+          >
+              Передати аудиторію
+          </Button>
+          <Button
+              type="button"
+              onClick={() => {
+                  freeClassroom().then((r) => getClassrooms());
+              }}
+          >
+              Звільнити аудиторію
+          </Button>
+          </div>
       </div>
-      <Button
-        type="button"
-        onClick={() => {
-          freeClassroom().then((r) => getClassrooms());
-        }}
-      >
-        Передати аудиторію
-      </Button>
-      <Button
-        type="button"
-        onClick={() => {
-          freeClassroom().then((r) => getClassrooms());
-        }}
-      >
-        Звільнити аудиторію
-      </Button>
+
     </div>
   );
 };

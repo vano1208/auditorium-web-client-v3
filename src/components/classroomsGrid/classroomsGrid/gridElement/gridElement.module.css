@@ -4,6 +4,7 @@
   cursor: pointer;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  min-height: 125px;
 }
 
 .cell:hover {
@@ -30,7 +31,6 @@
   margin: 0;
   padding: 0;
   color: #1e2c4f;
-  text-transform: uppercase;
   font-family: "Roboto Medium";
   line-height: 1.4;
   font-size: 1.1rem;

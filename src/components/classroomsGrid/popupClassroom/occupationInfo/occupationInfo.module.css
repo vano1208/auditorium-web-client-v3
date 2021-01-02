@@ -28,3 +28,9 @@
 .until {
     padding-top: 16px;
 }
+
+.buttons {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+}
