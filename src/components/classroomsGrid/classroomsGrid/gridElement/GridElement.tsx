@@ -30,7 +30,7 @@ const GridElement: React.FC<PropTypes> = ({ classroom, onClose }) => {
   const tempName = (str: string) => {
     if(str!==undefined) {
     let array = str.split(" ");
-    let name1 = array[1].charAt(0) + ".";
+    let name1 = array[1]?.charAt(0) + ".";
     let name2 = array[2] ? array[2].charAt(0) + "." : "";
     return [array[0], name1, name2].join(" ");
     } else return ""

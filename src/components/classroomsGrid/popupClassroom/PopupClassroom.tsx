@@ -24,12 +24,20 @@ const PopupClassroom: React.FC<PropTypes> = ({
   onClose,
 }) => {
   let { classroomId } = useParams<ParamTypes>();
-  if(classroomId===undefined) classroomId = "1";
+  if (classroomId === undefined) classroomId = "1";
   const popupClassroom = classrooms.find(
     (classroom) => classroom.name === classroomId
   ) as Classroom;
   return (
-    <div style={{ display: visibility }} className={styles.modal}>
+    <div
+      style={{ display: visibility }}
+      className={styles.modal}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) {
+          onClose("none");
+        }
+      }}
+    >
       <div className={styles.modalContent}>
         <div className={styles.modalHeader}>
           <span onClick={() => onClose("none")} className={styles.close}>
@@ -41,9 +49,7 @@ const PopupClassroom: React.FC<PropTypes> = ({
               (popupClassroom.chair !== null
                 ? " — " + popupClassroom.chair
                 : "")}
-            {popupClassroom.isWing ? (
-              <Tag text="Флігель" />
-            ) : null}
+            {popupClassroom.isWing ? <Tag text="Флігель" /> : null}
             {popupClassroom.special ? (
               <Tag text="Спеціалізована (ф-но)" />
             ) : null}
@@ -51,14 +57,31 @@ const PopupClassroom: React.FC<PropTypes> = ({
         </div>
         <div className={styles.modalBody}>
           <ClassroomSchedule schedule={popupClassroom.schedule} />
-          <div className={popupClassroom.instruments.length!==0?styles.instruments:""}>
+          <div
+            className={
+              popupClassroom.instruments.length !== 0 ? styles.instruments : ""
+            }
+          >
             {popupClassroom.instruments.map((instrument) => (
-              <Instrument key={instrument.id} withName instrument={instrument} />
+              <Instrument
+                key={instrument.id}
+                withName
+                instrument={instrument}
+              />
             ))}
           </div>
           {popupClassroom.occupied ? (
-            <OccupationInfo occupied={popupClassroom.occupied} classroom={popupClassroom}/>
-          ) : <OccupantRegistration classroom={popupClassroom}/>}
+            <OccupationInfo
+              occupied={popupClassroom.occupied}
+              classroom={popupClassroom}
+              onClose={onClose}
+            />
+          ) : (
+            <OccupantRegistration
+              classroom={popupClassroom}
+              onClose={onClose}
+            />
+          )}
         </div>
         {/*<div className={styles.modalFooter}>*/}
         {/*  <Button>Заблокувати аудиторію</Button>*/}

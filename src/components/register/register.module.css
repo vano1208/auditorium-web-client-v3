@@ -9,6 +9,23 @@
     transition: all .2s ease-in;
 }
 
+.registerUnitListSkeleton {
+    margin: 8px auto;
+    padding: 16px;
+    border-bottom: none;
+    background-image: linear-gradient(
+            90deg,
+            rgba(221, 221, 221, 0.5) 0px,
+            rgba(232, 232, 232, 0.5) 40px,
+            rgba(221, 221, 221, 0.5) 80px
+    );
+    background-size: 600px;
+    animation: shine 1.4s infinite linear;
+    height: 16px;
+    width: 50vw;
+    border-radius: 8px;
+}
+
 .registerUnitList:hover {
     background-color: rgba(0, 0, 0, .1);
 }
@@ -35,4 +52,36 @@
 
 .register ul {
     margin-top: 32px;
+}
+
+.registerDateInput {
+    background-color: #1e2c4f;
+    color: #fff;
+    font-family: "Roboto Light";
+    border-radius: 8px;
+    padding: 8px;
+    margin-left: 16px;
+    border: 2px solid #1e2c4f;
+}
+
+.registerDateInput:hover {
+    border: 2px solid #fff;
+}
+
+.registerDateInput:focus {
+    outline: none;
+}
+
+.registerDateInput::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+@keyframes shine {
+    0% {
+        background-position: -150px;
+    }
+    40%,
+    100% {
+        background-position: 320px;
+    }
 }

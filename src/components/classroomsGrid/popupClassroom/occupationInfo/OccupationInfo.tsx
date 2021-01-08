@@ -9,28 +9,37 @@ import {
 import styles from "./occupationInfo.module.css";
 import { getTimeHHMM } from "../../../../helpers/helpers";
 import Button from "../../../button/Button";
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { FREE_CLASSROOM } from "../../../../api/operations/mutations/freeClassroom";
-import { GET_CLASSROOMS } from "../../../../api/operations/queries/classrooms";
 
 type PropTypes = {
   occupied: OccupiedInfo;
   classroom: Classroom;
+  onClose: (value: string) => void;
 };
 
-const OccupationInfo: React.FC<PropTypes> = ({ occupied, classroom }) => {
-  const [freeClassroom] = useMutation(FREE_CLASSROOM, {
+const OccupationInfo: React.FC<PropTypes> = ({ occupied, classroom , onClose}) => {
+  const [freeClassroom, { data, error }] = useMutation(FREE_CLASSROOM, {
     variables: {
       input: {
         classroomName: String(classroom.name),
       },
     },
-  });
-  const [getClassrooms] = useLazyQuery(GET_CLASSROOMS, {
-    variables: {
-      date: new Date().toString(),
+    update(cache, { data }) {
+      cache.modify({
+        fields: {
+          classrooms(existingRelay, { toReference }) {
+            const freedClassroomIndex = existingRelay.findIndex(
+              (el: Classroom) => el.id === data.freeClassroom.classroom.id
+            );
+
+            return existingRelay
+              .slice()
+              .splice(freedClassroomIndex, 1, data.freeClassroom.classroom);
+          },
+        },
+      });
     },
-    fetchPolicy: "network-only",
   });
   const fullName =
     occupied?.user.nameTemp === null
@@ -56,26 +65,25 @@ const OccupationInfo: React.FC<PropTypes> = ({ occupied, classroom }) => {
         <div className={styles.until}>
           Зайнято до {getTimeHHMM(new Date(occupied.until))}
         </div>
-          <div className={styles.buttons}>
+        <div className={styles.buttons}>
           <Button
-              type="button"
-              onClick={() => {
-                  freeClassroom().then((r) => getClassrooms());
-              }}
+            type="button"
+            onClick={() => {
+              freeClassroom();
+            }}
           >
-              Передати аудиторію
+            Передати аудиторію
           </Button>
           <Button
-              type="button"
-              onClick={() => {
-                  freeClassroom().then((r) => getClassrooms());
-              }}
+            type="button"
+            onClick={() => {
+              freeClassroom().then(()=> onClose("none"));
+            }}
           >
-              Звільнити аудиторію
+            Звільнити аудиторію
           </Button>
-          </div>
+        </div>
       </div>
-
     </div>
   );
 };

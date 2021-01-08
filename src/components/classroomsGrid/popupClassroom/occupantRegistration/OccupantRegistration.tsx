@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./occupantRegistration.module.css";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { GET_USERS } from "../../../../api/operations/queries/users";
 import {
   Classroom,
@@ -10,29 +10,27 @@ import {
   userTypesUa,
 } from "../../../../models/models";
 import { OCCUPY_CLASSROOM } from "../../../../api/operations/mutations/occupyClassroom";
-import { GET_CLASSROOMS } from "../../../../api/operations/queries/classrooms";
 import Button from "../../../button/Button";
+import { MINUTE } from "../../../../helpers/constants";
 
 type PropTypes = {
   classroom: Classroom;
+  onClose: (value: string) => void;
 };
 
-const OccupantRegistration: React.FC<PropTypes> = ({ classroom }) => {
+const OccupantRegistration: React.FC<PropTypes> = ({ classroom, onClose }) => {
+  const [validationText, setValidationText] = useState("");
   const { loading, data, error } = useQuery(GET_USERS);
   const [value, setValue] = useState("");
-  const [rangeValue, setRangeValue] = useState(1);
+  const [rangeValue, setRangeValue] = useState(12);
   const [occupyClassroom] = useMutation(OCCUPY_CLASSROOM);
-  const [getClassrooms] = useLazyQuery(GET_CLASSROOMS, {
-    variables: {
-      date: new Date().toString(),
-    },
-  });
   let [chosenOccupantInfo, setChosenOccupantInfo] = useState("");
   let [tempUserType, setTempUserType] = useState("STUDENT");
   if (loading) return <h1>Loading</h1>;
   if (error) return <h1>Error</h1>;
   let users = data.users;
   const handleChange = (e: any) => {
+    setValidationText("");
     setValue(e.target.value);
     users = users
       .slice()
@@ -53,22 +51,48 @@ const OccupantRegistration: React.FC<PropTypes> = ({ classroom }) => {
         <Formik
           initialValues={{ users: value }}
           onSubmit={(values, { setSubmitting }) => {
-            occupyClassroom({
-              variables: {
-                input: {
-                  classroomName: String(classroom.name),
-                  userId: value.match(/^\d+$/) ? Number(value) : -1,
-                  until: new Date(),
-                  tempUser: value.match(/^\d+$/)
-                    ? null
-                    : {
-                        name: value,
-                        type: tempUserType,
+            value === ""
+              ? setValidationText("Введіть ID або П.І.Б.")
+              : // : users.find((user: User) => user.id === value)!==(-1)?""
+                occupyClassroom({
+                  variables: {
+                    input: {
+                      classroomName: String(classroom.name),
+                      userId: value.match(/^\d+$/) ? Number(value) : -1,
+                      until: new Date(
+                        new Date().getTime() + rangeValue * 15 * MINUTE
+                      ),
+                      tempUser: value.match(/^\d+$/)
+                        ? null
+                        : {
+                            name: value,
+                            type: tempUserType,
+                          },
+                    },
+                  },
+                  update(cache, { data }) {
+                    cache.modify({
+                      fields: {
+                        classrooms(existingRelay, { toReference }) {
+                          const freedClassroomIndex = existingRelay.findIndex(
+                            (el: Classroom) =>
+                              el.id === data.occupyClassroom.classroom.id
+                          );
+
+                          return existingRelay
+                            .slice()
+                            .splice(
+                              freedClassroomIndex,
+                              1,
+                              data.occupyClassroom.classroom
+                            );
+                        },
                       },
-                },
-              },
-            }).then((r) => getClassrooms());
+                    });
+                  },
+                }).then(()=> onClose("none"));
             setSubmitting(false);
+
           }}
         >
           {({ isSubmitting }) => (
@@ -83,6 +107,7 @@ const OccupantRegistration: React.FC<PropTypes> = ({ classroom }) => {
                 list="usersList"
                 id="users"
               />
+              <label htmlFor="users"> {validationText}</label>
               <datalist id="usersList">
                 {!loading
                   ? users.map((user: User) => (
@@ -99,7 +124,8 @@ const OccupantRegistration: React.FC<PropTypes> = ({ classroom }) => {
                 <span style={{ color: "#959595" }}>П.І.Б.:&nbsp;</span>
                 {chosenOccupantInfo === ""
                   ? "не визначено"
-                  : chosenOccupantInfo.match(/^\d+$/)
+                  : chosenOccupantInfo.match(/^\d+$/) &&
+                    users.find((user: User) => user.id === value) !== undefined
                   ? [
                       users.find((user: User) => user.id === value).lastName,
                       users.find((user: User) => user.id === value).firstName,
@@ -112,7 +138,8 @@ const OccupantRegistration: React.FC<PropTypes> = ({ classroom }) => {
               </p>
               {chosenOccupantInfo === "" ? (
                 "не визначено"
-              ) : chosenOccupantInfo.match(/^\d+$/) ? (
+              ) : chosenOccupantInfo.match(/^\d+$/) &&
+                users.find((user: User) => user.id === value) !== undefined ? (
                 userTypesUa[
                   users.find((user: User) => user.id === value)
                     .type as userTypes
@@ -142,15 +169,38 @@ const OccupantRegistration: React.FC<PropTypes> = ({ classroom }) => {
                 </select>
               )}
               <br />
-              <Field
-                className={styles.untilInput}
-                type="range"
-                min="0"
-                max="3"
-                step="1"
-                value={rangeValue}
-                onChange={(e: any) => setRangeValue(e.target.value)}
-              />
+              {users.find((user: User) => user.id === value)?.type ===
+                userTypes.STUDENT ||
+              users.find((user: User) => user.id === value)?.type ===
+                userTypes.POST_GRADUATE ||
+              (!chosenOccupantInfo.match(/^\d+$/) &&
+                chosenOccupantInfo !== "" &&
+                (tempUserType === userTypes.STUDENT ||
+                  tempUserType === userTypes.POST_GRADUATE)) ? (
+                <>
+                  <Field
+                    className={styles.untilInput}
+                    id="untilRange"
+                    type="range"
+                    min="1"
+                    max="12"
+                    step="1"
+                    value={rangeValue}
+                    onChange={(e: any) => setRangeValue(e.target.value)}
+                  />
+                  <label htmlFor="untilRange">
+                    {" до "}
+                    {new Date(
+                      new Date().getTime() + rangeValue * 15 * MINUTE
+                    ).getHours() +
+                      ":" +
+                      new Date(
+                        new Date().getTime() + rangeValue * 15 * MINUTE
+                      ).getMinutes()}
+                  </label>
+                </>
+              ) : null}
+
               <div className={styles.buttonWrapper}>
                 <Button type="submit" disabled={isSubmitting}>
                   Записати в аудиторію

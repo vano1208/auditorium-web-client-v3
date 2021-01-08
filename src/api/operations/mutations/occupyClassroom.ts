@@ -4,6 +4,10 @@ export const OCCUPY_CLASSROOM = gql`
     mutation occupyClassroom($input: OccupyClassroomInput!) {
         occupyClassroom(input: $input) {
             classroom {
+                id
+                name
+                special
+                chair
                 occupied {
                     user {
                         id
@@ -13,7 +17,11 @@ export const OCCUPY_CLASSROOM = gql`
                         type
                         department
                     }
-                    until
+                }
+                instruments {
+                    type
+                    name
+                    rate
                 }
             }
             userErrors {

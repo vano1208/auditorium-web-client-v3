@@ -10,7 +10,7 @@ import settingsIcon from "./assets/menuIcons/settings.png";
 import profileIcon from "./assets/menuIcons/profile.png";
 import logoutIcon from "./assets/menuIcons/logout.png";
 import scheduleIcon from "./assets/menuIcons/schedule.png";
-import { useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 import { GET_CLASSROOMS } from "./api/operations/queries/classrooms";
 import { Classroom } from "./models/models";
 import ClassroomsGrid from "./components/classroomsGrid/classroomsGrid/ClassroomsGrid";
@@ -19,6 +19,8 @@ import Register from "./components/register/Register";
 import Users from "./components/users/Users";
 import Schedule from "./components/schedule/Schedule";
 import ClassroomsGridSkeleton from "./components/classroomsGrid/classroomsGrid/ClassroomsGridSkeleton";
+import Login from "./components/login/Login";
+import { isLoggedVar } from "./api/client";
 
 function App() {
   const menuElements = [
@@ -81,10 +83,17 @@ function App() {
       .slice()
       .sort((a: Classroom, b: Classroom) => Number(a.name) - Number(b.name));
   }
+  const { data: dataLogged } = useQuery(gql`
+    query GetIsLogged {
+      isLogged @client
+    }
+  `);
+  let isLogged = dataLogged.isLogged;
   return (
     <div className={styles.container}>
-      <Sidebar divider={[4, 9]} children={menuElements} />
+      {isLogged && <Sidebar divider={[4, 9]} children={menuElements} />}
       <main>
+        {!isLogged && <Login />}
         <Route path="/auditoriums/:classroomId?">
           {!loading && !error ? (
             <ClassroomsGrid classrooms={classrooms} />
