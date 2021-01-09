@@ -53,7 +53,7 @@ const OccupantRegistration: React.FC<PropTypes> = ({ classroom, onClose }) => {
           onSubmit={(values, { setSubmitting }) => {
             value === ""
               ? setValidationText("Введіть ID або П.І.Б.")
-              : // : users.find((user: User) => user.id === value)!==(-1)?""
+              : // : users.find((user: UserPopup) => user.id === value)!==(-1)?""
                 occupyClassroom({
                   variables: {
                     input: {

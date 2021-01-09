@@ -104,7 +104,7 @@ function App() {
         <Route path="/register">
           <Register />
         </Route>
-        <Route path="/users">
+        <Route path="/users/:userId?">
           <Users />
         </Route>
         <Route path="/schedule">
