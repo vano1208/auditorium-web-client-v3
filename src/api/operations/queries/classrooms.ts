@@ -15,6 +15,8 @@ export const GET_CLASSROOMS = gql`
           lastName
           type
           nameTemp
+          email
+          phoneNumber
         }
         until
       }

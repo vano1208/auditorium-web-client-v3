@@ -45,13 +45,24 @@
 .paginator {
     list-style-type: none;
     display: inline-block;
+    user-select: none;
+}
+
+.paginatorDots {
+    font-size: 1rem;
+    font-family: "Roboto Black";
+    color: rgba(0, 0, 0, .3);
+    padding-left: 4px;
+    padding-right: 4px;
 }
 
 .paginator li {
-    display: inline;
+    display: inline-block;
     padding: 2px 6px;
+    text-align: center;
+    width: 16px;
     border: 1px solid rgba(0, 110, 212, .3);
-    border-radius: 4px;
+    border-radius: 6px;
     margin-right: 4px;
     font-family: "Roboto Light";
     color: #006ed4;
@@ -64,14 +75,17 @@
 }
 
 .selectPageSize {
-    padding: 2px 6px;
+    display: inline-block;
+    text-align: center;
+    padding: 1px 6px;
     border: 1px solid rgba(0, 110, 212, .3);
-    border-radius: 4px;
+    border-radius: 6px;
     margin-left: 4px;
     font-family: "Roboto Light";
     font-size: 1rem;
     color: #006ed4;
     background-color: rgba(255, 255, 255, 0);
+    user-select: none;
 }
 
 .selectPageSize:hover {
@@ -106,5 +120,36 @@
 .userSearch:focus {
     border: 2px solid #fff;
     outline: none;
+}
+
+.usersSort {
+    background-color: #1e2c4f;
+    padding: 8px;
+    font-family: "Roboto Thin";
+    font-size: 1.5rem;
+    margin-left: 8px;
+    border: 2px solid #1e2c4f;
+    border-radius: 8px;
+    color: #fff;
+}
+
+.usersSort:focus {
+    outline: none;
+    border: 2px solid #fff;
+}
+
+.userTypes {
+    background-color: #1e2c4f;
+    color: #fff;
+    border: 2px solid #1e2c4f;
+    border-radius: 8px;
+    padding: 8px;
+    margin: -16px;
+    font-size: 1rem;
+}
+
+.userTypes:focus {
+    outline: none;
+    border: 2px solid #fff;
 }
 

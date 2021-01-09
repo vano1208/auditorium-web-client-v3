@@ -17,14 +17,6 @@
     left: 16px;
 }
 
-.occupant {
-    display: inline-block;
-    padding: 8px;
-    border-radius: 8px;
-    color: #fff;
-    font-family: "Roboto Light";
-}
-
 .until {
     padding-top: 16px;
 }

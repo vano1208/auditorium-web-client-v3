@@ -1,5 +1,10 @@
 @import-normalize ;
 
+* {
+    font-family: "Roboto Light", Arial;
+    font-weight: normal;
+}
+
 .container {
     display: grid;
     grid-template-columns: auto 1fr;

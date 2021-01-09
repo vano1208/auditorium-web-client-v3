@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Classroom,
   OccupiedInfo,
@@ -11,6 +11,7 @@ import { getTimeHHMM } from "../../../../helpers/helpers";
 import Button from "../../../button/Button";
 import { useMutation } from "@apollo/client";
 import { FREE_CLASSROOM } from "../../../../api/operations/mutations/freeClassroom";
+import UserPopup from "../../../user/UserPopup";
 
 type PropTypes = {
   occupied: OccupiedInfo;
@@ -49,11 +50,13 @@ const OccupationInfo: React.FC<PropTypes> = ({ occupied, classroom , onClose}) =
           occupied?.user.patronymic?.charAt(0) + ".",
         ].join(" ")
       : occupied?.user.nameTemp;
+  const [visibility, setVisibility] = useState("none");
   return (
     <div>
+      <UserPopup visibility={visibility} onClose={()=>setVisibility("none")} userData={occupied?.user}/>
       <div className={styles.occupationInfo}>
-        <div
-          className={styles.occupant}
+        <Button
+          onClick={()=>setVisibility("block")}
           style={{
             backgroundColor: userTypeColors[occupied.user.type as userTypes],
           }}
@@ -61,7 +64,7 @@ const OccupationInfo: React.FC<PropTypes> = ({ occupied, classroom , onClose}) =
           {[fullName, "— ", userTypesUa[occupied.user.type as userTypes]].join(
             " "
           )}
-        </div>
+        </Button>
         <div className={styles.until}>
           Зайнято до {getTimeHHMM(new Date(occupied.until))}
         </div>

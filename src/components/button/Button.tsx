@@ -5,11 +5,12 @@ type PropTypes = {
   onClick?: () => void;
   type?: "button" | "submit" | "reset"
   disabled?: boolean
+  style?: {}
 };
 
-const Button: React.FC<PropTypes> = ({ children, onClick = ()=>null, type = "button", disabled = false}) => {
+const Button: React.FC<PropTypes> = ({ children, onClick = ()=>null, type = "button", disabled = false, style}) => {
   return (
-    <button disabled={disabled} type={type} onClick={onClick} className={styles.button}>
+    <button style={style} disabled={disabled} type={type} onClick={onClick} className={styles.button}>
       {children}
     </button>
   );

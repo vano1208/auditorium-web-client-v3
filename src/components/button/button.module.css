@@ -11,7 +11,7 @@
 
 .button:hover, .button.focus  {
     border: none;
-    background-color: #006fd6;
+    background-color: #006fd6 !important;
 }
 
 .button:focus {

@@ -21,6 +21,7 @@ import Schedule from "./components/schedule/Schedule";
 import ClassroomsGridSkeleton from "./components/classroomsGrid/classroomsGrid/ClassroomsGridSkeleton";
 import Login from "./components/login/Login";
 import { isLoggedVar } from "./api/client";
+import Profile from "./components/profile/Profile";
 
 function App() {
   const menuElements = [
@@ -54,11 +55,6 @@ function App() {
       text: "Адміністрування",
       path: "/admin",
       icon: administrationIcon,
-    },
-    {
-      text: "Налаштування",
-      path: "/settings",
-      icon: settingsIcon,
     },
     {
       text: "Профіль",
@@ -109,6 +105,9 @@ function App() {
         </Route>
         <Route path="/schedule">
           <Schedule />
+        </Route>
+        <Route path="/profile">
+          <Profile />
         </Route>
       </main>
     </div>
