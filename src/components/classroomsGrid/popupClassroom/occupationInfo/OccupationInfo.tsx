@@ -7,29 +7,30 @@ import {
   userTypesUa,
 } from "../../../../models/models";
 import styles from "./occupationInfo.module.css";
-import { getTimeHHMM } from "../../../../helpers/helpers";
+import {getTimeHHMM} from "../../../../helpers/helpers";
 import Button from "../../../button/Button";
-import { useMutation } from "@apollo/client";
-import { FREE_CLASSROOM } from "../../../../api/operations/mutations/freeClassroom";
+import {useMutation} from "@apollo/client";
+import {FREE_CLASSROOM} from "../../../../api/operations/mutations/freeClassroom";
 import UserPopup from "../../../user/UserPopup";
 
 type PropTypes = {
   occupied: OccupiedInfo;
   classroom: Classroom;
   onClose: (value: string) => void;
+  setReadyForRewriting: (value: boolean) => void;
 };
 
-const OccupationInfo: React.FC<PropTypes> = ({ occupied, classroom , onClose}) => {
-  const [freeClassroom, { data, error }] = useMutation(FREE_CLASSROOM, {
+const OccupationInfo: React.FC<PropTypes> = ({occupied, classroom, onClose, setReadyForRewriting}) => {
+  const [freeClassroom, {data, error}] = useMutation(FREE_CLASSROOM, {
     variables: {
       input: {
         classroomName: String(classroom.name),
       },
     },
-    update(cache, { data }) {
+    update(cache, {data}) {
       cache.modify({
         fields: {
-          classrooms(existingRelay, { toReference }) {
+          classrooms(existingRelay, {toReference}) {
             const freedClassroomIndex = existingRelay.findIndex(
               (el: Classroom) => el.id === data.freeClassroom.classroom.id
             );
@@ -45,18 +46,18 @@ const OccupationInfo: React.FC<PropTypes> = ({ occupied, classroom , onClose}) =
   const fullName =
     occupied?.user.nameTemp === null
       ? [
-          occupied?.user.lastName,
-          occupied?.user.firstName.charAt(0) + ".",
-          occupied?.user.patronymic?.charAt(0) + ".",
-        ].join(" ")
+        occupied?.user.lastName,
+        occupied?.user.firstName.charAt(0) + ".",
+        occupied?.user.patronymic?.charAt(0) + ".",
+      ].join(" ")
       : occupied?.user.nameTemp;
   const [visibility, setVisibility] = useState("none");
   return (
     <div>
-      <UserPopup visibility={visibility} onClose={()=>setVisibility("none")} userData={occupied?.user}/>
+      <UserPopup visibility={visibility} onClose={() => setVisibility("none")} userData={occupied?.user}/>
       <div className={styles.occupationInfo}>
         <Button
-          onClick={()=>setVisibility("block")}
+          onClick={() => setVisibility("block")}
           style={{
             backgroundColor: userTypeColors[occupied.user.type as userTypes],
           }}
@@ -65,14 +66,15 @@ const OccupationInfo: React.FC<PropTypes> = ({ occupied, classroom , onClose}) =
             " "
           )}
         </Button>
+        {(occupied.user.type === userTypes.STUDENT || occupied.user.type===userTypes.POST_GRADUATE)&&
         <div className={styles.until}>
           Зайнято до {getTimeHHMM(new Date(occupied.until))}
-        </div>
+        </div>}
         <div className={styles.buttons}>
           <Button
             type="button"
             onClick={() => {
-              freeClassroom();
+              setReadyForRewriting(true)
             }}
           >
             Передати аудиторію
@@ -80,7 +82,7 @@ const OccupationInfo: React.FC<PropTypes> = ({ occupied, classroom , onClose}) =
           <Button
             type="button"
             onClick={() => {
-              freeClassroom().then(()=> onClose("none"));
+              freeClassroom().then(() => onClose("none"));
             }}
           >
             Звільнити аудиторію

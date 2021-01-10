@@ -9,7 +9,7 @@ interface PropTypes {
 }
 
 const UserPopup: React.FC<PropTypes> = ({visibility, onClose, userData}) => {
-  const {firstName, lastName, patronymic, type, department, phoneNumber, email} = userData;
+  const {firstName, lastName, patronymic, type, department, phoneNumber, email, id} = userData;
   const fullName = [lastName, firstName, patronymic].join(" ");
   const typeUa = userTypesUa[type as userTypes];
   return (
@@ -32,8 +32,9 @@ const UserPopup: React.FC<PropTypes> = ({visibility, onClose, userData}) => {
         </div>
         <div className={styles.modalBody}>
           <p>{department}</p>
-          <p>Тел.: {phoneNumber}</p>
-          <p>E-mail: {email}</p>
+          <p>Номер користувача: {id}</p>
+          <p>Тел.: <a href={`tel:${phoneNumber}`}>{phoneNumber}</a></p>
+          <p>E-mail: <a href={`mailto:${email}`}>{email}</a></p>
         </div>
       </div>
     </div>

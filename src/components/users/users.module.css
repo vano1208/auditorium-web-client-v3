@@ -39,7 +39,15 @@
 
 .userLink a{
     color: #006ed4;
-    padding: 0;
+    padding: 8px;
+    margin: -8px;
+    border-radius: 8px;
+    transition: all .1s linear;
+}
+
+.userLink a:hover {
+    color: #fff;
+    background-color: rgba(0, 110, 212, 1);
 }
 
 .paginator {
@@ -128,6 +136,8 @@
     font-family: "Roboto Thin";
     font-size: 1.5rem;
     margin-left: 8px;
+    margin-bottom: -16px;
+    margin-top: -16px;
     border: 2px solid #1e2c4f;
     border-radius: 8px;
     color: #fff;

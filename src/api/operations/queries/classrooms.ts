@@ -7,6 +7,8 @@ export const GET_CLASSROOMS = gql`
       name
       special
       chair
+      isWing
+      isOperaStudio
       occupied {
         user {
           id
@@ -34,6 +36,10 @@ export const GET_CLASSROOMS = gql`
         type
         name
         rate
+      }
+      disabled {
+          comment
+          until
       }
     }
   }

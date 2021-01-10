@@ -3,11 +3,11 @@
     border-radius: 8px;
     border: 1px solid rgba(0, 0, 0, .2);
     position: relative;
-    margin-top: 8px;
+    margin-top: 16px;
 }
 
 .occupationInfo::before {
-    content: "Інформація про утримувача";
+    content: "Інформація про користувача";
     color: #1e2c4f;
     font-family: "Roboto Medium";
     background-color: #fff;

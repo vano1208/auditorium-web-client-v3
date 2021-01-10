@@ -28,14 +28,16 @@ export const getPossiblyOccupied = (schedule: Array<any>) => {
   const current =
     new Date().getHours() * HOUR + new Date().getMinutes() * MINUTE;
   const timeSnippets = schedule.map((el: any) => {
-    return {
+    return ({
       from: getScheduleTimeInMilliseconds(el.from),
       to: getScheduleTimeInMilliseconds(el.to),
-    };
+    });
   });
   return timeSnippets
-    .map((el: any) => current > el.from && current < el.to)
-    .every((el: any) => el === true);
+    .map((el: any) => {
+      return current >= el.from && current <= el.to
+    })
+    .some((el: any) => el === true);
 };
 
 export const getTimeHHMM = (date: Date) => {

@@ -86,6 +86,7 @@ export type Classroom = {
   special: string | null;
   floor: number;
   isWing: boolean;
+  isOperaStudio: boolean;
   description: string | null;
   occupied: OccupiedInfo | null;
   instruments: Array<InstrumentType>;
@@ -101,6 +102,7 @@ export type RegisterUnit = {
     patronymic: string
     type: string
     id: string
+    nameTemp: string
   }
   nameTemp: string
   classroom: {

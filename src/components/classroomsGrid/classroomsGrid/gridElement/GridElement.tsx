@@ -9,6 +9,8 @@ import {
 } from "../../../../models/models";
 import Instrument from "../../../instrument/Instrument";
 import { useHistory } from "react-router-dom";
+import {getPossiblyOccupied} from "../../../../helpers/helpers";
+import pianoIcon from './../../../../assets/specialPiano.png';
 
 type PropTypes = {
   classroom: Classroom;
@@ -16,7 +18,8 @@ type PropTypes = {
 };
 
 const GridElement: React.FC<PropTypes> = ({ classroom, onClose }) => {
-  const { name: classroomName, occupied} = classroom;
+  const { name: classroomName, occupied, schedule} = classroom;
+  const occupiedBecauseSchedule:boolean = getPossiblyOccupied(schedule);
   const occupationTime = occupied
     ? new Date(occupied.until).getHours() +
       ":" +
@@ -53,6 +56,7 @@ const GridElement: React.FC<PropTypes> = ({ classroom, onClose }) => {
           : { backgroundColor: "#63ff97" }
       }
     >
+      {classroom.special&&<img className={styles.specialIcon} src={pianoIcon} alt="piano"/>}
       <div className={styles.cellHeader}>
         <div
           style={
@@ -83,14 +87,14 @@ const GridElement: React.FC<PropTypes> = ({ classroom, onClose }) => {
           </div>
         ) : null}
       </div>
-      <div className={styles.message}>
+      <div className={styles.message} style={{opacity:
+          !(occupied?.user.type === userTypes.STUDENT || occupied?.user.type===userTypes.POST_GRADUATE)?0:1}}>
         {occupied ? (
           <p>
-            Зайнято до <span>{occupationTime}</span>
+            {(occupied.user.type === userTypes.STUDENT || occupied.user.type===userTypes.POST_GRADUATE)?
+              <>Зайнято до  <span>{occupationTime}</span></>:"Зайнято"}
           </p>
-        ) : (
-          <p>Зайнято за розкладом!</p>
-        )}
+        ) : occupiedBecauseSchedule?<p>Можливі заняття за розкладом</p>:<p>Вільно</p>}
       </div>
       <div className={styles.instruments}>
         {classroom.instruments.map((instrument: InstrumentType) => (

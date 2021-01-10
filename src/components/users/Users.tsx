@@ -53,7 +53,7 @@ const Users: React.FC = () => {
           <div>П.І.Б. {<input
             className={styles.userSearch}
             type="text"
-            placeholder="Пошук"
+            placeholder="Пошук (П.І.Б. або ID)"
             value={userSearch}
             onChange={(e) => {
               setUserSearch(e.target.value);
@@ -107,7 +107,7 @@ const Users: React.FC = () => {
       <div className={styles.footer}>
         <div>
           <ul className={styles.paginator}>
-            <li onClick={() => {
+            <li style={currentPage===1?{color: "#ccc", border: "1px solid #ccc"}:{}} onClick={() => {
               currentPage >= 2 ? setCurrentPage((prevState => prevState - 1)) : setCurrentPage(1);
             }}>&lt;</li>
             {(currentPage >= 4) && <>
@@ -122,12 +122,15 @@ const Users: React.FC = () => {
                                                  color: "#fff"
                                                } : undefined}>{pageNumber}</li>)}
             {(currentPage < pages - 2) && <><span className={styles.paginatorDots}>...</span><li onClick={() => setCurrentPage(pages)}>{pages}</li></>}
-            <li onClick={() => {
+            <li style={currentPage===pages?{color: "#ccc", border: "1px solid #ccc"}:{}}onClick={() => {
               currentPage <= pages - 1 ? setCurrentPage((prevState => prevState + 1)) : setCurrentPage(pages);
             }}>&gt;</li>
           </ul>
           <select className={styles.selectPageSize} name="pageSize" id="pageSize"
-                  onChange={(e) => setPageSize(Number(e.target.value))}>
+                  onChange={(e) => {
+                    setPageSize(Number(e.target.value));
+                    setCurrentPage(1);
+                  }}>
             <option value="10">10 / ст.</option>
             <option value="20">20 / ст.</option>
             <option value="50">50 / ст.</option>

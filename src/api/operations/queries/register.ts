@@ -10,6 +10,8 @@ export const GET_REGISTER = gql`
                 patronymic
                 id
                 type
+                email
+                phoneNumber
             }
             classroom {
                 name

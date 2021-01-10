@@ -7,7 +7,7 @@
     border: 1px solid rgba(0, 0, 0, .2);
     font-family: "Roboto Light";
     padding: 16px;
-
+    margin-top: 16px;
 }
 
 .chosenOccupantInfo::before {
@@ -44,11 +44,10 @@
     padding: 8px;
     border: 2px solid #959595;
     width: 250px;
-
 }
 
 .status {
-   display: inline-block;
+    display: inline-block;
 }
 
 .buttonWrapper {
@@ -63,9 +62,11 @@ input[type=range].untilInput {
     background-color: transparent;
     -webkit-appearance: none;
 }
+
 input[type=range].untilInput:focus {
     outline: none;
 }
+
 input[type=range].untilInput::-webkit-slider-runnable-track {
     background: rgba(30, 44, 79, 0.2);
     border: 1px solid rgba(0, 1, 0, 0);
@@ -74,6 +75,7 @@ input[type=range].untilInput::-webkit-slider-runnable-track {
     height: 0px;
     cursor: pointer;
 }
+
 input[type=range].untilInput::-webkit-slider-thumb {
     margin-top: -11px;
     width: 20px;
@@ -84,9 +86,11 @@ input[type=range].untilInput::-webkit-slider-thumb {
     cursor: pointer;
     -webkit-appearance: none;
 }
+
 input[type=range].untilInput:focus::-webkit-slider-runnable-track {
     background: #95a8d7;
 }
+
 input[type=range].untilInput::-moz-range-track {
     background: rgba(30, 44, 79, 0.2);
     border: 1px solid rgba(0, 1, 0, 0);
@@ -95,6 +99,7 @@ input[type=range].untilInput::-moz-range-track {
     height: 0px;
     cursor: pointer;
 }
+
 input[type=range].untilInput::-moz-range-thumb {
     width: 20px;
     height: 20px;
@@ -103,6 +108,7 @@ input[type=range].untilInput::-moz-range-thumb {
     border-radius: 50px;
     cursor: pointer;
 }
+
 input[type=range].untilInput::-ms-track {
     background: transparent;
     border-color: transparent;
@@ -112,16 +118,19 @@ input[type=range].untilInput::-ms-track {
     height: 0px;
     cursor: pointer;
 }
+
 input[type=range].untilInput::-ms-fill-lower {
     background: #000000;
     border: 1px solid rgba(0, 1, 0, 0);
     border-radius: 50px;
 }
+
 input[type=range].untilInput::-ms-fill-upper {
     background: rgba(30, 44, 79, 0.2);
     border: 1px solid rgba(0, 1, 0, 0);
     border-radius: 50px;
 }
+
 input[type=range].untilInput::-ms-thumb {
     width: 20px;
     height: 20px;
@@ -130,11 +139,12 @@ input[type=range].untilInput::-ms-thumb {
     border-radius: 50px;
     cursor: pointer;
     margin-top: 0px;
-    /*Needed to keep the Edge thumb centred*/
 }
+
 input[type=range].untilInput:focus::-ms-fill-lower {
     background: rgba(30, 44, 79, 0.2);
 }
+
 input[type=range].untilInput:focus::-ms-fill-upper {
     background: #95a8d7;
 }
