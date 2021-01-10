@@ -110,7 +110,7 @@ const Register: React.FC = () => {
                 registerUnit.user.firstName,
                 registerUnit.user.patronymic,
                 registerUnit.classroom.name].join(" ").indexOf(userSearch) !== -1
-                : [registerUnit.user.nameTemp, registerUnit.classroom.name].join(" ").indexOf(userSearch) !== -1
+                : [registerUnit.nameTemp, registerUnit.classroom.name].join(" ").indexOf(userSearch) !== -1
             }).map((registerUnit: RegisterUnit) => (
               <li key={registerUnit.id} className={styles.registerUnitList}>
                 <div>{registerUnit.classroom.name}</div>

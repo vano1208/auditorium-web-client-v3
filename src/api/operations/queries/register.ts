@@ -12,6 +12,7 @@ export const GET_REGISTER = gql`
                 type
                 email
                 phoneNumber
+                nameTemp
             }
             classroom {
                 name

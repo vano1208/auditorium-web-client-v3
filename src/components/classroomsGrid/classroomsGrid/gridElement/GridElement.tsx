@@ -30,22 +30,15 @@ const GridElement: React.FC<PropTypes> = ({ classroom, onClose }) => {
     history.push("/auditoriums/" + classroomName);
     onClose("block");
   };
-  const tempName = (str: string) => {
-    if(str!==undefined) {
-    let array = str.split(" ");
-    let name1 = array[1]?.charAt(0) + ".";
-    let name2 = array[2] ? array[2].charAt(0) + "." : "";
-    return [array[0], name1, name2].join(" ");
-    } else return ""
-  };
   const fullName =
     occupied?.user.nameTemp === null
       ? [
           occupied?.user.lastName,
           occupied?.user.firstName.charAt(0) + ".",
           occupied?.user.patronymic?.charAt(0) + ".",
-        ].join(" ")
-      : tempName(occupied?.user.nameTemp as string);
+        ].join("\u00A0")
+      : occupied?.user.nameTemp?.split(" ").join("\u00A0");
+
   return (
     <div
       onClick={onClick}
@@ -76,9 +69,13 @@ const GridElement: React.FC<PropTypes> = ({ classroom, onClose }) => {
           {classroomName}
         </div>
         {occupied ? (
-          <div className={styles.occupant}>
+          <div className={occupied.user.nameTemp !== null && (fullName as string).length>=20?
+            [styles.gradient, styles.occupant].join(" "):
+            styles.occupant}>
             <div>
-              <h2>{fullName}</h2>
+              <h2 className={occupied.user.nameTemp !== null && (fullName as string).length>=20?
+                styles.tickerAnimation:undefined}>{occupied.user.nameTemp !== null && (fullName as string).length>=20?
+              [fullName, fullName].join("\u00A0\u00A0\u00A0\u00A0\u00A0"):fullName}</h2>
             </div>
 
             <div className={styles.occupantType}>
@@ -87,10 +84,10 @@ const GridElement: React.FC<PropTypes> = ({ classroom, onClose }) => {
           </div>
         ) : null}
       </div>
-      <div className={styles.message} style={{opacity:
-          !(occupied?.user.type === userTypes.STUDENT || occupied?.user.type===userTypes.POST_GRADUATE)?0:1}}>
+      <div className={styles.message}>
         {occupied ? (
-          <p>
+          <p style={{opacity:
+            !(occupied?.user.type === userTypes.STUDENT || occupied?.user.type===userTypes.POST_GRADUATE)?0:1}}>
             {(occupied.user.type === userTypes.STUDENT || occupied.user.type===userTypes.POST_GRADUATE)?
               <>Зайнято до  <span>{occupationTime}</span></>:"Зайнято"}
           </p>

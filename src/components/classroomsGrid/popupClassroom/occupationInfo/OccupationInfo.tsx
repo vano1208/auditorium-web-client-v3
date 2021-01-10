@@ -32,12 +32,12 @@ const OccupationInfo: React.FC<PropTypes> = ({occupied, classroom, onClose, setR
         fields: {
           classrooms(existingRelay, {toReference}) {
             const freedClassroomIndex = existingRelay.findIndex(
-              (el: Classroom) => el.id === data.freeClassroom.classroom.id
+              (el: Classroom) => el.id === classroom.id
             );
 
             return existingRelay
               .slice()
-              .splice(freedClassroomIndex, 1, data.freeClassroom.classroom);
+              .splice(freedClassroomIndex, 1, {...classroom, occupied: data.freeClassroom.classroom.occupied});
           },
         },
       });

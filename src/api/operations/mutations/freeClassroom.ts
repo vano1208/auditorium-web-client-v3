@@ -1,28 +1,19 @@
-import { gql } from "@apollo/client";
+import {gql} from "@apollo/client";
 
 export const FREE_CLASSROOM = gql`
-  mutation free($input: FreeClassroomInput!) {
-    freeClassroom(input: $input) {
-      classroom {
-        id
-        name
-        special
-        chair
-        occupied {
-          user {
-            id
-          }
+    mutation free($input: FreeClassroomInput!) {
+        freeClassroom(input: $input) {
+            classroom {
+                occupied {
+                    user {
+                        id
+                    }
+                }
+            }
+                userErrors {
+                    message
+                    code
+                }
+            }
         }
-        instruments {
-          type
-          name
-          rate
-        }
-      }
-      userErrors {
-        message
-        code
-      }
-    }
-  }
 `;
