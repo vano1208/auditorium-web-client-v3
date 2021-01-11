@@ -5,8 +5,11 @@ import { WORKING_DAY_END, WORKING_DAY_START } from "../../helpers/constants";
 import { useQuery } from "@apollo/client";
 import { GET_CLASSROOMS } from "../../api/operations/queries/classrooms";
 import { ScheduleUnit } from "../../models/models";
+import PageHeader from "../pageHeader/PageHeader";
 
 const Schedule = () => {
+  const timelineMarks = ["8:00", "9:00", "10:00", "11:00", "12:00",
+    "13:00", "14:00", "15:00","16:00", "17:00", "18:00", "19:00", "20:00"]
   const { loading, error, data } = useQuery(GET_CLASSROOMS, {
     variables: {
       date: new Date().toString(),
@@ -20,6 +23,7 @@ const Schedule = () => {
   if (error) return <h1>Error</h1>;
   return (
     <>
+      <PageHeader body="Розклад"></PageHeader>
       <div className={styles.scheduleTable}>
         <table className={styles.tg}>
           <thead>
@@ -27,14 +31,7 @@ const Schedule = () => {
               <th></th>
               {timeSnippets.map((el: any) => (
                 <th className={styles.tg_0pky}>
-                  {el === "8:00" ||
-                  el === "10:00" ||
-                  el === "12:00" ||
-                  el === "14:00" ||
-                  el === "16:00" ||
-                  el === "18:00"
-                    ? el
-                    : null}
+                  {timelineMarks.map(mark=>el===mark?el:null)}
                 </th>
               ))}
             </tr>

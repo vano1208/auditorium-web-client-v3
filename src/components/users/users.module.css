@@ -19,20 +19,6 @@
     font-family: "Roboto Light";
 }
 
-.users {
-    margin: 16px;
-}
-
-.usersHeader {
-    background-color: #1e2c4f;
-    color: #fff;
-    font-family: "Roboto Thin";
-    font-weight: 100;
-    font-size: 2rem;
-    margin: -16px;
-    padding: 16px;
-}
-
 .users ul {
     margin-top: 32px;
 }

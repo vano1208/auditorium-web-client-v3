@@ -6,11 +6,11 @@ import {
   userTypeColors,
   userTypes,
   userTypesUa,
-} from "../../../../models/models";
-import Instrument from "../../../instrument/Instrument";
+} from "../../../models/models";
+import Instrument from "../../instrument/Instrument";
 import { useHistory } from "react-router-dom";
-import {getPossiblyOccupied} from "../../../../helpers/helpers";
-import pianoIcon from './../../../../assets/specialPiano.png';
+import {getPossiblyOccupied} from "../../../helpers/helpers";
+import pianoIcon from '../../../assets/specialPiano.png';
 
 type PropTypes = {
   classroom: Classroom;

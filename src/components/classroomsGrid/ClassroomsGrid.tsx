@@ -1,10 +1,11 @@
 import React, {useState} from "react";
-import {Classroom} from "../../../models/models";
+import {Classroom} from "../../models/models";
 import GridElement from "./gridElement/GridElement";
 import styles from "./classroomsGrid.module.css";
-import PopupClassroom from "../popupClassroom/PopupClassroom";
-import Caviar from "../caviar/Caviar";
-import Filters from "../filters/Filters";
+import PopupClassroom from "./popupClassroom/PopupClassroom";
+import Caviar from "./caviar/Caviar";
+import Filters from "./filters/Filters";
+import PageHeader from "../pageHeader/PageHeader";
 
 type PropTypes = {
   classrooms: Array<Classroom>;
@@ -32,9 +33,8 @@ const ClassroomsGrid: React.FC<PropTypes> = ({classrooms}) => {
     setFilter(() => value);
   };
   return (
-    <div className={styles.classroomsContainer}>
-      <div className={styles.classroomsHeader}>
-        Аудиторії
+    <>
+      <PageHeader body="Аудиторії">
         <Filters onChange={onFilterChange}/>
         <div className={styles.conditionalFilters}>
         <label htmlFor="wing" className={styles.checkboxLabel}>
@@ -55,7 +55,7 @@ const ClassroomsGrid: React.FC<PropTypes> = ({classrooms}) => {
                  <span></span>
         </label>
         </div>
-      </div>
+      </PageHeader>
       <Caviar
         classroomsFilter={classroomsFilter}
         classrooms={classrooms.filter((classroom) => onlyOperaStudio ? classroom.isOperaStudio : true)
@@ -83,7 +83,7 @@ const ClassroomsGrid: React.FC<PropTypes> = ({classrooms}) => {
             />
           ))}
       </div>
-    </div>
+    </>
   );
 };
 

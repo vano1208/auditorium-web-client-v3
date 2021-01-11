@@ -13,15 +13,16 @@ import scheduleIcon from "./assets/menuIcons/schedule.png";
 import { gql, useQuery } from "@apollo/client";
 import { GET_CLASSROOMS } from "./api/operations/queries/classrooms";
 import { Classroom } from "./models/models";
-import ClassroomsGrid from "./components/classroomsGrid/classroomsGrid/ClassroomsGrid";
+import ClassroomsGrid from "./components/classroomsGrid/ClassroomsGrid";
 import { Route } from "react-router-dom";
 import Register from "./components/register/Register";
 import Users from "./components/users/Users";
 import Schedule from "./components/schedule/Schedule";
-import ClassroomsGridSkeleton from "./components/classroomsGrid/classroomsGrid/ClassroomsGridSkeleton";
+import ClassroomsGridSkeleton from "./components/classroomsGrid/ClassroomsGridSkeleton";
 import Login from "./components/login/Login";
 import { isLoggedVar } from "./api/client";
 import Profile from "./components/profile/Profile";
+import AdminPanel from "./components/adminPanel/AdminPanel";
 
 function App() {
   const menuElements = [
@@ -108,6 +109,9 @@ function App() {
         </Route>
         <Route path="/profile">
           <Profile />
+        </Route>
+        <Route path="/admin">
+          <AdminPanel/>
         </Route>
       </main>
     </div>

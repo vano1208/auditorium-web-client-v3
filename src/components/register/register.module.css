@@ -36,20 +36,6 @@
     font-family: "Roboto Light";
 }
 
-.register {
-    margin: 16px;
-}
-
-.registerHeader {
-    background-color: #1e2c4f;
-    color: #fff;
-    font-family: "Roboto Thin";
-    font-weight: 100;
-    font-size: 2rem;
-    margin: -16px;
-    padding: 16px;
-}
-
 .register ul {
     margin-top: 32px;
 }

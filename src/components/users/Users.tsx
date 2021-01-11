@@ -9,6 +9,7 @@ import {GET_USERS} from "../../api/operations/queries/users";
 import styles from './users.module.css';
 import {NavLink, useParams} from "react-router-dom";
 import UserPopup from "../user/UserPopup";
+import PageHeader from "../pageHeader/PageHeader";
 
 interface Params {
   userId: string
@@ -32,9 +33,9 @@ const Users: React.FC = () => {
     pagesList.push(i)
   }
   return (
-    <div className={styles.users}>
+    <>
       {userId && <UserPopup onClose={() => setVisibility("none")} visibility={visibility} userData={userData}/>}
-      <div className={styles.usersHeader}>Користувачі
+      <PageHeader body="Користувачі">
         <select className={styles.usersSort} name="usersSort"
                 id="usersSort"
                 onChange={(e) => {
@@ -46,7 +47,7 @@ const Users: React.FC = () => {
           <option value="ID_UP">ID &#8593;</option>
           <option value="ID_DOWN">ID &#8595;</option>
         </select>
-      </div>
+      </PageHeader>
       <ul>
         <li className={[styles.usersUnitList, styles.listHeader].join(" ")}>
           <div>ID</div>
@@ -138,7 +139,7 @@ const Users: React.FC = () => {
           </select>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

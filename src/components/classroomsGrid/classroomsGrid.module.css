@@ -5,21 +5,6 @@
     grid-gap: 16px;
 }
 
-.classroomsContainer {
-    margin-top: 16px;
-}
-
-.classroomsHeader {
-    background-color: #1e2c4f;
-    color: #fff;
-    font-family: "Roboto Thin";
-    font-weight: 100;
-    font-size: 2rem;
-    margin-top: -16px;
-    padding: 16px;
-    user-select: none;
-}
-
 .checkboxLabel {
     font-size: 1.2rem;
     padding: 8px;
@@ -39,7 +24,7 @@
     border: 2px solid rgba(255, 255, 255, .5);
     border-radius: 8px;
     display: inline-block;
-    background: url("./../../../assets/check.png");
+    background: url("../../assets/check.png");
     background-repeat: no-repeat;
     background-position-x: 4px;
     background-position-y: 4px;
@@ -49,7 +34,7 @@
 
 .checkboxLabel input:checked + span {
     background-color: rgb(0, 110, 212);
-    background-image: url("./../../../assets/check.png");
+    background-image: url("../../assets/check.png");
     background-size: 20px 20px;
     background-repeat: no-repeat;
     background-position-x: 4px;

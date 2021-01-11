@@ -3,12 +3,15 @@ import {useQuery} from "@apollo/client";
 import {GET_REGISTER} from "../../api/operations/queries/register";
 import {RegisterUnit, User} from "../../models/models";
 import styles from "./register.module.css";
-import html2canvas from "html2canvas";
 import Button from "../button/Button";
-import {jsPDF} from "jspdf";
 import RegisterSkeleton from "./RegisterSkeleton";
 import {NavLink, useParams} from "react-router-dom";
 import UserPopup from "../user/UserPopup";
+import PageHeader from "../pageHeader/PageHeader";
+// @ts-ignore
+import pdfMake from 'pdfmake/build/pdfmake';
+// @ts-ignore
+import vfsFonts from 'pdfmake/build/vfs_fonts'
 
 interface Params {
   userId: string
@@ -43,10 +46,9 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className={styles.register}>
+    <>
       <UserPopup onClose={() => setVisibility("none")} visibility={visibility} userData={registerUser}/>
-      <div className={styles.registerHeader}>
-        Журнал
+      <PageHeader body="Журнал">
         <input className={styles.registerDateInput}
                type="date"
                onChange={(e) => setRegisterDate(new Date(e.target.value))}
@@ -54,30 +56,85 @@ const Register: React.FC = () => {
         />
         <div className={styles.registerControlPanel}><Button
           onClick={() => {
-            html2canvas(document.querySelector("#register") as HTMLElement).then(
-              (canvas) => {
-                const imgData = canvas.toDataURL("image/png");
-                const pdf = new jsPDF();
-                pdf.addImage(
-                  imgData,
-                  "PNG",
-                  -40,
-                  10,
-                  290,
-                  13 * data.register.length
-                );
-                pdf.save(`register_${[
-                  registerDate.getDate(), 
-                  registerDate.getMonth()+1, 
-                  registerDate.getFullYear()].join("_")}.pdf`);
+            const {vfs} = vfsFonts.pdfMake;
+            pdfMake.vfs = vfs;
+            const registerData = data.register.map((unit: RegisterUnit)=> {
+              const start = new Date(unit.start).getHours() + ":" + new Date(unit.start).getMinutes();
+              const end = unit.end !== null ? new Date(unit.end).getHours() +
+                ":" + new Date(unit.end).getMinutes() : "—";
+              return [
+                {text: unit.classroom.name, alignment: 'center'},
+                {
+                  text: unit.nameTemp === null ?
+                    [unit.user.lastName, unit.user.firstName, unit.user.patronymic].join(" ") : unit.nameTemp
+                },
+                {text:start, alignment: 'center'},
+                {text: end, alignment: 'center'}
+              ]
+            })
+            const documentDefinition = {
+              pageSize: 'A4',
+              pageOrientation: 'portrait',
+              content: [
+                {
+                  table: {
+                    widths: [30, '*', 50, 50],
+                    headerRows: 1,
+                    dontBreakRows: true,
+                    body: [
+                      [{text: `Журнал відвідувань за ${[
+                          registerDate.getDate(),
+                          registerDate.getMonth() + 1,
+                          registerDate.getFullYear()].join(".")}`,
+                        style: 'header',
+                        colSpan: 4,
+                        alignment: 'center',
+                        margin: [0, 10, 0, 10]
+                      }, {}, {}, {}],
+                      [
+                        {text: 'Ауд.', style: 'tableHeader', alignment: 'center'},
+                        {text: 'П.І.Б.', style: 'tableHeader'},
+                        {text: 'Від', style: 'tableHeader', alignment: 'center'},
+                        {text: 'До', style: 'tableHeader', alignment: 'center'},
+                      ],
+                      ...registerData,
+                      [{text: "П.І.Б. ___________________ Підпис ____________________",
+                        alignment: "center",
+                        margin: [0, 10, 0, 10],
+                        colSpan: 4},{}, {}, {}
+                      ]
+                    ]
+                  }
+                }
+              ],
+              styles: {
+                tableHeader: {
+                  bold: true,
+                },
+                header: {
+                  fontSize: 18,
+                  bold: true,
+                },
+                subheader: {
+                  fontSize: 15,
+                  bold: true
+                },
+                quote: {
+                  italics: true
+                },
+                small: {
+                  fontSize: 8
+                }
               }
-            );
-          }}
+            };
+            pdfMake.createPdf(documentDefinition).open()
+          }
+          }
         >
           Зберегти в PDF
         </Button>
         </div>
-      </div>
+      </PageHeader>
       {loading || error ? (
         <RegisterSkeleton/>
       ) : (
@@ -99,9 +156,9 @@ const Register: React.FC = () => {
             <div>До</div>
           </li>
           {data.register.length === 0 ? <li className={styles.noItemsInfo}>
-            {"Записи в журналі за " +
-            [registerDate.getDate(), registerDate.getMonth() + 1, registerDate.getFullYear()].join(".") +
-            " відсутні!"}
+              {"Записи в журналі за " +
+              [registerDate.getDate(), registerDate.getMonth() + 1, registerDate.getFullYear()].join(".") +
+              " відсутні!"}
             </li>
             : data.register.filter((registerUnit: RegisterUnit) => {
               return registerUnit.nameTemp === null
@@ -115,19 +172,19 @@ const Register: React.FC = () => {
               <li key={registerUnit.id} className={styles.registerUnitList}>
                 <div>{registerUnit.classroom.name}</div>
                 <div>
-                  {registerUnit.nameTemp === null?<NavLink
+                  {registerUnit.nameTemp === null ? <NavLink
                     className={styles.userLink}
                     onClick={() => {
-                    setRegisterUser(registerUnit.user as User);
-                    setVisibility("block");
-                  }}
-                           to={"/register/" + registerUnit.user.id}>{registerUnit.nameTemp === null
+                      setRegisterUser(registerUnit.user as User);
+                      setVisibility("block");
+                    }}
+                    to={"/register/" + registerUnit.user.id}>{registerUnit.nameTemp === null
                     ? [
                       registerUnit.user.lastName,
                       registerUnit.user.firstName,
                       registerUnit.user.patronymic,
                     ].join(" ")
-                    : registerUnit.nameTemp}</NavLink>:registerUnit.nameTemp === null
+                    : registerUnit.nameTemp}</NavLink> : registerUnit.nameTemp === null
                     ? [
                       registerUnit.user.lastName,
                       registerUnit.user.firstName,
@@ -150,7 +207,7 @@ const Register: React.FC = () => {
             ))}
         </ul>
       )}
-    </div>
+    </>
   );
 };
 
