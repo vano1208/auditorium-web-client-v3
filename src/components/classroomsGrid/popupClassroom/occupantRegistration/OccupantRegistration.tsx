@@ -12,6 +12,7 @@ import {
 import {OCCUPY_CLASSROOM} from "../../../../api/operations/mutations/occupyClassroom";
 import Button from "../../../button/Button";
 import {MINUTE} from "../../../../helpers/constants";
+import Loading from "../../../loading/Loading";
 
 type PropTypes = {
   classroom: Classroom;
@@ -26,7 +27,7 @@ const OccupantRegistration: React.FC<PropTypes> = ({classroom, onClose}) => {
   const [occupyClassroom] = useMutation(OCCUPY_CLASSROOM);
   let [chosenOccupantInfo, setChosenOccupantInfo] = useState("");
   let [tempUserType, setTempUserType] = useState("STUDENT");
-  if (loading) return <h1>Loading</h1>;
+  if (loading) return <Loading/>;
   if (error) return <h1>Error</h1>;
   let users = data.users;
   const timeline = ["15 хв.", "30 хв.", "45 хв.", "1год.", "1 год. 15 хв.", "1 год. 30 хв.", "1 год. 45 хв.",

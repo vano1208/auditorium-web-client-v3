@@ -1,3 +1,5 @@
+import {string} from "yup/es";
+
 export enum userTypes {
   STUDENT = "STUDENT",
   TEACHER = "TEACHER",
@@ -112,4 +114,16 @@ export type RegisterUnit = {
   start: string
   end: string
 
+}
+
+export type Degree = {
+  name: string
+  startMonth: number
+  startDay: number
+  durationMonth: number
+}
+
+export type Department = {
+  id: string
+  name: string
 }

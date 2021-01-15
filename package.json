@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "@types/yup": "^0.29.11",
     "prettier": "2.2.1"
   }
 }

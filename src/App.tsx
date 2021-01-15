@@ -6,7 +6,6 @@ import auditoriumsIcon from "./assets/menuIcons/auditoriums.png";
 import registerIcon from "./assets/menuIcons/register.png";
 import usersIcon from "./assets/menuIcons/users.png";
 import administrationIcon from "./assets/menuIcons/administration.png";
-import settingsIcon from "./assets/menuIcons/settings.png";
 import profileIcon from "./assets/menuIcons/profile.png";
 import logoutIcon from "./assets/menuIcons/logout.png";
 import scheduleIcon from "./assets/menuIcons/schedule.png";
@@ -20,7 +19,6 @@ import Users from "./components/users/Users";
 import Schedule from "./components/schedule/Schedule";
 import ClassroomsGridSkeleton from "./components/classroomsGrid/ClassroomsGridSkeleton";
 import Login from "./components/login/Login";
-import { isLoggedVar } from "./api/client";
 import Profile from "./components/profile/Profile";
 import AdminPanel from "./components/adminPanel/AdminPanel";
 
@@ -85,7 +83,8 @@ function App() {
       isLogged @client
     }
   `);
-  let isLogged = dataLogged.isLogged;
+  // let isLogged = dataLogged.isLogged;
+  let isLogged = localStorage.getItem("userId")!==null?true:false;
   return (
     <div className={styles.container}>
       {isLogged && <Sidebar divider={[4, 9]} children={menuElements} />}

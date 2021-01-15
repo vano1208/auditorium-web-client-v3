@@ -7,96 +7,77 @@ import ClassroomSchedule from "../../classroomSchedule/ClassroomSchedule";
 import Instrument from "../../instrument/Instrument";
 import OccupationInfo from "./occupationInfo/OccupationInfo";
 import OccupantRegistration from "./occupantRegistration/OccupantRegistration";
+import PopupWindow from "../../popupWindow/PopupWindow";
 
 interface PropTypes {
   classrooms: Array<Classroom>;
   visibility: string;
   onClose: (value: string) => void;
   readyForRewriting: boolean;
-  setReadyForRewriting: (value:boolean) => void;
+  setReadyForRewriting: (value: boolean) => void;
 }
 
 interface ParamTypes {
   classroomId: string;
 }
 
-const PopupClassroom: React.FC<PropTypes> = ({
-                                               classrooms,
-                                               visibility,
-                                               onClose,
-                                               readyForRewriting,
-                                               setReadyForRewriting
-                                             }) => {
+const PopupClassroom: React.FC<PropTypes> = (
+  {
+    classrooms,
+    visibility,
+    onClose,
+    readyForRewriting,
+    setReadyForRewriting
+  }) => {
   let {classroomId} = useParams<ParamTypes>();
-
   if (classroomId === undefined) classroomId = "1";
-  const popupClassroom = classrooms.find(
+  const classroom = classrooms.find(
     (classroom) => classroom.name === classroomId
   ) as Classroom;
-  return (
+  const {name, chair, isWing, isOperaStudio, special, schedule, instruments, occupied} = classroom;
+  const headerBody = <>
+    {"Аудиторія №" +
+    name +
+    (chair !== null
+      ? " — " + chair
+      : "")}
+    {isWing ? <Tag text="Флігель"/> : null}
+    {isOperaStudio ? <Tag text="Оперна студія"/> : null}
+    {special ? <Tag text="Спеціалізована (ф-но)"/> : null}
+  </>
+
+  return <PopupWindow headerBody={headerBody} onClose={onClose} visibility={visibility}>
+    <ClassroomSchedule schedule={schedule}/>
     <div
-      style={{display: visibility}}
-      className={styles.modal}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) {
-          onClose("none");
-        }
-      }}
+      className={
+        instruments.length !== 0 ? styles.instruments : ""
+      }
     >
-      <div className={styles.modalContent}>
-        <div className={styles.modalHeader}>
-          <span onClick={() => onClose("none")} className={styles.close}>
-            &times;
-          </span>
-          <h2>
-            {"Аудиторія №" +
-            popupClassroom.name +
-            (popupClassroom.chair !== null
-              ? " — " + popupClassroom.chair
-              : "")}
-            {popupClassroom.isWing ? <Tag text="Флігель"/> : null}
-            {popupClassroom.isOperaStudio ? <Tag text="Оперна студія"/> : null}
-            {popupClassroom.special ? <Tag text="Спеціалізована (ф-но)"/> : null}
-          </h2>
-        </div>
-        <div className={styles.modalBody}>
-          <ClassroomSchedule schedule={popupClassroom.schedule}/>
-          <div
-            className={
-              popupClassroom.instruments.length !== 0 ? styles.instruments : ""
-            }
-          >
-            {popupClassroom.instruments.map((instrument) => (
-              <Instrument
-                key={instrument.id}
-                withName
-                instrument={instrument}
-              />
-            ))}
-          </div>
-          {popupClassroom.occupied? readyForRewriting? <OccupantRegistration
-            classroom={popupClassroom}
-            onClose={onClose}
-          />: (
-            <OccupationInfo
-              occupied={popupClassroom.occupied as OccupiedInfo}
-              classroom={popupClassroom}
-              onClose={onClose}
-              setReadyForRewriting={(value)=>setReadyForRewriting(value)}
-            />
-          ) : (
-            <OccupantRegistration
-              classroom={popupClassroom}
-              onClose={onClose}
-            />
-          )}
-        </div>
-        {/*<div className={styles.modalFooter}>*/}
-        {/*  <Button>Заблокувати аудиторію</Button>*/}
-        {/*</div>*/}
-      </div>
+      {instruments.map((instrument) => (
+        <Instrument
+          key={instrument.id}
+          withName
+          instrument={instrument}
+        />
+      ))}
     </div>
-  );
+    {occupied ? readyForRewriting ? <OccupantRegistration
+      classroom={classroom}
+      onClose={onClose}
+    /> : (
+      <OccupationInfo
+        occupied={occupied as OccupiedInfo}
+        classroom={classroom}
+        onClose={onClose}
+        setReadyForRewriting={(value) => setReadyForRewriting(value)}
+      />
+    ) : (
+      <OccupantRegistration
+        classroom={classroom}
+        onClose={onClose}
+      />
+    )}
+  </PopupWindow>
 };
 
 export default PopupClassroom;

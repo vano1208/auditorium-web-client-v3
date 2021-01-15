@@ -44,6 +44,77 @@ const Register: React.FC = () => {
     date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
     return date.toJSON().slice(0, 10);
   };
+  const {vfs} = vfsFonts.pdfMake;
+  pdfMake.vfs = vfs;
+  const registerData = !loading && !error?data.register.map((unit: RegisterUnit)=> {
+    const start = new Date(unit.start).getHours() + ":" + new Date(unit.start).getMinutes();
+    const end = unit.end !== null ? new Date(unit.end).getHours() +
+      ":" + new Date(unit.end).getMinutes() : "—";
+    return [
+      {text: unit.classroom.name, alignment: 'center'},
+      {
+        text: unit.nameTemp === null ?
+          [unit.user.lastName, unit.user.firstName, unit.user.patronymic].join(" ") : unit.nameTemp
+      },
+      {text:start, alignment: 'center'},
+      {text: end, alignment: 'center'}
+    ]
+  }):[];
+  const documentDefinition = {
+    pageSize: 'A4',
+    pageOrientation: 'portrait',
+    content: [
+      {
+        table: {
+          widths: [30, '*', 50, 50],
+          headerRows: 1,
+          dontBreakRows: true,
+          body: [
+            [{text: `Журнал відвідувань за ${[
+                registerDate.getDate(),
+                registerDate.getMonth() + 1,
+                registerDate.getFullYear()].join(".")}`,
+              style: 'header',
+              colSpan: 4,
+              alignment: 'center',
+              margin: [0, 10, 0, 10]
+            }, {}, {}, {}],
+            [
+              {text: 'Ауд.', style: 'tableHeader', alignment: 'center'},
+              {text: 'П.І.Б.', style: 'tableHeader'},
+              {text: 'Від', style: 'tableHeader', alignment: 'center'},
+              {text: 'До', style: 'tableHeader', alignment: 'center'},
+            ],
+            ...registerData,
+            [{text: "П.І.Б. ___________________ Підпис ____________________",
+              alignment: "center",
+              margin: [0, 10, 0, 10],
+              colSpan: 4},{}, {}, {}
+            ]
+          ]
+        }
+      }
+    ],
+    styles: {
+      tableHeader: {
+        bold: true,
+      },
+      header: {
+        fontSize: 18,
+        bold: true,
+      },
+      subheader: {
+        fontSize: 15,
+        bold: true
+      },
+      quote: {
+        italics: true
+      },
+      small: {
+        fontSize: 8
+      }
+    }
+  };
 
   return (
     <>
@@ -54,80 +125,21 @@ const Register: React.FC = () => {
                onChange={(e) => setRegisterDate(new Date(e.target.value))}
                defaultValue={toDateInputValue(new Date())}
         />
-        <div className={styles.registerControlPanel}><Button
+        <div className={styles.registerControlPanel}>
+          <Button
+            onClick={() => {
+              pdfMake.createPdf(documentDefinition).print()
+            }
+            }
+          >
+            Роздрукувати
+          </Button>
+          <Button
           onClick={() => {
-            const {vfs} = vfsFonts.pdfMake;
-            pdfMake.vfs = vfs;
-            const registerData = data.register.map((unit: RegisterUnit)=> {
-              const start = new Date(unit.start).getHours() + ":" + new Date(unit.start).getMinutes();
-              const end = unit.end !== null ? new Date(unit.end).getHours() +
-                ":" + new Date(unit.end).getMinutes() : "—";
-              return [
-                {text: unit.classroom.name, alignment: 'center'},
-                {
-                  text: unit.nameTemp === null ?
-                    [unit.user.lastName, unit.user.firstName, unit.user.patronymic].join(" ") : unit.nameTemp
-                },
-                {text:start, alignment: 'center'},
-                {text: end, alignment: 'center'}
-              ]
-            })
-            const documentDefinition = {
-              pageSize: 'A4',
-              pageOrientation: 'portrait',
-              content: [
-                {
-                  table: {
-                    widths: [30, '*', 50, 50],
-                    headerRows: 1,
-                    dontBreakRows: true,
-                    body: [
-                      [{text: `Журнал відвідувань за ${[
-                          registerDate.getDate(),
-                          registerDate.getMonth() + 1,
-                          registerDate.getFullYear()].join(".")}`,
-                        style: 'header',
-                        colSpan: 4,
-                        alignment: 'center',
-                        margin: [0, 10, 0, 10]
-                      }, {}, {}, {}],
-                      [
-                        {text: 'Ауд.', style: 'tableHeader', alignment: 'center'},
-                        {text: 'П.І.Б.', style: 'tableHeader'},
-                        {text: 'Від', style: 'tableHeader', alignment: 'center'},
-                        {text: 'До', style: 'tableHeader', alignment: 'center'},
-                      ],
-                      ...registerData,
-                      [{text: "П.І.Б. ___________________ Підпис ____________________",
-                        alignment: "center",
-                        margin: [0, 10, 0, 10],
-                        colSpan: 4},{}, {}, {}
-                      ]
-                    ]
-                  }
-                }
-              ],
-              styles: {
-                tableHeader: {
-                  bold: true,
-                },
-                header: {
-                  fontSize: 18,
-                  bold: true,
-                },
-                subheader: {
-                  fontSize: 15,
-                  bold: true
-                },
-                quote: {
-                  italics: true
-                },
-                small: {
-                  fontSize: 8
-                }
-              }
-            };
-            pdfMake.createPdf(documentDefinition).open()
+            pdfMake.createPdf(documentDefinition).download(`register_${[
+              registerDate.getDate(),
+              registerDate.getMonth() + 1,
+              registerDate.getFullYear()].join(".")}.pdf`);
           }
           }
         >

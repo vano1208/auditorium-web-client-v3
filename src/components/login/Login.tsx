@@ -1,24 +1,25 @@
-import React from "react";
+import React, {useState} from "react";
 import styles from "./login.module.css";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import Button from "../button/Button";
-import { useMutation } from "@apollo/client";
-import { LOGIN } from "../../api/operations/mutations/login";
-import { isLoggedVar } from "../../api/client";
+import {useMutation} from "@apollo/client";
+import {LOGIN} from "../../api/operations/mutations/login";
+import {isLoggedVar} from "../../api/client";
 import Registration from "./registration/Registration";
 
 const Login = () => {
   const [login] = useMutation(LOGIN);
+  const [visibility, setVisibility] = useState('none');
   return (
     <div className={styles.loginPage}>
-        {/*<Registration visibility="block" onClose={()=>{}}/>*/}
+      <Registration visibility={visibility} onClose={() => setVisibility("none")}/>
       <div className={styles.form}>
         <h1>AUDITORIUM</h1>
         <a href="https://knmau.com.ua/" target="_blank" rel="noreferrer">
           Національна Музична Академія України ім. П.І. Чайковського
         </a>
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={{email: "", password: ""}}
           validate={(values) => {
             const errors = {};
             if (!values.email) {
@@ -32,7 +33,7 @@ const Login = () => {
             }
             return errors;
           }}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values, {setSubmitting}) => {
             login({
               variables: {
                 input: {
@@ -41,15 +42,20 @@ const Login = () => {
                 },
               },
             }).then((r: any) => {
-              r.data.login.userErrors?.map((error: any) =>
-                console.log(error.message)
+              r.data.login.userErrors?.map((error: any) => {
+                  console.log(error.message);
+                  setSubmitting(false);
+                }
               );
-              setSubmitting(false);
-              isLoggedVar(true);
+              if (r.data.login.token !== null) {
+                localStorage.setItem("userId", r.data.login.user.id);
+                setSubmitting(false);
+                isLoggedVar(true);
+              }
             });
           }}
         >
-          {({ isSubmitting, errors }) => (
+          {({isSubmitting, errors}) => (
             <Form className={styles.inputForm}>
               <ErrorMessage
                 className={styles.errorMessage}
@@ -82,10 +88,10 @@ const Login = () => {
                 }
               />
               <div className={styles.buttons}>
-              <Button type="button">Реєстрація</Button>
-              <Button type="submit" disabled={isSubmitting}>
-                Увійти
-              </Button>
+                <Button type="button" onClick={() => setVisibility('block')}>Реєстрація</Button>
+                <Button type="submit" disabled={isSubmitting}>
+                  Увійти
+                </Button>
               </div>
             </Form>
           )}

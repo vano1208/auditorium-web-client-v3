@@ -3,7 +3,7 @@
   width: 100vw;
   height: 100vh;
   position: fixed;
-  z-index: 1000;
+  z-index: 800;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
   grid-auto-rows: 200px;
@@ -11,6 +11,7 @@
     ". a a ."
     ". a a .";
   background-color: #1e2c4f;
+  margin: -16px;
 }
 
 .form {

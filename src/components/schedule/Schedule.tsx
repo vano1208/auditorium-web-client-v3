@@ -6,6 +6,7 @@ import { useQuery } from "@apollo/client";
 import { GET_CLASSROOMS } from "../../api/operations/queries/classrooms";
 import { ScheduleUnit } from "../../models/models";
 import PageHeader from "../pageHeader/PageHeader";
+import Loading from "../loading/Loading";
 
 const Schedule = () => {
   const timelineMarks = ["8:00", "9:00", "10:00", "11:00", "12:00",
@@ -19,7 +20,7 @@ const Schedule = () => {
     WORKING_DAY_START,
     WORKING_DAY_END
   );
-  if (loading) return <h1>Loading</h1>;
+  if (loading) return <Loading/>;
   if (error) return <h1>Error</h1>;
   return (
     <>
