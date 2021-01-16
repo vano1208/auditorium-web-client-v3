@@ -48,7 +48,7 @@ const Login = () => {
                 }
               );
               if (r.data.login.token !== null) {
-                localStorage.setItem("userId", r.data.login.user.id);
+                sessionStorage.setItem("userId", r.data.login.user.id);
                 setSubmitting(false);
                 isLoggedVar(true);
               }

@@ -11,6 +11,11 @@ export const client = new ApolloClient({
             read () {
               return isLoggedVar();
             }
+          },
+          gridUpdate: {
+            read () {
+              return gridUpdate();
+            }
           }
         }
       }
@@ -18,4 +23,5 @@ export const client = new ApolloClient({
   }),
 });
 
-export const isLoggedVar = makeVar(false)
+export const isLoggedVar = makeVar(false);
+export const gridUpdate = makeVar(false);

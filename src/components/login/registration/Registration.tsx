@@ -67,14 +67,13 @@ const Registration: React.FC<PropTypes> = ({ visibility, onClose }) => {
         email: "",
         password: "",
         passwordConfirm: "",
-        department: "",
+        department: !loadingDeps&&!errorDeps?departments.departments[0].name:"",
         phoneNumber: "",
-        degree: "Бакалавр",
+        degree: !loadingDegs&&!errorDegs?degrees.degrees[0].name:"",
         startYear: new Date().getFullYear()
       }}
       validationSchema={SignupSchema}
       onSubmit={(values, { setSubmitting }) => {
-        console.log(values)
         signUp({
           variables: {
             input: {
@@ -92,8 +91,9 @@ const Registration: React.FC<PropTypes> = ({ visibility, onClose }) => {
             },
           },
         }).then((r) => {
-          localStorage.setItem("token", r.data.signup.token);
-          localStorage.setItem("userId", r.data.signup.user.id);
+          sessionStorage.setItem("token", r.data.signup.token);
+          sessionStorage.setItem("userId", r.data.signup.user.id);
+
         });
         setSubmitting(false);
         isLoggedVar(true);

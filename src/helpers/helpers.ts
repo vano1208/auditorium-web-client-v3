@@ -53,3 +53,8 @@ export const getScheduleUnitRowLength = (
       return parseInt(scheduleUnit.to) - parseInt(scheduleUnit.from) + units;
     })
     .join(" ");
+
+export const formatMinutesToMM = (value: number) => {
+  if(value<=9) return `0${value}`
+  else return value
+}

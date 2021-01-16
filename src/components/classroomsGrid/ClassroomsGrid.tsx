@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {Classroom} from "../../models/models";
 import GridElement from "./gridElement/GridElement";
 import styles from "./classroomsGrid.module.css";
@@ -9,51 +9,55 @@ import PageHeader from "../pageHeader/PageHeader";
 
 type PropTypes = {
   classrooms: Array<Classroom>;
+  onFilterChange: (value: string) => void;
+  withWing: boolean;
+  setWithWing: (prevState: any) => void;
+  onlyOperaStudio: boolean
+  setOnlyOperaStudio: (prevState: any) => void;
+  classroomsFilter: (classroom: Classroom) => boolean;
+  readyForRewriting: boolean
+  setReadyForRewriting: (prevState: any) => void;
+  onClose: (value: string) => void;
+  visibility: string
 };
 
-const ClassroomsGrid: React.FC<PropTypes> = ({classrooms}) => {
-  const [filter, setFilter] = useState("ALL");
-  const [withWing, setWithWing] = useState(true);
-  const [onlyOperaStudio, setOnlyOperaStudio] = useState(false);
-  const [readyForRewriting, setReadyForRewriting] = useState(false)
-  let classroomsFilter =
-    filter === "FREE"
-      ? (classroom: Classroom) => classroom.occupied === null
-      : filter === "SPECIAL"
-      ? (classroom: Classroom) => classroom.special !== null
-      : filter === "CHAIR"
-        ? (classroom: Classroom) => classroom.chair !== null
-        : () => true;
-  let [visibility, setVisibility] = useState("none");
-  const onClose = (value: string) => {
-    setReadyForRewriting(false);
-    setVisibility(value);
-  };
-  const onFilterChange = (value: string) => {
-    setFilter(() => value);
-  };
+const ClassroomsGrid: React.FC<PropTypes> = React.memo((
+  {
+    classrooms,
+    onFilterChange,
+    withWing,
+    setWithWing,
+    onlyOperaStudio,
+    setOnlyOperaStudio,
+    classroomsFilter,
+    readyForRewriting,
+    setReadyForRewriting,
+    onClose,
+    visibility
+  }) => {
+
   return (
     <>
       <PageHeader body="Аудиторії">
         <Filters onChange={onFilterChange}/>
         <div className={styles.conditionalFilters}>
-        <label htmlFor="wing" className={styles.checkboxLabel}>
-          Флігель
-          <input type="checkbox"
-                 name="wing"
-                 id="wing"
-                 checked={withWing}
-                 onChange={() => setWithWing(prevState => !prevState)}/><span></span>
-        </label>
-        <label htmlFor="operaStudio" className={styles.checkboxLabel}>
-          Тільки оперна студія
-          <input type="checkbox"
-                 name="operaStudio"
-                 id="operaStudio"
-                 checked={onlyOperaStudio}
-                 onChange={() => setOnlyOperaStudio(prevState => !prevState)}/>
-                 <span></span>
-        </label>
+          <label htmlFor="wing" className={styles.checkboxLabel}>
+            Флігель
+            <input type="checkbox"
+                   name="wing"
+                   id="wing"
+                   checked={withWing}
+                   onChange={() => setWithWing((prevState: any) => !prevState)}/><span></span>
+          </label>
+          <label htmlFor="operaStudio" className={styles.checkboxLabel}>
+            Тільки оперна студія
+            <input type="checkbox"
+                   name="operaStudio"
+                   id="operaStudio"
+                   checked={onlyOperaStudio}
+                   onChange={() => setOnlyOperaStudio((prevState: any) => !prevState)}/>
+            <span></span>
+          </label>
         </div>
       </PageHeader>
       <Caviar
@@ -85,6 +89,6 @@ const ClassroomsGrid: React.FC<PropTypes> = ({classrooms}) => {
       </div>
     </>
   );
-};
+});
 
 export default ClassroomsGrid;

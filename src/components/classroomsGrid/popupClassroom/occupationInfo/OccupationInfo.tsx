@@ -12,6 +12,7 @@ import Button from "../../../button/Button";
 import {useMutation} from "@apollo/client";
 import {FREE_CLASSROOM} from "../../../../api/operations/mutations/freeClassroom";
 import UserPopup from "../../../user/UserPopup";
+import {gridUpdate} from "../../../../api/client";
 
 type PropTypes = {
   occupied: OccupiedInfo;
@@ -82,7 +83,10 @@ const OccupationInfo: React.FC<PropTypes> = ({occupied, classroom, onClose, setR
           <Button
             type="button"
             onClick={() => {
-              freeClassroom().then(() => onClose("none"));
+              freeClassroom().then(() => {
+                gridUpdate(!gridUpdate())
+                onClose("none")
+              });
             }}
           >
             Звільнити аудиторію

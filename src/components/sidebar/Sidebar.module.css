@@ -71,14 +71,6 @@ img {
     transform: rotate(-180deg);
 }
 
-.rotatedImage:active {
-    background-color: rgba(0, 0, 0, 0);
-}
-
-.unrotatedImage:active {
-    background-color: rgba(0, 0, 0, 0);
-}
-
 .unrotatedImage {
     transition: transform .3s ease-in-out;
     transform: rotate(-360deg);

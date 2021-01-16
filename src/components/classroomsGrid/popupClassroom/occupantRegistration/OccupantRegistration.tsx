@@ -13,6 +13,7 @@ import {OCCUPY_CLASSROOM} from "../../../../api/operations/mutations/occupyClass
 import Button from "../../../button/Button";
 import {MINUTE} from "../../../../helpers/constants";
 import Loading from "../../../loading/Loading";
+import {gridUpdate} from "../../../../api/client";
 
 type PropTypes = {
   classroom: Classroom;
@@ -93,7 +94,10 @@ const OccupantRegistration: React.FC<PropTypes> = ({classroom, onClose}) => {
                     },
                   });
                 },
-              }).then(() => onClose("none"));
+              }).then(() => {
+                gridUpdate(!gridUpdate())
+                onClose("none")
+              });
             setSubmitting(false);
 
           }}
