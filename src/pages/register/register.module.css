@@ -99,7 +99,7 @@
 }
 
 .registerControlPanel {
-    position: absolute;
+    position: fixed;
     right: 16px;
     top: 16px;
 }

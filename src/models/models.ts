@@ -41,6 +41,8 @@ export type User = {
   phoneNumber: string;
   extraPhoneNumbers: string | null;
   nameTemp: string | null;
+  startYear: number;
+  degree: string
 };
 
 export type OccupiedInfo = {

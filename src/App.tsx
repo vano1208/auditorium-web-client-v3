@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styles from "./App.module.css";
 import Sidebar from "./components/sidebar/Sidebar";
 import homeIcon from "./assets/menuIcons/home.png";
@@ -10,14 +10,14 @@ import profileIcon from "./assets/menuIcons/profile.png";
 import logoutIcon from "./assets/menuIcons/logout.png";
 import scheduleIcon from "./assets/menuIcons/schedule.png";
 import { Route } from "react-router-dom";
-import Register from "./components/register/Register";
-import Users from "./components/users/Users";
-import Schedule from "./components/schedule/Schedule";
-import Login from "./components/login/Login";
-import Profile from "./components/profile/Profile";
+import Register from "./pages/register/Register";
+import Users from "./pages/users/Users";
+import Schedule from "./pages/schedule/Schedule";
+import Login from "./pages/login/Login";
+import Profile from "./pages/profile/Profile";
 import AdminPanel from "./components/adminPanel/AdminPanel";
-import Home from "./components/home/Home";
-import ClassroomsGridContainer from "./components/classroomsGrid/ClassroomGridConrainer";
+import Home from "./pages/home/Home";
+import ClassroomsGridContainer from "./pages/classrooms/ClassroomGridConrainer";
 
 function App() {
   const menuElements = [
@@ -63,12 +63,13 @@ function App() {
       icon: logoutIcon,
     },
   ];
-  let isLogged = sessionStorage.getItem("userId")!==null?true:false;
+  // sessionStorage.getItem("userId")!==null?true:false
+  const [isLogged, setIsLogged] = useState(false)
   return (
     <div className={styles.container}>
       {isLogged && <Sidebar divider={[4, 9]} children={menuElements} />}
       <main>
-        {!isLogged && <Login />}
+        {!isLogged && <Login setIsLogged={(value)=>setIsLogged(value)}/>}
         <Route path="/auditoriums/:classroomId?">
             <ClassroomsGridContainer/>
         </Route>

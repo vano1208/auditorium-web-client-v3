@@ -1,13 +1,15 @@
 import React, {useState} from "react";
-import {Classroom, OccupiedInfo} from "../../../models/models";
+import {Classroom, OccupiedInfo} from "../../models/models";
 import styles from "./popupClassroom.module.css";
 import {useParams} from "react-router-dom";
-import Tag from "../../tag/Tag";
-import ClassroomSchedule from "../../classroomSchedule/ClassroomSchedule";
-import Instrument from "../../instrument/Instrument";
+import Tag from "../tag/Tag";
+import ClassroomSchedule from "../classroomSchedule/ClassroomSchedule";
+import Instrument from "../instrument/Instrument";
 import OccupationInfo from "./occupationInfo/OccupationInfo";
 import OccupantRegistration from "./occupantRegistration/OccupantRegistration";
-import PopupWindow from "../../popupWindow/PopupWindow";
+import PopupWindow from "../popupWindow/PopupWindow";
+import {useQuery} from "@apollo/client";
+import {GET_USERS} from "../../api/operations/queries/users";
 
 interface PropTypes {
   classrooms: Array<Classroom>;

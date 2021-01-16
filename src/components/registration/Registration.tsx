@@ -1,22 +1,23 @@
 import React from "react";
 import styles from "./registration.module.css";
-import {isLoggedVar} from "../../../api/client";
+import {isLoggedVar} from "../../api/client";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import Button from "../../button/Button";
+import Button from "../button/Button";
 import {useMutation, useQuery} from "@apollo/client";
-import {SIGN_UP} from "../../../api/operations/mutations/signUp";
-import PopupWindow from "../../popupWindow/PopupWindow";
+import {SIGN_UP} from "../../api/operations/mutations/signUp";
+import PopupWindow from "../popupWindow/PopupWindow";
 import * as Yup from 'yup';
-import {Degree, Department, userTypes} from "../../../models/models";
-import {GET_DEGREES} from "../../../api/operations/queries/degrees";
-import {GET_DEPARTMENTS} from "../../../api/operations/queries/departments";
+import {Degree, Department, userTypes} from "../../models/models";
+import {GET_DEGREES} from "../../api/operations/queries/degrees";
+import {GET_DEPARTMENTS} from "../../api/operations/queries/departments";
 
 type PropTypes = {
   visibility: string;
   onClose: (value: string) => void;
+  setIsLogged: (value: boolean) => void;
 };
 
-const Registration: React.FC<PropTypes> = ({ visibility, onClose }) => {
+const Registration: React.FC<PropTypes> = ({ visibility, onClose, setIsLogged }) => {
   const {data: degrees, loading: loadingDegs, error: errorDegs} = useQuery(GET_DEGREES);
   const {data: departments, loading: loadingDeps, error: errorDeps} = useQuery(GET_DEPARTMENTS);
   const fieldsData = [
@@ -97,6 +98,7 @@ const Registration: React.FC<PropTypes> = ({ visibility, onClose }) => {
         });
         setSubmitting(false);
         isLoggedVar(true);
+        setIsLogged(true)
       }}
     >
       {({ isSubmitting, errors , values, handleChange, handleBlur}) => (

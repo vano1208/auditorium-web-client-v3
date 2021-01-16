@@ -37,6 +37,7 @@
 }
 
 .paginator {
+    margin-top: 16px;
     list-style-type: none;
     display: inline-block;
     user-select: none;

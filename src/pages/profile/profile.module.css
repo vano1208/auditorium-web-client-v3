@@ -1,0 +1,19 @@
+.profileTable {
+    border-collapse: collapse;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, .1);
+}
+
+.profileTable td {
+    padding: 8px;
+}
+
+.profileTable td:nth-child(1) {
+    font-family: "Roboto Light";
+    color: #fff;
+    background-color: rgb(30, 44, 79);
+}
+
+.profileTable tr:nth-child(odd) {
+    background-color: rgba(0, 0, 0, .1);
+}

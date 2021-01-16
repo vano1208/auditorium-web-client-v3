@@ -1,18 +1,22 @@
 import React, {useState} from "react";
 import styles from "./login.module.css";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import Button from "../button/Button";
+import Button from "../../components/button/Button";
 import {useMutation} from "@apollo/client";
 import {LOGIN} from "../../api/operations/mutations/login";
 import {isLoggedVar} from "../../api/client";
-import Registration from "./registration/Registration";
+import Registration from "../../components/registration/Registration";
 
-const Login = () => {
+interface PT {
+  setIsLogged: (value: boolean) => void;
+}
+
+const Login: React.FC<PT> = ({setIsLogged}) => {
   const [login] = useMutation(LOGIN);
   const [visibility, setVisibility] = useState('none');
   return (
     <div className={styles.loginPage}>
-      <Registration visibility={visibility} onClose={() => setVisibility("none")}/>
+      <Registration setIsLogged={setIsLogged} visibility={visibility} onClose={() => setVisibility("none")}/>
       <div className={styles.form}>
         <h1>AUDITORIUM</h1>
         <a href="https://knmau.com.ua/" target="_blank" rel="noreferrer">
@@ -47,10 +51,11 @@ const Login = () => {
                   setSubmitting(false);
                 }
               );
-              if (r.data.login.token !== null) {
+              if (r.data.login.token) {
                 sessionStorage.setItem("userId", r.data.login.user.id);
                 setSubmitting(false);
                 isLoggedVar(true);
+                setIsLogged(true)
               }
             });
           }}

@@ -5,14 +5,14 @@ import {
   userTypeColors,
   userTypes,
   userTypesUa,
-} from "../../../../models/models";
+} from "../../../models/models";
 import styles from "./occupationInfo.module.css";
-import {getTimeHHMM} from "../../../../helpers/helpers";
-import Button from "../../../button/Button";
+import {getTimeHHMM} from "../../../helpers/helpers";
+import Button from "../../button/Button";
 import {useMutation} from "@apollo/client";
-import {FREE_CLASSROOM} from "../../../../api/operations/mutations/freeClassroom";
-import UserPopup from "../../../user/UserPopup";
-import {gridUpdate} from "../../../../api/client";
+import {FREE_CLASSROOM} from "../../../api/operations/mutations/freeClassroom";
+import UserPopup from "../../user/UserPopup";
+import {gridUpdate} from "../../../api/client";
 
 type PropTypes = {
   occupied: OccupiedInfo;

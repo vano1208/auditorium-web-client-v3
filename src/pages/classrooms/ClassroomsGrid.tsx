@@ -1,11 +1,11 @@
 import React from "react";
 import {Classroom} from "../../models/models";
-import GridElement from "./gridElement/GridElement";
+import GridElement from "../../components/gridElement/GridElement";
 import styles from "./classroomsGrid.module.css";
-import PopupClassroom from "./popupClassroom/PopupClassroom";
-import Caviar from "./caviar/Caviar";
-import Filters from "./filters/Filters";
-import PageHeader from "../pageHeader/PageHeader";
+import PopupClassroom from "../../components/popupClassroom/PopupClassroom";
+import Caviar from "../../components/caviar/Caviar";
+import Filters from "../../components/filters/Filters";
+import PageHeader from "../../components/pageHeader/PageHeader";
 
 type PropTypes = {
   classrooms: Array<Classroom>;

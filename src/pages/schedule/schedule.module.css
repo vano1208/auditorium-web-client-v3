@@ -92,3 +92,25 @@ thead {
     text-align: center;
     font-size: 1.4rem !important;
 }
+
+.scheduleDateInput {
+    background-color: #1e2c4f;
+    color: #fff;
+    font-family: "Roboto Light";
+    border-radius: 8px;
+    padding: 8px;
+    margin-left: 16px;
+    border: 2px solid #1e2c4f;
+}
+
+.scheduleDateInput:hover {
+    border: 2px solid #fff;
+}
+
+.scheduleDateInput:focus {
+    outline: none;
+}
+
+.scheduleDateInput::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}

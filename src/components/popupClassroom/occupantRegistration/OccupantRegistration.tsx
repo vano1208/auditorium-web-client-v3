@@ -2,18 +2,18 @@ import React, {useState} from "react";
 import styles from "./occupantRegistration.module.css";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import {useMutation, useQuery} from "@apollo/client";
-import {GET_USERS} from "../../../../api/operations/queries/users";
+import {GET_USERS} from "../../../api/operations/queries/users";
 import {
   Classroom,
   User,
   userTypes,
   userTypesUa,
-} from "../../../../models/models";
-import {OCCUPY_CLASSROOM} from "../../../../api/operations/mutations/occupyClassroom";
-import Button from "../../../button/Button";
-import {MINUTE} from "../../../../helpers/constants";
-import Loading from "../../../loading/Loading";
-import {gridUpdate} from "../../../../api/client";
+} from "../../../models/models";
+import {OCCUPY_CLASSROOM} from "../../../api/operations/mutations/occupyClassroom";
+import Button from "../../button/Button";
+import {MINUTE} from "../../../helpers/constants";
+import Loading from "../../loading/Loading";
+import {gridUpdate} from "../../../api/client";
 
 type PropTypes = {
   classroom: Classroom;

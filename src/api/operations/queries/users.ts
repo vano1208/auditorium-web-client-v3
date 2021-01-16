@@ -13,6 +13,8 @@ export const GET_USERS = gql`
             phoneNumber
             extraPhoneNumbers
             nameTemp
+            startYear
+            degree
         }
     }
 `;

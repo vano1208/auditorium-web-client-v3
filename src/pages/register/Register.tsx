@@ -3,11 +3,11 @@ import {useQuery} from "@apollo/client";
 import {GET_REGISTER} from "../../api/operations/queries/register";
 import {RegisterUnit, User} from "../../models/models";
 import styles from "./register.module.css";
-import Button from "../button/Button";
+import Button from "../../components/button/Button";
 import RegisterSkeleton from "./RegisterSkeleton";
 import {NavLink, useParams} from "react-router-dom";
-import UserPopup from "../user/UserPopup";
-import PageHeader from "../pageHeader/PageHeader";
+import UserPopup from "../../components/user/UserPopup";
+import PageHeader from "../../components/pageHeader/PageHeader";
 // @ts-ignore
 import pdfMake from 'pdfmake/build/pdfmake';
 // @ts-ignore
@@ -32,10 +32,8 @@ const Register: React.FC = () => {
     nameTemp: ""
   } as User);
   const [userSearch, setUserSearch] = useState("");
-  const {userId} = useParams<Params>();
   const [visibility, setVisibility] = useState("none");
   const {loading, error, data} = useQuery(GET_REGISTER, {
-    fetchPolicy: "network-only",
     variables: {
       date: new Date(registerDate).setHours(0, 0, 0, 0),
     },

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./classroomsGrid.module.css";
-import GridElementSkeleton from "./gridElement/GridElementSkeleton";
-import PageHeader from "../pageHeader/PageHeader";
+import GridElementSkeleton from "../../components/gridElement/GridElementSkeleton";
+import PageHeader from "../../components/pageHeader/PageHeader";
 
 const ClassroomsGridSkeleton = () => {
   const classrooms = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];

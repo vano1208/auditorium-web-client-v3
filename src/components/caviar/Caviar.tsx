@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./caviar.module.css";
 import { useHistory } from "react-router-dom";
-import { Classroom } from "../../../models/models";
+import { Classroom } from "../../models/models";
 
 type Props = {
   classroomsFilter: (classroom: Classroom) => boolean;

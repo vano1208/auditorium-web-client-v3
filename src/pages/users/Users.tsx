@@ -8,8 +8,8 @@ import {useQuery} from "@apollo/client";
 import {GET_USERS} from "../../api/operations/queries/users";
 import styles from './users.module.css';
 import {NavLink, useParams} from "react-router-dom";
-import UserPopup from "../user/UserPopup";
-import PageHeader from "../pageHeader/PageHeader";
+import UserPopup from "../../components/user/UserPopup";
+import PageHeader from "../../components/pageHeader/PageHeader";
 
 interface Params {
   userId: string
