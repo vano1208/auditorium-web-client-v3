@@ -7,7 +7,11 @@ import {client} from "../../api/client";
 import {gql, useQuery} from "@apollo/client";
 import Error from "../../components/error/Error";
 
-const ClassroomsGridContainer: React.FC = React.memo(() => {
+interface PT {
+  meType: string;
+}
+
+const ClassroomsGridContainer: React.FC<PT> = React.memo(({meType}) => {
 
   const [classrooms, setClassrooms] = useState<Array<Classroom>>();
   const [filter, setFilter] = useState("ALL");
@@ -20,7 +24,6 @@ const ClassroomsGridContainer: React.FC = React.memo(() => {
           gridUpdate @client
       }
   `);
-
   useEffect(() => {
     getClassrooms()
   }, [gridUpdate]);
@@ -72,6 +75,7 @@ const ClassroomsGridContainer: React.FC = React.memo(() => {
         setReadyForRewriting={setReadyForRewriting}
         onClose={onClose}
         visibility={visibility}
+        meType={meType}
       />
     );
 });

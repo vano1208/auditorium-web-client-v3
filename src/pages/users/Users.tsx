@@ -12,12 +12,18 @@ import UserPopup from "../../components/user/UserPopup";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import Loading from "../../components/loading/Loading";
 import Error from "../../components/error/Error";
+import OccupantRegistration from "../../components/popupClassroom/occupantRegistration/OccupantRegistration";
 
 interface Params {
-  userId: string
+  userId: string;
+
 }
 
-const Users: React.FC = () => {
+interface PT {
+  meType: string;
+}
+
+const Users: React.FC<PT> = ({meType}) => {
   const {loading, error, data} = useQuery(GET_USERS);
   const {userId} = useParams<Params>();
   const [visibility, setVisibility] = useState("none");
@@ -72,14 +78,20 @@ const Users: React.FC = () => {
                          setCurrentPage(1);
                        }}>
             <option value="ALL">Всі</option>
-            <option value="STUDENT">Студенти</option>
+            {meType==="ADMINISTRATION"?<option value="STUDENT">Студенти</option>:null}
             <option value="TEACHER">Викладачі</option>
-            <option value="POST_GRADUATE">Асистенти/Аспіранти</option>
+            {meType==="ADMINISTRATION"?<option value="POST_GRADUATE">Асистенти/Аспіранти</option>:null}
             <option value="ILLUSTRATOR">Іллюстратори</option>
             <option value="CONCERTMASTER">Концертмейстери</option>
           </select></div>
         </li>
-        {data.users.slice().filter((user: any)=> {
+        {data.users.slice().filter((user: User)=>{
+          if(meType==="ADMINISTRATION") return true
+          else {
+            if(user.type==="POST_GRADUATE" || user.type==="STUDENT") return false
+            else return true
+          }
+        }).filter((user: User)=> {
           if(userTypes==="ALL") return true
           return user.type === userTypes
         }).sort((a: any, b: any) => {

@@ -6,6 +6,7 @@ import PopupClassroom from "../../components/popupClassroom/PopupClassroom";
 import Caviar from "../../components/caviar/Caviar";
 import Filters from "../../components/filters/Filters";
 import PageHeader from "../../components/pageHeader/PageHeader";
+import {meType} from "../../api/client";
 
 type PropTypes = {
   classrooms: Array<Classroom>;
@@ -18,7 +19,8 @@ type PropTypes = {
   readyForRewriting: boolean
   setReadyForRewriting: (prevState: any) => void;
   onClose: (value: string) => void;
-  visibility: string
+  visibility: string;
+  meType: string
 };
 
 const ClassroomsGrid: React.FC<PropTypes> = React.memo((
@@ -33,7 +35,8 @@ const ClassroomsGrid: React.FC<PropTypes> = React.memo((
     readyForRewriting,
     setReadyForRewriting,
     onClose,
-    visibility
+    visibility,
+    meType
   }) => {
 
   return (
@@ -72,6 +75,7 @@ const ClassroomsGrid: React.FC<PropTypes> = React.memo((
         onClose={onClose}
         readyForRewriting={readyForRewriting}
         setReadyForRewriting={setReadyForRewriting}
+        meType={meType}
       />
       <div className={styles.classrooms}>
         {classrooms

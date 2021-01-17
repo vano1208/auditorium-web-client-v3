@@ -5,17 +5,13 @@ import {RegisterUnit, User} from "../../models/models";
 import styles from "./register.module.css";
 import Button from "../../components/button/Button";
 import RegisterSkeleton from "./RegisterSkeleton";
-import {NavLink, useParams} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import UserPopup from "../../components/user/UserPopup";
 import PageHeader from "../../components/pageHeader/PageHeader";
 // @ts-ignore
 import pdfMake from 'pdfmake/build/pdfmake';
 // @ts-ignore
 import vfsFonts from 'pdfmake/build/vfs_fonts'
-
-interface Params {
-  userId: string
-}
 
 const Register: React.FC = () => {
   const [registerDate, setRegisterDate] = useState(new Date());

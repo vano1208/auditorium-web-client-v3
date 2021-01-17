@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Classroom, OccupiedInfo} from "../../models/models";
+import {Classroom, OccupiedInfo, userTypes} from "../../models/models";
 import styles from "./popupClassroom.module.css";
 import {useParams} from "react-router-dom";
 import Tag from "../tag/Tag";
@@ -8,8 +8,6 @@ import Instrument from "../instrument/Instrument";
 import OccupationInfo from "./occupationInfo/OccupationInfo";
 import OccupantRegistration from "./occupantRegistration/OccupantRegistration";
 import PopupWindow from "../popupWindow/PopupWindow";
-import {useQuery} from "@apollo/client";
-import {GET_USERS} from "../../api/operations/queries/users";
 
 interface PropTypes {
   classrooms: Array<Classroom>;
@@ -17,6 +15,7 @@ interface PropTypes {
   onClose: (value: string) => void;
   readyForRewriting: boolean;
   setReadyForRewriting: (value: boolean) => void;
+  meType: string;
 }
 
 interface ParamTypes {
@@ -29,7 +28,8 @@ const PopupClassroom: React.FC<PropTypes> = (
     visibility,
     onClose,
     readyForRewriting,
-    setReadyForRewriting
+    setReadyForRewriting,
+    meType
   }) => {
   let {classroomId} = useParams<ParamTypes>();
   if (classroomId === undefined) classroomId = "1";
@@ -72,12 +72,13 @@ const PopupClassroom: React.FC<PropTypes> = (
         classroom={classroom}
         onClose={onClose}
         setReadyForRewriting={(value) => setReadyForRewriting(value)}
+        meType={meType}
       />
     ) : (
-      <OccupantRegistration
+      meType===userTypes.ADMINISTRATION?<OccupantRegistration
         classroom={classroom}
         onClose={onClose}
-      />
+      />:null
     )}
   </PopupWindow>
 };

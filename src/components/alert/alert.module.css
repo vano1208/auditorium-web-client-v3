@@ -4,7 +4,8 @@
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.1);
-    color: #1e2c4f;
+    color: rgb(220, 20, 60);
+    font-family: "Roboto Medium";
     z-index: 999;
     padding: 16px;
 }

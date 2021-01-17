@@ -1,4 +1,5 @@
 import {ApolloClient, InMemoryCache, makeVar} from "@apollo/client";
+import {userTypes} from "../models/models";
 
 export const client = new ApolloClient({
   // uri: "http://192.168.0.102:4000/",
@@ -8,13 +9,18 @@ export const client = new ApolloClient({
       Query: {
         fields: {
           isLogged: {
-            read () {
+            read() {
               return isLoggedVar();
             }
           },
           gridUpdate: {
-            read () {
+            read() {
               return gridUpdate();
+            }
+          },
+          meType: {
+            read() {
+              return meType();
             }
           }
         }
@@ -25,3 +31,4 @@ export const client = new ApolloClient({
 
 export const isLoggedVar = makeVar(false);
 export const gridUpdate = makeVar(false);
+export const meType = makeVar("USER");
