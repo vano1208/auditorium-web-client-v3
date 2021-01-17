@@ -1,4 +1,12 @@
-import {string} from "yup/es";
+export enum errorCodesUa {
+  INVALID_PASSWORD = "Невірний пароль",
+  USER_NOT_FOUND = "Користувача не знайдено"
+}
+
+export enum errorCodes {
+  INVALID_PASSWORD= "INVALID_PASSWORD",
+  USER_NOT_FOUND = "USER_NOT_FOUND",
+}
 
 export enum userTypes {
   STUDENT = "STUDENT",
@@ -129,3 +137,4 @@ export type Department = {
   id: string
   name: string
 }
+

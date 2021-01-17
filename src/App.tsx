@@ -63,8 +63,7 @@ function App() {
       icon: logoutIcon,
     },
   ];
-  // sessionStorage.getItem("userId")!==null?true:false
-  const [isLogged, setIsLogged] = useState(false)
+  const [isLogged, setIsLogged] = useState(sessionStorage.getItem("userId")!==null?true:false)
   return (
     <div className={styles.container}>
       {isLogged && <Sidebar divider={[4, 9]} children={menuElements} />}

@@ -10,6 +10,8 @@ import styles from './users.module.css';
 import {NavLink, useParams} from "react-router-dom";
 import UserPopup from "../../components/user/UserPopup";
 import PageHeader from "../../components/pageHeader/PageHeader";
+import Loading from "../../components/loading/Loading";
+import Error from "../../components/error/Error";
 
 interface Params {
   userId: string
@@ -24,8 +26,8 @@ const Users: React.FC = () => {
   const [userSearch, setUserSearch] = useState("");
   const [sortBy, setSortBy] = useState("AZ");
   const [userTypes, setUserTypes] = useState("ALL");
-  if (loading) return <h1>Loading</h1>;
-  if (error) return <h1>Error</h1>;
+  if (loading) return <Loading/>;
+  if (error) return <Error/>;
   const userData = data.users.find((user: User) => user.id === userId);
   const pages = Math.ceil(data.users.length / pageSize);
   let pagesList: number[] = [];

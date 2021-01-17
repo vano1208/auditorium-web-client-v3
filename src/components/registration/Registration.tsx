@@ -7,9 +7,11 @@ import {useMutation, useQuery} from "@apollo/client";
 import {SIGN_UP} from "../../api/operations/mutations/signUp";
 import PopupWindow from "../popupWindow/PopupWindow";
 import * as Yup from 'yup';
-import {Degree, Department, userTypes} from "../../models/models";
+import {Degree, Department, User, userTypes} from "../../models/models";
 import {GET_DEGREES} from "../../api/operations/queries/degrees";
 import {GET_DEPARTMENTS} from "../../api/operations/queries/departments";
+import {GET_USERS, GET_USERS_EMAIL_AND_PHONE} from "../../api/operations/queries/users";
+import Loading from "../loading/Loading";
 
 type PropTypes = {
   visibility: string;
@@ -18,6 +20,7 @@ type PropTypes = {
 };
 
 const Registration: React.FC<PropTypes> = ({ visibility, onClose, setIsLogged }) => {
+  const {data: users, loading: loadingUsers, error: errorUsers} = useQuery(GET_USERS_EMAIL_AND_PHONE)
   const {data: degrees, loading: loadingDegs, error: errorDegs} = useQuery(GET_DEGREES);
   const {data: departments, loading: loadingDeps, error: errorDeps} = useQuery(GET_DEPARTMENTS);
   const fieldsData = [
@@ -32,22 +35,30 @@ const Registration: React.FC<PropTypes> = ({ visibility, onClose, setIsLogged })
     {placeholder: "ступінь", name: "degree", type: "text"},
     {placeholder: "Рік початку навчання", name: "startYear", type: "number"},
   ];
+
   const [signUp] = useMutation(SIGN_UP);
   const format = "Невірний формат";
   const req = "Обов'язкове поле";
+  const nameRegExp = /^(?=.{1,20}$)(?![\s\-_.'0-9])(?!.*[\s\-_.0-9]{2})[а-яА-Яa-zA-Z0-9.іІєЄґҐ \-']+(?<![\s\-_.'0-9])$/
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
   const SignupSchema = Yup.object().shape({
-    firstName: Yup.string()
+    firstName: Yup.string().matches(nameRegExp, format)
       .max(20, "Не більше 20 символів")
       .required(req),
-    lastName: Yup.string()
+    lastName: Yup.string().matches(nameRegExp, format)
       .max(20, "Не більше 20 символів")
       .required(req),
-    patronymic: Yup.string()
+    patronymic: Yup.string().matches(nameRegExp, format)
       .max(20, "Не більше 20 символів"),
-    email: Yup.string().email(format).required(req),
+    email: Yup.string().email(format).notOneOf(
+        users!==undefined?[...users.users.map((user: User)=>user.email)]:[""],
+        "E-mail адреса зайнята"
+      ).required(req),
     department: Yup.string().required(req),
-    phoneNumber: Yup.string().matches(phoneRegExp, 'Невірний формат номеру').required(req),
+    phoneNumber: Yup.string().matches(phoneRegExp, 'Невірний формат номеру').notOneOf(
+      users!==undefined?[...users.users.map((user: User)=>user.phoneNumber)]:[""],
+      "Телефонний номер зайнятий"
+    ).required(req),
     password: Yup.string().required(req).min(6),
     passwordConfirm: Yup.string().when("password", {
       is: (val: string) => (val && val.length > 0 ? true : false),
@@ -56,10 +67,11 @@ const Registration: React.FC<PropTypes> = ({ visibility, onClose, setIsLogged })
         "Паролі не співпадають"
       )
     }),
-    degree: Yup.string(),
-    startYear: Yup.number().min((new Date().getFullYear())-4)
+    degree: Yup.string().default("Бакалавр"),
+    startYear: Yup.number().min((new Date().getFullYear())-4).max(new Date().getFullYear())
   })
-  return <PopupWindow headerBody="Реєстрація" onClose={onClose} visibility={visibility}>
+  if (loadingUsers) return <Loading/>
+  else return <PopupWindow headerBody="Реєстрація" onClose={onClose} visibility={visibility}>
     <Formik
       initialValues={{
         firstName: "",
@@ -110,11 +122,21 @@ const Registration: React.FC<PropTypes> = ({ visibility, onClose, setIsLogged })
                   <option value="...">...</option>}
               </Field>
               </label>
+              <ErrorMessage
+                className={styles.errorMessage}
+                name={name}
+                component="span"
+              />
             </div>:name==="department"?<div className={styles[name]}>
               <label htmlFor={name}>{placeholder}: <Field name={name} as="select" value={values.department} onChange={handleChange} onBlur={handleBlur}>
                 {!loadingDeps&&!errorDeps?departments.departments.map(({name}:Department)=><option value={name} label={name}/>):
                   <option value="...">...</option>}
               </Field></label>
+              <ErrorMessage
+                className={styles.errorMessage}
+                name={name}
+                component="span"
+              />
             </div>:<div className={styles[name]}>
               <label htmlFor={name}>{placeholder}: <Field
               placeholder={placeholder}
@@ -127,14 +149,14 @@ const Registration: React.FC<PropTypes> = ({ visibility, onClose, setIsLogged })
               // }
               defaultValue="def"
               /></label>
-            <ErrorMessage
-              className={styles.errorMessage}
-              name={name}
-              component="span"
-            />
+              <ErrorMessage
+                className={styles.errorMessage}
+                name={name}
+                component="span"
+              />
           </div>)}
           <div className={styles.buttons}>
-            <Button type="button">Очистити</Button>
+            <Button type="reset">Очистити</Button>
             <Button type="submit" disabled={isSubmitting}>
               Зареєструватися
             </Button>

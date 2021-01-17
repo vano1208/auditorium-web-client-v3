@@ -18,3 +18,12 @@ export const GET_USERS = gql`
         }
     }
 `;
+
+export const GET_USERS_EMAIL_AND_PHONE = gql`
+    query getUsersEmailAndPhone {
+        users {
+            email
+            phoneNumber
+        }
+    }
+`;
