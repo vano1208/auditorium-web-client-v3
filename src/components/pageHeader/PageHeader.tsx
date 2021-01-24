@@ -1,4 +1,4 @@
-import React, {ReactFragment} from "react";
+import React from "react";
 import styles from './header.module.css';
 
 interface PropTypes {

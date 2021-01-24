@@ -44,9 +44,9 @@ const GridElement: React.FC<PropTypes> = ({classroom, onClose}) => {
       onClick={onClick}
       className={styles.cell}
       style={
-        occupied
-          ? {backgroundColor: "#ffffff"}
-          : {backgroundColor: "#63ff97"}
+          occupied
+            ? {backgroundColor: "#ffffff"}
+            : {backgroundColor: "#63ff97"}
       }
     >
       {classroom.special && <img className={styles.specialIcon} src={pianoIcon} alt="piano"/>}

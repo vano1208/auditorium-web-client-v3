@@ -12,7 +12,6 @@ import UserPopup from "../../components/user/UserPopup";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import Loading from "../../components/loading/Loading";
 import Error from "../../components/error/Error";
-import OccupantRegistration from "../../components/popupClassroom/occupantRegistration/OccupantRegistration";
 
 interface Params {
   userId: string;
@@ -34,7 +33,7 @@ const Users: React.FC<PT> = ({meType}) => {
   const [userTypes, setUserTypes] = useState("ALL");
   if (loading) return <Loading/>;
   if (error) return <Error/>;
-  const userData = data.users.find((user: User) => user.id === userId);
+  const userData = data.users.find((user: User) => user.id === Number(userId));
   const pages = Math.ceil(data.users.length / pageSize);
   let pagesList: number[] = [];
   for (let i = 1; i <= pages; i++) {

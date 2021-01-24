@@ -1,34 +1,40 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styles from "./login.module.css";
-import {ErrorMessage, Field, Form, Formik} from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import Button from "../../components/button/Button";
-import {useMutation} from "@apollo/client";
-import {LOGIN} from "../../api/operations/mutations/login";
-import {isLoggedVar} from "../../api/client";
+import { useMutation } from "@apollo/client";
+import { LOGIN } from "../../api/operations/mutations/login";
+import { isLoggedVar } from "../../api/client";
 import Registration from "../../components/registration/Registration";
 import Alert from "../../components/alert/Alert";
-import {errorCodes, errorCodesUa} from "../../models/models";
+import { errorCodes, errorCodesUa } from "../../models/models";
 
 interface PT {
   setIsLogged: (value: boolean) => void;
 }
 
-const Login: React.FC<PT> = ({setIsLogged}) => {
+const Login: React.FC<PT> = ({ setIsLogged }) => {
   const [login] = useMutation(LOGIN);
-  const [visibility, setVisibility] = useState('none');
+  const [visibility, setVisibility] = useState("none");
   let alertIndex = 0;
   const [alerts, setAlerts] = useState<Array<any>>([]);
   return (
     <div className={styles.loginPage}>
-      {alerts.map(({errorMessage}, index) => <Alert positionTop={60 * index + 16} body={errorMessage}/>)}
-      <Registration setIsLogged={setIsLogged} visibility={visibility} onClose={() => setVisibility("none")}/>
+      {alerts.map(({ errorMessage }, index) => (
+        <Alert positionTop={60 * index + 16} body={errorMessage} />
+      ))}
+      <Registration
+        setIsLogged={setIsLogged}
+        visibility={visibility}
+        onClose={() => setVisibility("none")}
+      />
       <div className={styles.form}>
         <h1>AUDITORIUM</h1>
         <a href="https://knmau.com.ua/" target="_blank" rel="noreferrer">
           Національна Музична Академія України ім. П.І. Чайковського
         </a>
         <Formik
-          initialValues={{email: "", password: ""}}
+          initialValues={{ email: "", password: "" }}
           validate={(values) => {
             const errors = {};
             if (!values.email) {
@@ -42,7 +48,7 @@ const Login: React.FC<PT> = ({setIsLogged}) => {
             }
             return errors;
           }}
-          onSubmit={(values, {setSubmitting}) => {
+          onSubmit={(values, { setSubmitting }) => {
             login({
               variables: {
                 input: {
@@ -52,27 +58,41 @@ const Login: React.FC<PT> = ({setIsLogged}) => {
               },
             }).then((r: any) => {
               r.data.login.userErrors?.map((error: any) => {
-                  if (alerts.length === 0 || (alerts.findIndex((alert: any) => alert.errorMessage === errorCodesUa[error.code as errorCodes]) === -1)) {
-                    setAlerts((prevState => [...prevState, {
+                if (
+                  alerts.length === 0 ||
+                  alerts.findIndex(
+                    (alert: any) =>
+                      alert.errorMessage ===
+                      errorCodesUa[error.code as errorCodes]
+                  ) === -1
+                ) {
+                  setAlerts((prevState) => [
+                    ...prevState,
+                    {
                       errorMessage: errorCodesUa[error.code as errorCodes],
-                      key: alertIndex
-                    }]))
-                    let removedItem = alerts.findIndex((item) => item.key === alertIndex++);
-                    setTimeout(() => setAlerts([...alerts.splice(removedItem, 1)]), 3000);
-                  }
-                  setSubmitting(false);
+                      key: alertIndex,
+                    },
+                  ]);
+                  let removedItem = alerts.findIndex(
+                    (item) => item.key === alertIndex++
+                  );
+                  setTimeout(
+                    () => setAlerts([...alerts.splice(removedItem, 1)]),
+                    3000
+                  );
                 }
-              );
+                return setSubmitting(false);
+              });
               if (r.data.login.token) {
                 sessionStorage.setItem("userId", r.data.login.user.id);
                 setSubmitting(false);
                 isLoggedVar(true);
-                setIsLogged(true)
+                setIsLogged(true);
               }
             });
           }}
         >
-          {({isSubmitting, errors}) => (
+          {({ isSubmitting, errors }) => (
             <Form className={styles.inputForm}>
               <ErrorMessage
                 className={styles.errorMessage}
@@ -105,7 +125,9 @@ const Login: React.FC<PT> = ({setIsLogged}) => {
                 }
               />
               <div className={styles.buttons}>
-                <Button type="button" onClick={() => setVisibility('block')}>Реєстрація</Button>
+                <Button type="button" onClick={() => setVisibility("block")}>
+                  Реєстрація
+                </Button>
                 <Button type="submit" disabled={isSubmitting}>
                   Увійти
                 </Button>

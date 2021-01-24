@@ -1,45 +1,47 @@
-import React, {useEffect, useState} from "react";
-import {Classroom} from "../../models/models";
-import {GET_CLASSROOMS} from "../../api/operations/queries/classrooms";
+import React, { useEffect, useState } from "react";
+import { Classroom } from "../../models/models";
+import { GET_CLASSROOMS } from "../../api/operations/queries/classrooms";
 import ClassroomsGrid from "./ClassroomsGrid";
 import ClassroomsGridSkeleton from "./ClassroomsGridSkeleton";
-import {client} from "../../api/client";
-import {gql, useQuery} from "@apollo/client";
+import { client } from "../../api/client";
+import { gql, useQuery } from "@apollo/client";
 import Error from "../../components/error/Error";
 
 interface PT {
   meType: string;
 }
 
-const ClassroomsGridContainer: React.FC<PT> = React.memo(({meType}) => {
-
+const ClassroomsGridContainer: React.FC<PT> = React.memo(({ meType }) => {
   const [classrooms, setClassrooms] = useState<Array<Classroom>>();
   const [filter, setFilter] = useState("ALL");
   const [withWing, setWithWing] = useState(true);
   const [onlyOperaStudio, setOnlyOperaStudio] = useState(false);
   const [readyForRewriting, setReadyForRewriting] = useState(false);
   let [visibility, setVisibility] = useState("none");
-  const {data: gridUpdate, error} = useQuery(gql`
-      query gridUpdate {
-          gridUpdate @client
-      }
+  const { data: gridUpdate, error } = useQuery(gql`
+    query gridUpdate {
+      gridUpdate @client
+    }
   `);
   useEffect(() => {
-    getClassrooms()
+    getClassrooms();
   }, [gridUpdate]);
 
   const getClassrooms = async () => {
     const {
-      data: {classrooms},
+      data: { classrooms },
     } = await client.query({
       query: GET_CLASSROOMS,
       variables: {
-        date: new Date().toString()
+        date: new Date().toString(),
       },
-      fetchPolicy: 'cache-first'
+      fetchPolicy: "cache-first",
     });
-    setClassrooms(classrooms.slice()
-      .sort((a: Classroom, b: Classroom) => Number(a.name) - Number(b.name)));
+    setClassrooms(
+      classrooms
+        .slice()
+        .sort((a: Classroom, b: Classroom) => Number(a.name) - Number(b.name))
+    );
   };
 
   let classroomsFilter =
@@ -48,8 +50,8 @@ const ClassroomsGridContainer: React.FC<PT> = React.memo(({meType}) => {
       : filter === "SPECIAL"
       ? (classroom: Classroom) => classroom.special !== null
       : filter === "CHAIR"
-        ? (classroom: Classroom) => classroom.chair !== null
-        : () => true;
+      ? (classroom: Classroom) => classroom.chair !== null
+      : () => true;
 
   const onClose = (value: string) => {
     setReadyForRewriting(false);
@@ -60,9 +62,10 @@ const ClassroomsGridContainer: React.FC<PT> = React.memo(({meType}) => {
     setFilter(() => value);
   };
 
-  if (classrooms === undefined && !error) return <ClassroomsGridSkeleton/>
-  else if (classrooms === undefined && error) return <Error/>
-  else return (
+  if (classrooms === undefined && !error) return <ClassroomsGridSkeleton />;
+  else if (classrooms === undefined && error) return <Error />;
+  else
+    return (
       <ClassroomsGrid
         classrooms={classrooms as Array<Classroom>}
         onFilterChange={onFilterChange}

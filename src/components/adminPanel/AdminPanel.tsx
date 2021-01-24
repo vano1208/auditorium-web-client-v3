@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './adminPanel.module.css';
+// import styles from './adminPanel.module.css';
 import PageHeader from "../pageHeader/PageHeader";
 
 const AdminPanel: React.FC = () => {

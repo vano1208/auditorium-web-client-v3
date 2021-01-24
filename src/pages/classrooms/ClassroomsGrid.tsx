@@ -6,7 +6,6 @@ import PopupClassroom from "../../components/popupClassroom/PopupClassroom";
 import Caviar from "../../components/caviar/Caviar";
 import Filters from "../../components/filters/Filters";
 import PageHeader from "../../components/pageHeader/PageHeader";
-import {meType} from "../../api/client";
 
 type PropTypes = {
   classrooms: Array<Classroom>;
@@ -23,8 +22,8 @@ type PropTypes = {
   meType: string
 };
 
-const ClassroomsGrid: React.FC<PropTypes> = React.memo((
-  {
+const ClassroomsGrid: React.FC<PropTypes> = React.memo(
+  ({
     classrooms,
     onFilterChange,
     withWing,
@@ -36,63 +35,79 @@ const ClassroomsGrid: React.FC<PropTypes> = React.memo((
     setReadyForRewriting,
     onClose,
     visibility,
-    meType
+    meType,
   }) => {
-
-  return (
-    <>
-      <PageHeader body="Аудиторії">
-        <Filters onChange={onFilterChange}/>
-        <div className={styles.conditionalFilters}>
-          <label htmlFor="wing" className={styles.checkboxLabel}>
-            Флігель
-            <input type="checkbox"
-                   name="wing"
-                   id="wing"
-                   checked={withWing}
-                   onChange={() => setWithWing((prevState: any) => !prevState)}/><span></span>
-          </label>
-          <label htmlFor="operaStudio" className={styles.checkboxLabel}>
-            Тільки оперна студія
-            <input type="checkbox"
-                   name="operaStudio"
-                   id="operaStudio"
-                   checked={onlyOperaStudio}
-                   onChange={() => setOnlyOperaStudio((prevState: any) => !prevState)}/>
-            <span></span>
-          </label>
+    console.log("ClassroomsGrid");
+    return (
+      <>
+        <PageHeader body="Аудиторії">
+          <Filters onChange={onFilterChange} />
+          <div className={styles.conditionalFilters}>
+            <label htmlFor="wing" className={styles.checkboxLabel}>
+              Флігель
+              <input
+                type="checkbox"
+                name="wing"
+                id="wing"
+                checked={withWing}
+                onChange={() => setWithWing((prevState: any) => !prevState)}
+              />
+              <span></span>
+            </label>
+            <label htmlFor="operaStudio" className={styles.checkboxLabel}>
+              Тільки оперна студія
+              <input
+                type="checkbox"
+                name="operaStudio"
+                id="operaStudio"
+                checked={onlyOperaStudio}
+                onChange={() =>
+                  setOnlyOperaStudio((prevState: any) => !prevState)
+                }
+              />
+              <span></span>
+            </label>
+          </div>
+        </PageHeader>
+        <Caviar
+          classroomsFilter={classroomsFilter}
+          classrooms={classrooms
+            .filter((classroom) =>
+              onlyOperaStudio ? classroom.isOperaStudio : true
+            )
+            .filter((classroom) => (classroom.isWing ? withWing : true))}
+          onClose={onClose}
+        />
+        <PopupClassroom
+          classrooms={classrooms}
+          visibility={visibility}
+          onClose={onClose}
+          readyForRewriting={readyForRewriting}
+          setReadyForRewriting={setReadyForRewriting}
+          meType={meType}
+        />
+        <div className={styles.classrooms}>
+          {classrooms
+            .slice()
+            .filter((classroom) =>
+              onlyOperaStudio ? classroom.isOperaStudio : true
+            )
+            .filter((classroom) => (classroom.isWing ? withWing : true))
+            .sort(
+              (a: Classroom, b: Classroom) => Number(a.name) - Number(b.name)
+            )
+            .filter(classroomsFilter)
+            .map((classroom: Classroom) => (
+              <GridElement
+                key={classroom.id}
+                classroom={classroom}
+                onClose={onClose}
+              />
+            ))}
         </div>
-      </PageHeader>
-      <Caviar
-        classroomsFilter={classroomsFilter}
-        classrooms={classrooms.filter((classroom) => onlyOperaStudio ? classroom.isOperaStudio : true)
-          .filter((classroom) => classroom.isWing ? withWing : true)}
-        onClose={onClose}
-      />
-      <PopupClassroom
-        classrooms={classrooms}
-        visibility={visibility}
-        onClose={onClose}
-        readyForRewriting={readyForRewriting}
-        setReadyForRewriting={setReadyForRewriting}
-        meType={meType}
-      />
-      <div className={styles.classrooms}>
-        {classrooms
-          .slice()
-          .filter((classroom) => onlyOperaStudio ? classroom.isOperaStudio : true)
-          .filter((classroom) => classroom.isWing ? withWing : true)
-          .sort((a: Classroom, b: Classroom) => Number(a.name) - Number(b.name)).filter(classroomsFilter)
-          .map((classroom: Classroom) => (
-            <GridElement
-              key={classroom.id}
-              classroom={classroom}
-              onClose={onClose}
-            />
-          ))}
-      </div>
-    </>
-  );
-});
+      </>
+    );
+  }
+);
 
 export default ClassroomsGrid;

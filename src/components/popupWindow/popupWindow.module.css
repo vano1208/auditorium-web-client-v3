@@ -1,3 +1,32 @@
+@media only screen and (min-width: 600px){
+    .modalContent {
+        overflow: hidden;
+        border-radius: 8px;
+        position: relative;
+        top: 20%;
+        margin: auto;
+        padding: 0;
+        width: 60%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        animation-name: animateTop;
+        animation-duration: 0.4s;
+    }
+}
+
+@media only screen and (max-width: 600px){
+    .modalContent {
+        overflow: hidden;
+        border-radius: 8px;
+        position: relative;
+        top: 0;
+        margin: 16px;
+        padding: 0;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        animation-name: animateTop;
+        animation-duration: 0.4s;
+    }
+}
+
 .modal {
     position: fixed;
     z-index: 900;
@@ -28,18 +57,7 @@
     color: white;
 }
 
-.modalContent {
-    overflow: hidden;
-    border-radius: 8px;
-    position: relative;
-    top: 20%;
-    margin: auto;
-    padding: 0;
-    width: 60%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    animation-name: animateTop;
-    animation-duration: 0.4s;
-}
+
 
 .close {
     top: -2px;

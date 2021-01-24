@@ -1,3 +1,16 @@
+@media only screen and (min-width: 600px) {
+    .conditionalFilters {
+        display: inline-block;
+        position: absolute;
+        right: 16px;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .conditionalFilters {
+        display: block;
+    }
+}
+
 .classrooms {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -52,10 +65,4 @@
 .checkboxLabel input:active + span {
     border: 2px solid rgba(255, 255, 255, 1);
     background-color: rgba(0, 110, 212, .5);
-}
-
-.conditionalFilters {
-    display: inline-block;
-    position: absolute;
-    right: 16px;
 }

@@ -10,7 +10,7 @@ type PropTypes = {
 };
 
 const Instrument: React.FC<PropTypes> = ({ instrument , withName = false}) => {
-  return <div key={instrument.id} className={styles.instrument}>{
+  return <div className={styles.instrument}>{
       <img src={instrument.type==="UpRightPiano"?uprightPiano:grandPiano} alt={instrument.type}/>
   }<div>{withName?<span>{instrument.name} </span>:null}{instrument.rate}</div></div>;
 };

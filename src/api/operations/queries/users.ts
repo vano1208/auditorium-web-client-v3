@@ -27,3 +27,22 @@ export const GET_USERS_EMAIL_AND_PHONE = gql`
         }
     }
 `;
+
+export const GET_USER_BY_ID = gql`
+    query getUsers($id: Int!) {
+        user(id: $id) {
+            id
+            firstName
+            patronymic
+            lastName
+            type
+            department
+            email
+            phoneNumber
+            extraPhoneNumbers
+            nameTemp
+            startYear
+            degree
+        }
+    }
+`;

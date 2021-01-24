@@ -6,7 +6,7 @@ interface PropTypes {
 
 }
 
-const Loading: React.FC<PropTypes> = ({}) => {
+const Loading: React.FC<PropTypes> = () => {
   return <div><img src={musicNotesIcon} alt="loading" className={styles.heartbeat}/>
   <h2 className={styles.loadingMessage}>Завантаження даних. Будь ласка, зачекайте...</h2>
   </div>

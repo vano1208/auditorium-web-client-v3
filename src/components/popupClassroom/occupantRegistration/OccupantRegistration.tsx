@@ -132,11 +132,11 @@ const OccupantRegistration: React.FC<PropTypes> = ({classroom, onClose}) => {
                 {chosenOccupantInfo === ""
                   ? ""
                   : chosenOccupantInfo.match(/^\d+$/) &&
-                  users.find((user: User) => user.id === value) !== undefined
+                  users.find((user: User) => user.id === Number(value)) !== undefined
                     ? [
-                      users.find((user: User) => user.id === value).lastName,
-                      users.find((user: User) => user.id === value).firstName,
-                      users.find((user: User) => user.id === value).patronymic,
+                      users.find((user: User) => user.id === Number(value)).lastName,
+                      users.find((user: User) => user.id === Number(value)).firstName,
+                      users.find((user: User) => user.id === Number(value)).patronymic,
                     ].join(" ")
                     : chosenOccupantInfo}
               </p>
@@ -146,9 +146,9 @@ const OccupantRegistration: React.FC<PropTypes> = ({classroom, onClose}) => {
               {chosenOccupantInfo === "" ? (
                 ""
               ) : chosenOccupantInfo.match(/^\d+$/) &&
-              users.find((user: User) => user.id === value) !== undefined ? (
+              users.find((user: User) => user.id === Number(value)) !== undefined ? (
                 userTypesUa[
-                  users.find((user: User) => user.id === value)
+                  users.find((user: User) => user.id === Number(value))
                     .type as userTypes
                   ]
               ) : (
@@ -169,16 +169,15 @@ const OccupantRegistration: React.FC<PropTypes> = ({classroom, onClose}) => {
                     Концертмейстер
                   </option>
                   <option value={userTypes.ILLUSTRATOR}>Іллюстратор</option>
-                  <option value={userTypes.ADMINISTRATION}>
-                    Адміністрація
-                  </option>
+                  <option value={userTypes.STAFF}>Співробітник</option>
+                  <option value={userTypes.PIANO_TUNER}>Настроювач фортепіано</option>
                   <option value={userTypes.OTHER}>Інше</option>
                 </select>
               )}
               <br/>
-              {users.find((user: User) => user.id === value)?.type ===
+              {users.find((user: User) => user.id === Number(value))?.type ===
               userTypes.STUDENT ||
-              users.find((user: User) => user.id === value)?.type ===
+              users.find((user: User) => user.id === Number(value))?.type ===
               userTypes.POST_GRADUATE ||
               (!chosenOccupantInfo.match(/^\d+$/) &&
                 chosenOccupantInfo !== "" &&

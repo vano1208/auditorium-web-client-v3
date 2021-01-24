@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./userPopup.module.css";
+// import styles from "./userPopup.module.css";
 import {User, userTypes, userTypesUa} from "../../models/models";
 import PopupWindow from "../popupWindow/PopupWindow";
 

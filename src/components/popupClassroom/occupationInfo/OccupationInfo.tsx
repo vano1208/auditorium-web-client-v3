@@ -23,7 +23,7 @@ type PropTypes = {
 };
 
 const OccupationInfo: React.FC<PropTypes> = ({occupied, classroom, onClose, setReadyForRewriting, meType}) => {
-  const [freeClassroom, {data, error}] = useMutation(FREE_CLASSROOM, {
+  const [freeClassroom] = useMutation(FREE_CLASSROOM, {
     variables: {
       input: {
         classroomName: String(classroom.name),
@@ -60,8 +60,8 @@ const OccupationInfo: React.FC<PropTypes> = ({occupied, classroom, onClose, setR
       <div className={styles.occupationInfo}>
         <Button
           onClick={() => {
-            if((occupied.user.type === userTypes.STUDENT || occupied.user.type===userTypes.POST_GRADUATE) && meType=="USER")
-            setVisibility("none")
+            if ((occupied.user.type === userTypes.STUDENT || occupied.user.type === userTypes.POST_GRADUATE) && meType === "USER")
+              setVisibility("none")
             else
               setVisibility("block")
           }}
@@ -73,11 +73,11 @@ const OccupationInfo: React.FC<PropTypes> = ({occupied, classroom, onClose, setR
             " "
           )}
         </Button>
-        {(occupied.user.type === userTypes.STUDENT || occupied.user.type===userTypes.POST_GRADUATE)&&
+        {(occupied.user.type === userTypes.STUDENT || occupied.user.type === userTypes.POST_GRADUATE) &&
         <div className={styles.until}>
           Зайнято до {getTimeHHMM(new Date(occupied.until))}
         </div>}
-        {meType===userTypes.ADMINISTRATION?<div className={styles.buttons}>
+        {meType === userTypes.ADMIN ? <div className={styles.buttons}>
           <Button
             type="button"
             onClick={() => {
@@ -97,7 +97,7 @@ const OccupationInfo: React.FC<PropTypes> = ({occupied, classroom, onClose, setR
           >
             Звільнити аудиторію
           </Button>
-        </div>:null}
+        </div> : null}
       </div>
     </div>
   );

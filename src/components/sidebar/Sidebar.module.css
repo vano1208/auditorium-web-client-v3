@@ -1,18 +1,95 @@
 @import-normalize ;
 
-aside {
-    background-color: #1e2c4f;
-    height: 100vh;
-    overflow: hidden;
-    transition: all .2s ease-out;
-    user-select: none;
-}
-
 .fixed {
     position: fixed;
     width: inherit;
     overflow: hidden;
     height: 100vh;
+}
+
+@media only screen and (min-width: 600px){
+    aside {
+        background-color: #1e2c4f;
+        overflow: hidden;
+        transition: all .2s ease-out;
+        user-select: none;
+    }
+
+    .collapsed{
+        width: 54px;
+        height: 100vh;
+    }
+
+    .opened {
+        width: 230px;
+        height: 100vh;
+    }
+    .rotatedImage {
+        transition: transform .3s ease-in-out;
+        transform: rotate(-180deg);
+    }
+
+    .unrotatedImage {
+        transition: transform .3s ease-in-out;
+        transform: rotate(-360deg);
+    }
+
+}
+
+@media only screen and (max-width: 600px){
+    aside {
+        background-color: #1e2c4f;
+        overflow: hidden;
+        transition: all .2s ease-out;
+        user-select: none;
+    }
+
+    .collapsed{
+        position: fixed;
+        z-index: 998;
+        width: 100vw;
+        height: 0vh;
+    }
+
+    .collapsed ul {
+        display: none;
+    }
+
+    .collapsed a {
+        display: none;
+    }
+
+    .opened ul li {
+        width: 100vw;
+    }
+
+    .opened {
+        position: fixed;
+        z-index: 998;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .rotatedImage {
+        transform: rotate(-180deg);
+        position: fixed;
+        top:16px;
+        left: 16px;
+        background-color: #1e2c4f;
+        width: 32px;
+        height: 32px;
+    }
+
+    .unrotatedImage {
+        transform: rotate(-360deg);
+        position: fixed;
+        top:16px;
+        left: 16px;
+        background-color: #1e2c4f;
+        width: 32px;
+        height: 32px;
+        z-index: 999;
+    }
 }
 
 .logo h1{
@@ -64,16 +141,6 @@ img {
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
-
-.rotatedImage {
-    transition: transform .3s ease-in-out;
-    transform: rotate(-180deg);
-}
-
-.unrotatedImage {
-    transition: transform .3s ease-in-out;
-    transform: rotate(-360deg);
 }
 
 hr {

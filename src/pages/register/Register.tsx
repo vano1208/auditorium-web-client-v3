@@ -16,7 +16,7 @@ import vfsFonts from 'pdfmake/build/vfs_fonts'
 const Register: React.FC = () => {
   const [registerDate, setRegisterDate] = useState(new Date());
   const [registerUser, setRegisterUser] = useState({
-    id: "",
+    id: 0,
     firstName: "",
     lastName: "",
     patronymic: "",
@@ -32,7 +32,7 @@ const Register: React.FC = () => {
   const {loading, error, data} = useQuery(GET_REGISTER, {
     variables: {
       date: new Date(registerDate).setHours(0, 0, 0, 0),
-    },
+    }, fetchPolicy: "network-only"
   });
   const toDateInputValue = (date: Date) => {
     date.setMinutes(date.getMinutes() - date.getTimezoneOffset());

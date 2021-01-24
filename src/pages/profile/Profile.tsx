@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
     department,
     startYear,
     degree,
-    id}: User = data.users.find((user:User)=>user.id===userId);
+    id}: User = data.users.find((user:User)=>user.id===Number(userId));
 
   return <>
     <PageHeader body="Особистий кабінет"/>

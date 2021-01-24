@@ -12,7 +12,10 @@ export enum userTypes {
   STUDENT = "STUDENT",
   TEACHER = "TEACHER",
   POST_GRADUATE = "POST_GRADUATE",
-  ADMINISTRATION = "ADMINISTRATION",
+  ADMIN = "ADMIN",
+  DISPATCHER = "DISPATCHER",
+  PIANO_TUNER = "PIANO_TUNER",
+  STAFF = "STAFF",
   CONCERTMASTER = "CONCERTMASTER",
   ILLUSTRATOR = "ILLUSTRATOR",
   OTHER = "OTHER",
@@ -22,7 +25,10 @@ export enum userTypesUa {
   STUDENT = "Студент",
   TEACHER = "Викладач",
   POST_GRADUATE = "Асистент/аспірант",
-  ADMINISTRATION = "Адміністрація",
+  ADMIN = "Адмін",
+  DISPATCHER = "Диспетчер",
+  PIANO_TUNER = "Настроювач фортепіано",
+  STAFF = "Співробітник",
   CONCERTMASTER = "Концертмейстер",
   ILLUSTRATOR = "Іллюстратор",
   OTHER = "Не визначено"
@@ -32,14 +38,17 @@ export enum userTypeColors {
   STUDENT = "#1e2c4f",
   TEACHER = "#ffa200",
   POST_GRADUATE = "#1e2c4f",
-  ADMINISTRATION = "#ffa200",
-  ILLUSTRATOR = "#ffa200",
+  ADMIN = "#ffa200",
+  DISPATCHER = "#ffa200",
+  PIANO_TUNER = "#ffa200",
+  STAFF = "#ffa200",
   CONCERTMASTER = "#ffa200",
+  ILLUSTRATOR = "#ffa200",
   OTHER = "#ffa200",
 }
 
 export type User = {
-  id: string;
+  id: number;
   firstName: string;
   patronymic: string | null;
   lastName: string;
@@ -59,14 +68,14 @@ export type OccupiedInfo = {
 };
 
 export type Comment = {
-  id: string;
+  id: number;
   user: User;
   body: string;
   date: Date;
 };
 
 export type InstrumentType = {
-  id: string;
+  id: number;
   type: string;
   name: string;
   rate: number;
@@ -80,7 +89,7 @@ export type DisabledInfo = {
 };
 
 export type ScheduleUnit = {
-  id: string;
+  id: number;
   user: User;
   classroom: Classroom;
   dateStart: Date;
@@ -92,7 +101,7 @@ export type ScheduleUnit = {
 };
 
 export type Classroom = {
-  id: string;
+  id: number;
   name: string;
   chair: string | null;
   special: string | null;
@@ -107,18 +116,18 @@ export type Classroom = {
 };
 
 export type RegisterUnit = {
-  id: string
+  id: number
   user: {
     lastName: string
     firstName: string
     patronymic: string
     type: string
-    id: string
+    id: number
     nameTemp: string
   }
   nameTemp: string
   classroom: {
-    id: string
+    id: number
     name: string
 }
   start: string
@@ -134,7 +143,16 @@ export type Degree = {
 }
 
 export type Department = {
-  id: string
+  id: number
   name: string
 }
+
+export type MenuElement = {
+  text: string
+  path: string
+  icon: string
+  exact?: boolean
+  rights: string
+}
+
 
