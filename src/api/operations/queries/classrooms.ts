@@ -23,6 +23,26 @@ export const GET_CLASSROOMS = gql`
         until
       }
       schedule(date: $date) {
+        from
+        to
+      }
+      instruments {
+        type
+        rate
+      }
+      disabled {
+        comment
+        until
+      }
+    }
+  }
+`;
+
+export const GET_CLASSROOMS_SCHEDULE = gql`
+  query getClassroomsSchedule($date: Date!) {
+    classrooms {
+      name
+      schedule(date: $date) {
         user {
           firstName
           patronymic
@@ -32,14 +52,23 @@ export const GET_CLASSROOMS = gql`
         to
         activity
       }
-      instruments {
-        type
-        name
-        rate
+    }
+  }
+`;
+
+export const GET_CLASSROOM_BY_NAME = gql`
+  query getClassroomByName($name: String!, $date: Date!) {
+    classroom(name: $name) {
+      schedule(date: $date) {
+        user {
+          lastName
+          firstName
+          patronymic
+        }
+        activity
       }
-      disabled {
-          comment
-          until
+      instruments {
+        name
       }
     }
   }

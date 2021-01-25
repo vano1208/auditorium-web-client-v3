@@ -37,7 +37,6 @@ const ClassroomsGrid: React.FC<PropTypes> = React.memo(
     visibility,
     meType,
   }) => {
-    console.log("ClassroomsGrid");
     return (
       <>
         <PageHeader body="Аудиторії">

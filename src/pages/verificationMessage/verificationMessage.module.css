@@ -1,0 +1,8 @@
+.verificationMessage {
+    background-color: #1e2c4f;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 999;
+    color: white;
+}

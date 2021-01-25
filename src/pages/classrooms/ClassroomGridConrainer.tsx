@@ -23,6 +23,7 @@ const ClassroomsGridContainer: React.FC<PT> = React.memo(({ meType }) => {
       gridUpdate @client
     }
   `);
+
   useEffect(() => {
     getClassrooms();
   }, [gridUpdate]);
@@ -40,7 +41,9 @@ const ClassroomsGridContainer: React.FC<PT> = React.memo(({ meType }) => {
     setClassrooms(
       classrooms
         .slice()
-        .sort((a: Classroom, b: Classroom) => Number(a.name) - Number(b.name))
+        .sort((a: Classroom, b: Classroom) => {
+          return parseInt(a.name) - parseInt(b.name)
+        })
     );
   };
 

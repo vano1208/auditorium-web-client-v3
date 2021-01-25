@@ -8,10 +8,11 @@ import profileIcon from "./assets/menuIcons/profile.png";
 import logoutIcon from "./assets/menuIcons/logout.png";
 import scheduleIcon from "./assets/menuIcons/schedule.png";
 import { client, meType } from "./api/client";
-import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_USER_BY_ID } from "./api/operations/queries/users";
 import { MenuElement, userTypes } from "./models/models";
 import App from "./App";
+import { GET_ME_TYPE } from "./api/operations/queries/me";
 
 const AppContainer: React.FC = () => {
   const menuElements: Array<MenuElement> = [
@@ -65,20 +66,10 @@ const AppContainer: React.FC = () => {
       rights: "USER",
     },
   ];
-  let meCurrentType = 'USER';
   const [isLogged, setIsLogged] = useState(
     sessionStorage.getItem("userId") !== null ? true : false
   );
-  const getMeType = async () => {
-    const {data} = await client.query({
-      query: gql`
-          query meType {
-              meType @client
-          }
-      `
-    });
-    meCurrentType = data.meType;
-  }
+  const { data: meCurrentType } = useQuery(GET_ME_TYPE);
   const getUser = async () => {
     const { data } = await client.query({
       query: GET_USER_BY_ID,
@@ -96,15 +87,14 @@ const AppContainer: React.FC = () => {
     }
   };
   useEffect(() => {
-    getMeType();
-    if(sessionStorage.getItem("userId") !== null) getUser();
+    if (sessionStorage.getItem("userId") !== null) getUser();
   });
   return (
     <App
       isLogged={isLogged}
       setIsLogged={setIsLogged}
       menuElements={menuElements}
-      meCurrentType={meCurrentType}
+      meCurrentType={meCurrentType.meType}
     />
   );
 };

@@ -8,9 +8,9 @@ import Schedule from "./pages/schedule/Schedule";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import AdminPanel from "./components/adminPanel/AdminPanel";
-import Home from "./pages/home/Home";
 import ClassroomsGridContainer from "./pages/classrooms/ClassroomGridConrainer";
 import { MenuElement, userTypes } from "./models/models";
+import Home from "./pages/home/Home";
 
 interface PT {
   isLogged: boolean;
@@ -40,7 +40,7 @@ const App: React.FC<PT> = ({
       )}
       <main>
         {!isLogged && <Login setIsLogged={(value) => setIsLogged(value)} />}
-        <Route path="/auditoriums/:classroomId?">
+        <Route path="/auditoriums/:classroomName?">
           <ClassroomsGridContainer meType={meCurrentType} />
         </Route>
         <Route exact path="/">
@@ -48,6 +48,7 @@ const App: React.FC<PT> = ({
         </Route>
         {meCurrentType === userTypes.ADMIN ? (
           <>
+            {console.log("test")}
             <Route path="/register">
               <Register />
             </Route>

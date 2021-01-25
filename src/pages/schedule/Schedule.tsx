@@ -3,7 +3,7 @@ import styles from "./schedule.module.css";
 import { getScheduleTimeline } from "../../helpers/helpers";
 import { WORKING_DAY_END, WORKING_DAY_START } from "../../helpers/constants";
 import { gql, useQuery } from "@apollo/client";
-import { GET_CLASSROOMS } from "../../api/operations/queries/classrooms";
+import { GET_CLASSROOMS_SCHEDULE } from "../../api/operations/queries/classrooms";
 import { Classroom, ScheduleUnit } from "../../models/models";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import Loading from "../../components/loading/Loading";
@@ -41,7 +41,7 @@ const Schedule = () => {
     const {
       data: { classrooms },
     } = await client.query({
-      query: GET_CLASSROOMS,
+      query: GET_CLASSROOMS_SCHEDULE,
       variables: {
         date: new Date(scheduleDate).setHours(0, 0, 0, 0),
       },

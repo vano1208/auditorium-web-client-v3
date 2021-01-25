@@ -1,5 +1,11 @@
 import React from "react";
-import { Classroom, OccupiedInfo, userTypes } from "../../models/models";
+import {
+  Classroom,
+  InstrumentType,
+  OccupiedInfo,
+  ScheduleUnit,
+  userTypes,
+} from "../../models/models";
 import styles from "./popupClassroom.module.css";
 import { useParams } from "react-router-dom";
 import Tag from "../tag/Tag";
@@ -8,6 +14,10 @@ import Instrument from "../instrument/Instrument";
 import OccupationInfo from "./occupationInfo/OccupationInfo";
 import OccupantRegistration from "./occupantRegistration/OccupantRegistration";
 import PopupWindow from "../popupWindow/PopupWindow";
+import { useQuery } from "@apollo/client";
+import { GET_CLASSROOM_BY_NAME } from "../../api/operations/queries/classrooms";
+import Loading from "../loading/Loading";
+import DisableClassroomButton from "./disableClassroomButton/DisableClassroomButton";
 
 interface PropTypes {
   classrooms: Array<Classroom>;
@@ -19,7 +29,7 @@ interface PropTypes {
 }
 
 interface ParamTypes {
-  classroomId: string;
+  classroomName: string;
 }
 
 const PopupClassroom: React.FC<PropTypes> = ({
@@ -30,10 +40,19 @@ const PopupClassroom: React.FC<PropTypes> = ({
   setReadyForRewriting,
   meType,
 }) => {
-  let { classroomId } = useParams<ParamTypes>();
-  if (classroomId === undefined) classroomId = "1";
+  let { classroomName } = useParams<ParamTypes>();
+  if (classroomName === undefined) classroomName = "1";
+  const { data: fetchedClassroom, loading, error } = useQuery(
+    GET_CLASSROOM_BY_NAME,
+    {
+      variables: {
+        name: classroomName,
+        date: new Date().toString(),
+      },
+    }
+  );
   const classroom = classrooms.find(
-    (classroom) => classroom.name === classroomId
+    (classroom) => classroom.name === classroomName
   ) as Classroom;
   const {
     name,
@@ -44,7 +63,30 @@ const PopupClassroom: React.FC<PropTypes> = ({
     schedule,
     instruments,
     occupied,
+    disabled,
   } = classroom;
+
+  const assembledSchedule: Array<ScheduleUnit> = schedule.map(
+    (scheduleUnit, index) => {
+      if (!loading && !error) {
+        return {
+          ...scheduleUnit,
+          user: fetchedClassroom.classroom.schedule[index].user,
+          activity: fetchedClassroom.classroom.schedule[index].activity,
+        };
+      } else return scheduleUnit;
+    }
+  );
+  const assembledInstruments: Array<InstrumentType> = instruments.map(
+    (instrument, index) => {
+      if (!loading && !error) {
+        return {
+          ...instrument,
+          name: fetchedClassroom.classroom.instruments[index].name,
+        };
+      } else return instrument;
+    }
+  );
   const headerBody = (
     <>
       {"Аудиторія №" + name + (chair !== null ? " — " + chair : "")}
@@ -60,11 +102,19 @@ const PopupClassroom: React.FC<PropTypes> = ({
       onClose={onClose}
       visibility={visibility}
     >
-      <ClassroomSchedule schedule={schedule} />
+      {!loading && !error ? (
+        <ClassroomSchedule schedule={assembledSchedule} />
+      ) : (
+        <Loading />
+      )}
       <div className={instruments.length !== 0 ? styles.instruments : ""}>
-        {instruments.map((instrument) => (
-          <Instrument key={instrument.id} withName instrument={instrument} />
-        ))}
+        {!loading && !error ? (
+          assembledInstruments.map((instrument) => (
+            <Instrument key={instrument.id} withName instrument={instrument} />
+          ))
+        ) : (
+          <Loading />
+        )}
       </div>
       {occupied ? (
         readyForRewriting ? (
@@ -81,6 +131,7 @@ const PopupClassroom: React.FC<PropTypes> = ({
       ) : meType === userTypes.ADMIN ? (
         <OccupantRegistration classroom={classroom} onClose={onClose} />
       ) : null}
+      <DisableClassroomButton classroom={classroom} disabled={disabled} onClose={onClose}/>
     </PopupWindow>
   );
 };
