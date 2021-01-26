@@ -56,7 +56,7 @@ const OccupationInfo: React.FC<PropTypes> = ({occupied, classroom, onClose, setR
   const [visibility, setVisibility] = useState("none");
   return (
     <div>
-      <UserPopup visibility={visibility} onClose={() => setVisibility("none")} userData={occupied?.user}/>
+      <UserPopup visibility={visibility} onClose={() => setVisibility("none")} userData={occupied?.user} meType={meType}/>
       <div className={styles.occupationInfo}>
         <Button
           onClick={() => {

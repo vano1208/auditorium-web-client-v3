@@ -1,0 +1,26 @@
+.inputField {
+    border-radius: 8px;
+    padding: 8px;
+    border: 2px solid #959595;
+}
+
+.inputField:hover, .inputField:focus, .chosenOccupantInfo select:hover, .chosenOccupantInfo select:focus {
+    outline: none;
+    border: 2px solid #1e2c4f;
+}
+
+.disableClassroomDateInput {
+    font-family: "Roboto Light";
+    border-radius: 8px;
+    padding: 8px;
+    margin-left: 16px;
+    border: 2px solid #959595;
+}
+
+.disableClassroomDateInput:hover {
+    border: 2px solid #1e2c4f;
+}
+
+.disableClassroomDateInput:focus {
+    outline: none;
+}

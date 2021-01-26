@@ -102,6 +102,9 @@ const PopupClassroom: React.FC<PropTypes> = ({
       onClose={onClose}
       visibility={visibility}
     >
+      {disabled && (
+        <h1 className={styles.disabledAlert}>Аудиторія заблокована!</h1>
+      )}
       {!loading && !error ? (
         <ClassroomSchedule schedule={assembledSchedule} />
       ) : (
@@ -131,7 +134,13 @@ const PopupClassroom: React.FC<PropTypes> = ({
       ) : meType === userTypes.ADMIN ? (
         <OccupantRegistration classroom={classroom} onClose={onClose} />
       ) : null}
-      <DisableClassroomButton classroom={classroom} disabled={disabled} onClose={onClose}/>
+      {meType === userTypes.ADMIN || meType === userTypes.DISPATCHER ? (
+        <DisableClassroomButton
+          classroom={classroom}
+          disabled={disabled}
+          onClose={onClose}
+        />
+      ) : null}
     </PopupWindow>
   );
 };

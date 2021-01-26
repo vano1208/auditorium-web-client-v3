@@ -1,10 +1,10 @@
 export enum errorCodesUa {
   INVALID_PASSWORD = "Невірний пароль",
-  USER_NOT_FOUND = "Користувача не знайдено"
+  USER_NOT_FOUND = "Користувача не знайдено",
 }
 
 export enum errorCodes {
-  INVALID_PASSWORD= "INVALID_PASSWORD",
+  INVALID_PASSWORD = "INVALID_PASSWORD",
   USER_NOT_FOUND = "USER_NOT_FOUND",
 }
 
@@ -31,7 +31,7 @@ export enum userTypesUa {
   STAFF = "Співробітник",
   CONCERTMASTER = "Концертмейстер",
   ILLUSTRATOR = "Іллюстратор",
-  OTHER = "Не визначено"
+  OTHER = "Не визначено",
 }
 
 export enum userTypeColors {
@@ -59,7 +59,8 @@ export type User = {
   extraPhoneNumbers: string | null;
   nameTemp: string | null;
   startYear: number;
-  degree: string
+  degree: string;
+  verified: boolean;
 };
 
 export type OccupiedInfo = {
@@ -116,43 +117,40 @@ export type Classroom = {
 };
 
 export type RegisterUnit = {
-  id: number
+  id: number;
   user: {
-    lastName: string
-    firstName: string
-    patronymic: string
-    type: string
-    id: number
-    nameTemp: string
-  }
-  nameTemp: string
+    lastName: string;
+    firstName: string;
+    patronymic: string;
+    type: string;
+    id: number;
+    nameTemp: string;
+  };
+  nameTemp: string;
   classroom: {
-    id: number
-    name: string
-}
-  start: string
-  end: string
-
-}
+    id: number;
+    name: string;
+  };
+  start: string;
+  end: string;
+};
 
 export type Degree = {
-  name: string
-  startMonth: number
-  startDay: number
-  durationMonth: number
-}
+  name: string;
+  startMonth: number;
+  startDay: number;
+  durationMonth: number;
+};
 
 export type Department = {
-  id: number
-  name: string
-}
+  id: number;
+  name: string;
+};
 
 export type MenuElement = {
-  text: string
-  path: string
-  icon: string
-  exact?: boolean
-  rights: string
-}
-
-
+  text: string;
+  path: string;
+  icon: string;
+  exact?: boolean;
+  rights: string;
+};

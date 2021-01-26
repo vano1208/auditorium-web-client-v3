@@ -36,6 +36,10 @@
     background-color: rgba(0, 110, 212, 1);
 }
 
+.userLink a:hover > span {
+    background-color: transparent;
+}
+
 .paginator {
     margin-top: 16px;
     list-style-type: none;
@@ -150,3 +154,10 @@
     border: 2px solid #fff;
 }
 
+.notVerified {
+    background-color: crimson;
+    border-radius: 8px;
+    color: white;
+    padding: 4px 8px;
+    margin-left: 8px;
+}

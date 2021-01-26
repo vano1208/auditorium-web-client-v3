@@ -1,4 +1,4 @@
-.verificationMessage {
+.loadingSplash {
     background-color: #1e2c4f;
     width: 100vw;
     height: 100vh;
@@ -9,18 +9,11 @@
     top: 0;
 }
 
-.verificationMessageBody {
+.loadingSplashBody {
     margin: 20vH auto;
     width: 600px;
     text-align: center;
     background-color: rgba(255, 255, 255, .1);
     padding: 32px;
     border-radius: 8px;
-}
-
-.verificationMessageBody h1 span {
-    border: 2px solid #ffdd00;
-    padding: 4px 8px;
-    border-radius: 8px;
-    color: white;
 }

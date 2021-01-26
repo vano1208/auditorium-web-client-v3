@@ -15,6 +15,7 @@ export const GET_USERS = gql`
             nameTemp
             startYear
             degree
+            verified
         }
     }
 `;
@@ -43,6 +44,7 @@ export const GET_USER_BY_ID = gql`
             nameTemp
             startYear
             degree
+            verified
         }
     }
 `;

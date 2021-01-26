@@ -17,7 +17,6 @@ const PopupWindow: React.FC<PropTypes> = ({onClose, visibility, headerBody, chil
       }
     }}
   >
-
     <div className={styles.modalContent}>
       <div className={styles.modalHeader}>
           <span onClick={() => onClose("none")} className={styles.close}>

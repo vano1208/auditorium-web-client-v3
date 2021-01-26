@@ -13,6 +13,7 @@ import { GET_USER_BY_ID } from "./api/operations/queries/users";
 import { MenuElement, userTypes } from "./models/models";
 import App from "./App";
 import { GET_ME_TYPE } from "./api/operations/queries/me";
+import LoadingSplash from "./pages/loadingSplash/LoadingSplash";
 
 const AppContainer: React.FC = () => {
   const menuElements: Array<MenuElement> = [
@@ -69,7 +70,9 @@ const AppContainer: React.FC = () => {
   const [isLogged, setIsLogged] = useState(
     sessionStorage.getItem("userId") !== null ? true : false
   );
+  const [verified, setVerified] = useState(false);
   const { data: meCurrentType } = useQuery(GET_ME_TYPE);
+  const [userLoading, setUserLoading] = useState(true);
   const getUser = async () => {
     const { data } = await client.query({
       query: GET_USER_BY_ID,
@@ -77,6 +80,7 @@ const AppContainer: React.FC = () => {
         id: Number(sessionStorage.getItem("userId")),
       },
     });
+    setVerified(data.user.verified);
     if (
       data.user.type === userTypes.ADMIN ||
       data.user.type === userTypes.DISPATCHER
@@ -87,14 +91,19 @@ const AppContainer: React.FC = () => {
     }
   };
   useEffect(() => {
-    if (sessionStorage.getItem("userId") !== null) getUser();
+    if (sessionStorage.getItem("userId") !== null)
+      getUser().then((r) => setUserLoading(false));
   });
-  return (
+
+  return userLoading && isLogged ? (
+    <LoadingSplash />
+  ) : (
     <App
       isLogged={isLogged}
       setIsLogged={setIsLogged}
       menuElements={menuElements}
       meCurrentType={meCurrentType.meType}
+      verified={verified}
     />
   );
 };
