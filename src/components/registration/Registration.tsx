@@ -24,8 +24,8 @@ const Registration: React.FC<PropTypes> = ({
   onClose,
   setIsLogged,
 }) => {
-  let alertDisplay = localStorage.getItem("registrationAlert") === "1" ? "none" :
-    "block";
+  let alertDisplay =
+    localStorage.getItem("registrationAlert") === "1" ? "none" : "block";
   let textInput: HTMLElement | null = null;
   useEffect(() => {
     textInput && (textInput as HTMLElement).focus();
@@ -84,7 +84,6 @@ const Registration: React.FC<PropTypes> = ({
         "E-mail адреса зайнята"
       )
       .required(req),
-    department: Yup.string().required(req),
     phoneNumber: Yup.string()
       .matches(phoneRegExp, "Невірний формат номеру")
       .notOneOf(
@@ -94,15 +93,22 @@ const Registration: React.FC<PropTypes> = ({
         "Телефонний номер зайнятий"
       )
       .required(req),
-    password: Yup.string().required(req).min(6),
+    password: Yup.string().required(req).min(6, "Не меньше 6 символів"),
     passwordConfirm: Yup.string().when("password", {
       is: (val: string) => (val && val.length > 0 ? true : false),
       then: Yup.string().oneOf([Yup.ref("password")], "Паролі не співпадають"),
     }),
-    degree: Yup.string().default("Бакалавр"),
+    department: Yup.string().required(req),
+    degree: Yup.string(),
     startYear: Yup.number()
-      .min(new Date().getFullYear() - 4)
-      .max(new Date().getFullYear()),
+      .min(
+        new Date().getFullYear() - 4,
+        `Не може бути меньший за ${new Date().getFullYear() - 4}-й`
+      )
+      .max(
+        new Date().getFullYear(),
+        `Не може бути більший за ${new Date().getFullYear()}-й`
+      ),
   });
   if (loadingUsers) return <Loading />;
   else
@@ -115,10 +121,10 @@ const Registration: React.FC<PropTypes> = ({
         <div
           className={styles.disabledAlert}
           style={{
-            display: alertDisplay
+            display: alertDisplay,
           }}
           onClick={(e) => {
-            localStorage.setItem("registrationAlert", '1')
+            localStorage.setItem("registrationAlert", "1");
             e.currentTarget.style.display = "none";
           }}
         >
@@ -129,7 +135,9 @@ const Registration: React.FC<PropTypes> = ({
             Реєстрація співробітників НМАУ та викладачів здійснюється
             безпосередньо в учбовій частині.
           </p>
-          <p className={styles.disabledAlertHint}>Торкніться, щоб більше не показувати.</p>
+          <p className={styles.disabledAlertHint}>
+            Торкніться, щоб більше не показувати.
+          </p>
         </div>
 
         <Formik
@@ -140,10 +148,11 @@ const Registration: React.FC<PropTypes> = ({
             email: "",
             password: "",
             passwordConfirm: "",
-            department:
-              !loadingDeps && !errorDeps ? departments.departments[0].name : "",
+            department: "Кафедра спеціального фортепіано №1",
+            // !loadingDeps && !errorDeps ? departments.departments[0].name : "",
             phoneNumber: "",
-            degree: !loadingDegs && !errorDegs ? degrees.degrees[0].name : "",
+            degree: "Бакалавр",
+            // !loadingDegs && !errorDegs ? degrees.degrees[0].name : "",
             startYear: new Date().getFullYear(),
           }}
           validationSchema={SignupSchema}

@@ -29,48 +29,48 @@ const App: React.FC<PT> = ({
   verified,
 }) => {
   return (
-        <div className={styles.container}>
-          {isLogged && verified ? (
-            <Sidebar divider={[4, 9]}>
-              {menuElements.filter((item) => {
-                if (meCurrentType === "USER") {
-                  return item.rights === meCurrentType;
-                } else {
-                  return true;
-                }
-              })}
-            </Sidebar>
-          ) : null}
-          <main>
-            {isLogged && !verified ? <VerificationMessage /> : null}
-            {!isLogged && <Login setIsLogged={(value) => setIsLogged(value)} />}
-            <Route path="/auditoriums/:classroomName?">
-              <ClassroomsGridContainer meType={meCurrentType} />
+    <div className={styles.container}>
+      {isLogged && verified ? (
+        <Sidebar divider={[4, 9]} setIsLogged={setIsLogged}>
+          {menuElements.filter((item) => {
+            if (meCurrentType === "USER") {
+              return item.rights === meCurrentType;
+            } else {
+              return true;
+            }
+          })}
+        </Sidebar>
+      ) : null}
+      <main>
+        {isLogged && !verified ? <VerificationMessage setIsLogged={setIsLogged}/> : null}
+        {!isLogged && <Login setIsLogged={setIsLogged} />}
+        <Route path="/auditoriums/:classroomName?">
+          <ClassroomsGridContainer meType={meCurrentType} />
+        </Route>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        {meCurrentType === userTypes.ADMIN ? (
+          <>
+            <Route path="/register/:userId?">
+              <Register />
             </Route>
-            <Route exact path="/">
-              <Home />
+            <Route path="/admin">
+              <AdminPanel />
             </Route>
-            {meCurrentType === userTypes.ADMIN ? (
-              <>
-                <Route path="/register/:userId?">
-                  <Register />
-                </Route>
-                <Route path="/admin">
-                  <AdminPanel />
-                </Route>
-              </>
-            ) : null}
-            <Route path="/users/:userId?">
-              <Users meType={meCurrentType} />
-            </Route>
-            <Route path="/schedule/:userId?">
-              <Schedule />
-            </Route>
-            <Route path="/profile">
-              <Profile />
-            </Route>
-          </main>
-        </div>
+          </>
+        ) : null}
+        <Route path="/users/:userId?">
+          <Users meType={meCurrentType} />
+        </Route>
+        <Route path="/schedule/:userId?">
+          <Schedule />
+        </Route>
+        <Route path="/profile">
+          <Profile />
+        </Route>
+      </main>
+    </div>
   );
 };
 

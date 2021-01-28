@@ -16,6 +16,8 @@ import { GET_ME_TYPE } from "./api/operations/queries/me";
 import LoadingSplash from "./pages/loadingSplash/LoadingSplash";
 
 const AppContainer: React.FC = () => {
+  const [userLoading, setUserLoading] = useState(true);
+  useEffect(() => {}, [userLoading]);
   const menuElements: Array<MenuElement> = [
     {
       text: "Головна",
@@ -72,7 +74,6 @@ const AppContainer: React.FC = () => {
   );
   const [verified, setVerified] = useState(false);
   const { data: meCurrentType } = useQuery(GET_ME_TYPE);
-  const [userLoading, setUserLoading] = useState(true);
   const getUser = async () => {
     const { data } = await client.query({
       query: GET_USER_BY_ID,

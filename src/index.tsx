@@ -2,18 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, HashRouter} from "react-router-dom";
 import {ApolloProvider} from "@apollo/client";
 import {client} from "./api/client";
 import AppContainer from "./AppContainer";
 
 ReactDOM.render(
   <React.StrictMode>
-      <BrowserRouter>
+    {/*Temporary solution for GH Pages*/}
+      <HashRouter>
           <ApolloProvider client={client}>
     <AppContainer />
           </ApolloProvider>
-      </BrowserRouter>
+      </HashRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

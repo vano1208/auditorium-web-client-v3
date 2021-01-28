@@ -8,12 +8,15 @@ import { isLoggedVar } from "../../api/client";
 import Registration from "../../components/registration/Registration";
 import Alert from "../../components/alert/Alert";
 import { errorCodes, errorCodesUa } from "../../models/models";
+import { useHistory } from "react-router-dom";
 
 interface PT {
   setIsLogged: (value: boolean) => void;
 }
 
 const Login: React.FC<PT> = ({ setIsLogged }) => {
+  const history = useHistory();
+  history.push("/");
   const [login] = useMutation(LOGIN);
   const [visibility, setVisibility] = useState("none");
   let alertIndex = 0;

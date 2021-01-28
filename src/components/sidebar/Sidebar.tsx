@@ -7,6 +7,7 @@ import { MenuElement } from "../../models/models";
 type PropTypes = {
   children: Array<MenuElement>;
   divider: Array<number>;
+  setIsLogged: (value: boolean) => void;
 };
 
 const Sidebar: React.FC<PropTypes> = (props) => {
@@ -54,7 +55,16 @@ const Sidebar: React.FC<PropTypes> = (props) => {
                 );
             }
             return (
-              <li key={item.path}>
+              <li
+                key={item.path}
+                onClick={() => {
+                  if (item.path === "/logout") {
+                    sessionStorage.removeItem("userId");
+                    localStorage.removeItem("userId");
+                    props.setIsLogged(false);
+                  }
+                }}
+              >
                 {collapsed ? (
                   linkItem
                 ) : (
