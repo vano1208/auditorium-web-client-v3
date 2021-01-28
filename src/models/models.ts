@@ -31,7 +31,7 @@ export enum userTypesUa {
   STAFF = "Співробітник",
   CONCERTMASTER = "Концертмейстер",
   ILLUSTRATOR = "Іллюстратор",
-  OTHER = "Не визначено",
+  OTHER = "Інше",
 }
 
 export enum userTypeColors {

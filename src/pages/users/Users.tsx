@@ -8,7 +8,6 @@ import UserPopup from "../../components/user/UserPopup";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import Loading from "../../components/loading/Loading";
 import Error from "../../components/error/Error";
-import Alert from "../../components/alert/Alert";
 import PopupMessage from "../../components/popupMessage/PopupMessage";
 
 interface Params {
@@ -29,6 +28,7 @@ const Users: React.FC<PT> = ({ meType }) => {
   const [userSearch, setUserSearch] = useState("");
   const [sortBy, setSortBy] = useState("AZ");
   const [userTypes, setUserTypes] = useState("ALL");
+  const [verificationSuccess, setVerificationSuccess] = useState(false);
   if (loading) return <Loading />;
   if (error) return <Error />;
   const pages = Math.ceil(data.users.length / pageSize);
@@ -39,6 +39,7 @@ const Users: React.FC<PT> = ({ meType }) => {
 
   const onClosePopup = () => {
     setPopupVisibility("none");
+    setVerificationSuccess(false);
   };
 
   const onCloseUserPopup = () => {
@@ -48,13 +49,20 @@ const Users: React.FC<PT> = ({ meType }) => {
 
   return (
     <>
-      <PopupMessage
-        headerBody="Верифікація успішна!"
-        onClose={onClosePopup}
-        visibility={popupVisibility}
-      />
+      {verificationSuccess && (
+        <PopupMessage
+          headerBody="Верифікація успішна!"
+          onClose={onClosePopup}
+          visibility={popupVisibility}
+        />
+      )}
       {userId && (
-        <UserPopup onClose={onCloseUserPopup} visibility={visibility} meType={meType} />
+        <UserPopup
+          onClose={onCloseUserPopup}
+          visibility={visibility}
+          meType={meType}
+          setVerificationSuccess={setVerificationSuccess}
+        />
       )}
       <PageHeader body="Користувачі">
         <select
@@ -142,8 +150,8 @@ const Users: React.FC<PT> = ({ meType }) => {
           .filter((user: any) => {
             return (
               [user.lastName, user.firstName, user.patronymic, user.id]
-                .join(" ")
-                .indexOf(userSearch) !== -1
+                .join(" ").toLowerCase()
+                .indexOf(userSearch.toLowerCase()) !== -1
             );
           })
           .slice(

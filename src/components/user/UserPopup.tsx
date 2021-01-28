@@ -13,15 +13,23 @@ interface PropTypes {
   onClose: (value: string) => void;
   userData?: User;
   meType: string;
+  userId?: number;
+  setVerificationSuccess?: (value: boolean) => void;
 }
 
 interface Params {
   userId: string;
 }
 
-const UserPopup: React.FC<PropTypes> = ({ visibility, onClose, meType}) => {
-  const { userId } = useParams<Params>();
-
+const UserPopup: React.FC<PropTypes> = ({
+  visibility,
+  onClose,
+  meType,
+  userId: userIdFromProps,
+  setVerificationSuccess,
+}) => {
+  const { userId: userIdFromParams } = useParams<Params>();
+  const userId = userIdFromParams ? userIdFromParams : userIdFromProps;
   const { loading, error, data } = useQuery(GET_USER_BY_ID, {
     variables: {
       id: Number(userId),
@@ -53,6 +61,8 @@ const UserPopup: React.FC<PropTypes> = ({ visibility, onClose, meType}) => {
   const verify = () => {
     onClose("none");
     verifyUser().then((r) => {
+      // @ts-ignore
+      setVerificationSuccess(true)
       if (r.data.verifyUser.userErrors.length === 0) {
       }
     });

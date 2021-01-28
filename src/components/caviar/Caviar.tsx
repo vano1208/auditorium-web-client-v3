@@ -6,14 +6,14 @@ import { Classroom } from "../../models/models";
 type Props = {
   classroomsFilter: (classroom: Classroom) => boolean;
   classrooms: Array<Classroom>;
-  onClose: (value: string)=>void;
+  onClose: (value: string) => void;
 };
 
-const Caviar: React.FC<Props> = ({ classroomsFilter, classrooms , onClose}) => {
+const Caviar: React.FC<Props> = ({ classroomsFilter, classrooms, onClose }) => {
   const history = useHistory();
   const onClick = (name: string) => {
     history.push("/auditoriums/" + name);
-    onClose("block")
+    onClose("block");
   };
   return (
     <ul className={styles.caviarClassroomsList}>

@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import styles from "./schedule.module.css";
 import { getScheduleTimeline } from "../../helpers/helpers";
 import { WORKING_DAY_END, WORKING_DAY_START } from "../../helpers/constants";
 import { gql, useQuery } from "@apollo/client";
 import { GET_CLASSROOMS_SCHEDULE } from "../../api/operations/queries/classrooms";
-import { Classroom, ScheduleUnit } from "../../models/models";
+import { Classroom, ScheduleUnit, User } from "../../models/models";
 import PageHeader from "../../components/pageHeader/PageHeader";
 import Loading from "../../components/loading/Loading";
 import { client } from "../../api/client";
+import PopupWindow from "../../components/popupWindow/PopupWindow";
+import Button from "../../components/button/Button";
+import UserPopup from "../../components/user/UserPopup";
+import { NavLink } from "react-router-dom";
 
 const Schedule = () => {
+  const [chosenScheduleUnit, setChooseScheduleUnit] = useState<
+    SetStateAction<ScheduleUnit>
+  >();
+  const [visibility, setVisibility] = useState("none");
   const [classrooms, setClassrooms] = useState<Array<Classroom>>();
   const [scheduleDate, setScheduleDate] = useState(new Date());
   const timelineMarks = [
@@ -37,6 +45,10 @@ const Schedule = () => {
     }
   `);
 
+  const onClose = () => {
+    setVisibility("none");
+  };
+
   const getClassrooms = async () => {
     const {
       data: { classrooms },
@@ -50,7 +62,9 @@ const Schedule = () => {
     setClassrooms(
       classrooms
         .slice()
-        .sort((a: Classroom, b: Classroom) => Number(a.name) - Number(b.name))
+        .sort(
+          (a: Classroom, b: Classroom) => parseInt(a.name) - parseInt(b.name)
+        )
     );
   };
   useEffect(() => {
@@ -63,6 +77,53 @@ const Schedule = () => {
   );
   return (
     <>
+      {/*<UserPopup visibility={} onClose={} meType={}/>*/}
+      <PopupWindow
+        headerBody="Деталі"
+        onClose={onClose}
+        visibility={visibility}
+      >
+        {chosenScheduleUnit === null ? null : (
+          <div>
+            <table>
+              <tbody>
+                <tr>
+                  <td>Аудиторія: </td>
+                  <td>
+                    {(chosenScheduleUnit as ScheduleUnit)?.classroom.name}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Користувач: </td>
+                  <td>
+                    <NavLink to={"/schedule/" + (chosenScheduleUnit as ScheduleUnit)?.user.id}>
+                      <Button onClick={() => null}>
+                        {[
+                          (chosenScheduleUnit as ScheduleUnit)?.user.lastName,
+                          (chosenScheduleUnit as ScheduleUnit)?.user.firstName,
+                          (chosenScheduleUnit as ScheduleUnit)?.user.patronymic,
+                        ].join(" ")}
+                      </Button>
+                    </NavLink>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Вид занять: </td>
+                  <td>{(chosenScheduleUnit as ScheduleUnit)?.activity}</td>
+                </tr>
+                <tr>
+                  <td>Час початку: </td>
+                  <td>{(chosenScheduleUnit as ScheduleUnit)?.from}</td>
+                </tr>
+                <tr>
+                  <td>Час закінчення: </td>
+                  <td>{(chosenScheduleUnit as ScheduleUnit)?.to}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+      </PopupWindow>
       <PageHeader body="Розклад">
         <input
           className={styles.scheduleDateInput}
@@ -125,9 +186,18 @@ const Schedule = () => {
                                 <div
                                   className={styles.occupied}
                                   key={scheduleUnit.id}
+                                  onClick={() => {
+                                    setChooseScheduleUnit(scheduleUnit);
+                                    setVisibility("block");
+                                  }}
                                 >
                                   <p>
                                     {scheduleUnit.user.lastName +
+                                      " " +
+                                      scheduleUnit.user.firstName.charAt(0) +
+                                      ". " +
+                                      scheduleUnit.user.patronymic?.charAt(0) +
+                                      "." +
                                       " " +
                                       scheduleUnit.from +
                                       " — " +

@@ -8,9 +8,7 @@ import RegisterSkeleton from "./RegisterSkeleton";
 import { NavLink } from "react-router-dom";
 import UserPopup from "../../components/user/UserPopup";
 import PageHeader from "../../components/pageHeader/PageHeader";
-// @ts-ignore
 import pdfMake from "pdfmake/build/pdfmake";
-// @ts-ignore
 import vfsFonts from "pdfmake/build/vfs_fonts";
 import { GET_ME_TYPE } from "../../api/operations/queries/me";
 
@@ -18,7 +16,7 @@ const Register: React.FC = () => {
   const { data: meCurrentType } = useQuery(GET_ME_TYPE);
   const [registerDate, setRegisterDate] = useState(new Date());
   const [registerUser, setRegisterUser] = useState({
-    id: 0,
+    id: -1,
     firstName: "",
     lastName: "",
     patronymic: "",
@@ -30,7 +28,7 @@ const Register: React.FC = () => {
     nameTemp: "",
   } as User);
   const [userSearch, setUserSearch] = useState("");
-  const [visibility, setVisibility] = useState("none");
+  const [userPopupVisibility, setUserPopupVisibility] = useState("none");
   const { loading, error, data } = useQuery(GET_REGISTER, {
     variables: {
       date: new Date(registerDate).setHours(0, 0, 0, 0),
@@ -73,7 +71,7 @@ const Register: React.FC = () => {
           ];
         })
       : [];
-  const documentDefinition = {
+  const documentDefinition: any = {
     pageSize: "A4",
     pageOrientation: "portrait",
     content: [
@@ -144,12 +142,15 @@ const Register: React.FC = () => {
 
   return (
     <>
-      <UserPopup
-        onClose={() => setVisibility("none")}
-        visibility={visibility}
-        userData={registerUser}
-        meType={meCurrentType.meType}
-      />
+      {registerUser.id !== -1 && (
+        <UserPopup
+          onClose={() => setUserPopupVisibility("none")}
+          visibility={userPopupVisibility}
+          userData={registerUser}
+          meType={meCurrentType.meType}
+          userId={registerUser.id}
+        />
+      )}
       <PageHeader body="Журнал">
         <input
           className={styles.registerDateInput}
@@ -242,7 +243,7 @@ const Register: React.FC = () => {
                         className={styles.userLink}
                         onClick={() => {
                           setRegisterUser(registerUnit.user as User);
-                          setVisibility("block");
+                          setUserPopupVisibility("block");
                         }}
                         to={"/register/" + registerUnit.user.id}
                       >

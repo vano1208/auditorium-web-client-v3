@@ -40,12 +40,13 @@ const Login: React.FC<PT> = ({ setIsLogged }) => {
             if (!values.email) {
               // @ts-ignore
               errors.email = "Обов'язкове поле";
-            } else if (
-              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-            ) {
-              // @ts-ignore
-              errors.email = "Невірна email адреса";
             }
+            // else if (
+            //   !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+            // ) {
+            //   // @ts-ignore
+            //   errors.email = "Невірна email адреса";
+            // }
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {

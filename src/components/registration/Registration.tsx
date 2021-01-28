@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./registration.module.css";
 import { isLoggedVar } from "../../api/client";
 import { ErrorMessage, Field, Form, Formik } from "formik";
@@ -24,6 +24,12 @@ const Registration: React.FC<PropTypes> = ({
   onClose,
   setIsLogged,
 }) => {
+  let alertDisplay = localStorage.getItem("registrationAlert") === "1" ? "none" :
+    "block";
+  let textInput: HTMLElement | null = null;
+  useEffect(() => {
+    textInput && (textInput as HTMLElement).focus();
+  });
   const { data: users, loading: loadingUsers } = useQuery(
     GET_USERS_EMAIL_AND_PHONE
   );
@@ -39,13 +45,13 @@ const Registration: React.FC<PropTypes> = ({
     { placeholder: "прізвище", name: "lastName", type: "text" },
     { placeholder: "ім'я", name: "firstName", type: "text" },
     { placeholder: "по-батькві", name: "patronymic", type: "text" },
-    { placeholder: "email", name: "email", type: "email" },
     { placeholder: "пароль", name: "password", type: "password" },
     {
       placeholder: "повторіть пароль",
       name: "passwordConfirm",
       type: "password",
     },
+    { placeholder: "email", name: "email", type: "text" },
     { placeholder: "телефон", name: "phoneNumber", type: "text" },
     { placeholder: "кафедра", name: "department", type: "text" },
     { placeholder: "ступінь", name: "degree", type: "text" },
@@ -106,6 +112,26 @@ const Registration: React.FC<PropTypes> = ({
         onClose={onClose}
         visibility={visibility}
       >
+        <div
+          className={styles.disabledAlert}
+          style={{
+            display: alertDisplay
+          }}
+          onClick={(e) => {
+            localStorage.setItem("registrationAlert", '1')
+            e.currentTarget.style.display = "none";
+          }}
+        >
+          <p>
+            Увага! Реєстрація тільки для студентів та асистентів/аспірантів!
+          </p>
+          <p>
+            Реєстрація співробітників НМАУ та викладачів здійснюється
+            безпосередньо в учбовій частині.
+          </p>
+          <p className={styles.disabledAlertHint}>Торкніться, щоб більше не показувати.</p>
+        </div>
+
         <Formik
           initialValues={{
             firstName: "",
@@ -152,7 +178,7 @@ const Registration: React.FC<PropTypes> = ({
         >
           {({ isSubmitting, errors, values, handleChange, handleBlur }) => (
             <Form className={styles.inputForm}>
-              {fieldsData.map(({ placeholder, type, name }) =>
+              {fieldsData.map(({ placeholder, type, name }, index) =>
                 name === "degree" ? (
                   <div className={styles[name]}>
                     <label htmlFor={name}>
@@ -221,6 +247,11 @@ const Registration: React.FC<PropTypes> = ({
                         //     : styles.errorField
                         // }
                         defaultValue="def"
+                        innerRef={(input: any) => {
+                          return name === "lastName"
+                            ? (textInput = input)
+                            : null;
+                        }}
                       />
                     </label>
                     <ErrorMessage

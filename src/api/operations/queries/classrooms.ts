@@ -44,9 +44,13 @@ export const GET_CLASSROOMS_SCHEDULE = gql`
       name
       schedule(date: $date) {
         user {
+          id
           firstName
           patronymic
           lastName
+        }
+        classroom {
+          name
         }
         from
         to

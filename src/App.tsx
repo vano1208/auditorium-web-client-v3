@@ -52,7 +52,7 @@ const App: React.FC<PT> = ({
             </Route>
             {meCurrentType === userTypes.ADMIN ? (
               <>
-                <Route path="/register">
+                <Route path="/register/:userId?">
                   <Register />
                 </Route>
                 <Route path="/admin">
@@ -63,7 +63,7 @@ const App: React.FC<PT> = ({
             <Route path="/users/:userId?">
               <Users meType={meCurrentType} />
             </Route>
-            <Route path="/schedule">
+            <Route path="/schedule/:userId?">
               <Schedule />
             </Route>
             <Route path="/profile">

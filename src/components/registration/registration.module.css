@@ -131,3 +131,29 @@ label {
     grid-area: buttons;
     margin: 8px;
 }
+
+.disabledAlert {
+    width: 100%;
+    text-align: center;
+    margin: 0 0 16px 0;
+    padding: 8px 0;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: crimson;
+    background-color: rgba(220, 20, 60, .1);
+    cursor: pointer;
+}
+
+.disabledAlertHint {
+    border: 1px solid rgba(255, 0, 0, .1);
+    border-radius: 8px;
+    display: inline-block;
+    margin: 0;
+    padding: 8px;
+    font-size: .8rem;
+    transition: all .3s linear;
+}
+
+.disabledAlertHint:hover {
+    background-color: rgba(255, 0, 0, .1);
+}
