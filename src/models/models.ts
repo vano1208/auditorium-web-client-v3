@@ -47,6 +47,12 @@ export enum userTypeColors {
   OTHER = "#ffa200",
 }
 
+export enum notificationsTypes {
+  OK = "ok",
+  ALERT = "alert",
+  DEFAULT = "default",
+}
+
 export type User = {
   id: number;
   firstName: string;
@@ -81,7 +87,7 @@ export type InstrumentType = {
   name: string;
   rate: number;
   comments: Comment | null;
-  classroom: Classroom;
+  classroom: ClassroomType;
 };
 
 export type DisabledInfo = {
@@ -89,10 +95,10 @@ export type DisabledInfo = {
   until: Date;
 };
 
-export type ScheduleUnit = {
+export type ScheduleUnitType = {
   id: number;
   user: User;
-  classroom: Classroom;
+  classroom: ClassroomType;
   dateStart: Date;
   dateEnd: Date;
   dayOfWeek: number;
@@ -101,10 +107,10 @@ export type ScheduleUnit = {
   activity: string;
 };
 
-export type Classroom = {
+export type ClassroomType = {
   id: number;
   name: string;
-  chair: string | null;
+  chair: Department | null;
   special: string | null;
   floor: number;
   isWing: boolean;
@@ -113,7 +119,7 @@ export type Classroom = {
   occupied: OccupiedInfo | null;
   instruments: Array<InstrumentType>;
   disabled: DisabledInfo | null;
-  schedule: Array<ScheduleUnit>;
+  schedule: Array<ScheduleUnitType>;
 };
 
 export type RegisterUnit = {

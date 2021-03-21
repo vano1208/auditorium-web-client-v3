@@ -1,0 +1,68 @@
+.userSearch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+}
+
+.customUser {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 16px;
+}
+
+.createUserInput {
+  background-color: hsl(0, 0%, 100%);
+  border-color: hsl(0, 0%, 80%);
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  min-height: 38px;
+  transition: all 100ms;
+  padding: 2px 8px;
+  box-sizing: border-box;
+  width: 100%;
+  font-family: "Roboto";
+  font-size: 1rem;
+}
+
+.createUserInput:focus {
+  border-color: #2684ff;
+  box-shadow: 0 0 0 1px #2684ff;
+  outline: none;
+}
+
+.usersSearchInput::placeholder {
+  color: #000;
+  font-style: italic;
+}
+
+.occupantType {
+  font-family: "Roboto Light";
+  font-size: 0.8rem;
+  margin: 0;
+  padding: 2px 4px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.icon {
+  position: absolute;
+  top: 16px;
+  left: 8px;
+  width: 16px;
+  height: 16px;
+  background-image: url("./../../../assets/images/profile.svg");
+  background-repeat: no-repeat;
+  filter: invert(27%) saturate(2878%) brightness(104%) contrast(97%);
+}
+
+.occupantName {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.occupantName p {
+  margin: 0;
+  padding: 0;
+}

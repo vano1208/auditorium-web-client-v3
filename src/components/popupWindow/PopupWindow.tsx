@@ -1,37 +1,59 @@
-import React from 'react';
-import styles from './popupWindow.module.css';
+import React, { ReactElement, useState } from "react";
+import styles from "./popupWindow.module.css";
 
 interface PropTypes {
-  headerBody: any
-  onClose: (value: string) => void
-  visibility: string
+  header: any;
+  body: any;
+  footer?: any;
+  dispatch: (value: any) => void;
 }
 
-const PopupWindow: React.FC<PropTypes> = ({onClose, visibility, headerBody, children}) => {
-  return <div
-    className={styles.modal}
-    style={{display: visibility}}
-    onClick={(e) => {
-      if (e.target === e.currentTarget) {
-        onClose("none");
-      }
-    }}
-  >
-    <div className={styles.modalContent}>
-      <div className={styles.modalHeader}>
-          <span onClick={() => onClose("none")} className={styles.close}>
-            &times;
-          </span>
-        <h2>
-          {headerBody}
-        </h2>
-      </div>
-      <div className={styles.modalBody}>
-        {children}
-      </div>
+const PopupWindow: React.FC<PropTypes> = ({
+  header,
+  body,
+  dispatch,
+  footer = "",
+}) => {
+  const [entering, setEntering] = useState(true);
+  const onClose = () => {
+    setEntering(false);
+    setTimeout(() => {
+      dispatch({
+        type: "POP_POPUP_WINDOW",
+      });
+    }, 300);
+  };
+  const footerWithProps = React.Children.map(footer, (child: ReactElement) => {
+    if (React.isValidElement(child)) {
+      // @ts-ignore
+      return React.cloneElement(child, { dispatch: dispatch });
+    }
+    return child;
+  });
 
+  return (
+    <div
+      className={[
+        styles.popupBackground,
+        styles[entering ? "fade-in" : "fade-out"],
+      ].join(" ")}
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      <div
+        className={[
+          styles.modal,
+          styles[entering ? "slide-in-top" : "slide-out-top"],
+        ].join(" ")}
+      >
+        <div className={styles.modalHeader}>
+          {header}
+          <span className={styles.modalClose} onClick={onClose} />
+        </div>
+        <div className={styles.modalBody}>{body}</div>
+        <div className={styles.modalFooter}>{footerWithProps}</div>
+      </div>
     </div>
-  </div>
-}
+  );
+};
 
 export default PopupWindow;

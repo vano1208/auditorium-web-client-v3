@@ -1,0 +1,37 @@
+@media (min-width: 320px) {
+  .header h1 {
+    display: none;
+  }
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #2e287c;
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 150;
+  }
+}
+@media (min-width: 1024px) {
+  .header h1 {
+    font-family: "Roboto Thin";
+    font-weight: normal;
+    display: inline-block;
+    margin: 0;
+    padding: 8px;
+  }
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #2e287c;
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 150;
+  }
+}
+

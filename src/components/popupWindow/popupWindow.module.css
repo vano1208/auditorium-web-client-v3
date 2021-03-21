@@ -1,103 +1,187 @@
-@media only screen and (min-width: 600px){
-    .modalContent {
-        overflow: hidden;
-        border-radius: 8px;
-        position: relative;
-        top: 20%;
-        margin: auto;
-        padding: 0;
-        width: 60%;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        animation-name: animateTop;
-        animation-duration: 0.4s;
-    }
+@media (max-width: 1024px) {
+  .popupBackground {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+  }
+  .modal {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    grid-template-rows: 64px 1fr 64px;
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.07);
+  }
+  .sider {
+    display: none;
+  }
+  .modalBody {
+    background-color: #fff;
+    padding: 16px;
+    overflow-y: scroll;
+  }
 }
 
-@media only screen and (max-width: 600px){
-    .modalContent {
-        overflow: hidden;
-        border-radius: 8px;
-        position: relative;
-        top: 0;
-        margin: 16px;
-        padding: 0;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        animation-name: animateTop;
-        animation-duration: 0.4s;
-    }
-}
-
-.modal {
-    position: fixed;
-    z-index: 900;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+@media (min-width: 1024px) {
+  .popupBackground {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+    flex-direction: row;
+  }
+  .modal {
+    display: grid;
+    grid-template-rows: 64px 1fr 64px;
+    width: 50vw;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+  }
+  .sider {
+    width: 300px;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+    margin-right: 16px;
+    background-color: #fff;
+    align-self: stretch;
+    padding: 16px;
+  }
+  .modalBody {
+    background-color: #fff;
+    padding: 16px;
     overflow: auto;
-    background-color: rgb(30, 44, 79);
-    background-color: rgba(30, 44, 79, 0.4);
+  }
+}
+
+.slide-in-top {
+  animation: slide-in-top 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.slide-out-top {
+  animation: slide-out-top 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+
+.fade-in {
+  animation: fade-in 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.fade-out {
+  animation: fade-out 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
 }
 
 .modalHeader {
-    padding: 2px 16px;
-    background-color: #1e2c4f;
-    color: white;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-flow: row wrap;
+  background-color: #fff;
+  border-bottom: 1px solid #e2e2e2;
+  color: #2e287c;
+  padding-right: 16px;
+  line-height: 1rem;
 }
 
-.modalHeader h2 {
-    font-size: 1.2rem;
-    font-family: "Roboto Thin";
-    font-weight: normal;
+.modalHeader h1 {
+  font-family: "Roboto Light";
+  font-weight: normal;
+  font-size: 1.5rem;
+  padding: 16px;
+  margin: 0;
+}
+
+.modalClose {
+  display: flex;
+  justify-self: flex-end;
+  margin-left: auto;
+  align-items: center;
+  justify-content: center;
+  font-family: "Roboto Medium";
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: #f91354;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid #f91354;
+  transition: all 0.3s ease-in-out;
+}
+
+.modalClose::before {
+  content: "x";
+  padding-bottom: 2px;
+}
+
+.modalClose:hover {
+  border: 1px solid #ff718d;
+  background: #ff003b;
+  box-shadow: 0px 0px 10px 0px rgba(249, 19, 84, 0.65);
+  cursor: pointer;
+}
+
+.modalClose:active {
+  background-color: white;
+  color: #f91354;
 }
 
 .modalFooter {
-    padding: 2px 16px;
-    background-color: #fff;
-    color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 0 16px 16px 0;
+  background-color: #fff;
 }
 
-
-
-.close {
-    top: -2px;
-    right: 12px;
-    position: absolute;
-    font-family: "Roboto Black";
-    color: #ffffff;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    background-color: #bd1930;
-    width: 30px;
-    height: 24px;
-    text-align: center;
-    padding-bottom: 6px;
-    border-radius: 8px;
-    margin-top: 16px;
-    transition: all 0.2s ease-in;
+@keyframes slide-in-top {
+  0% {
+    transform: translateY(-500px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-.close:hover,
-.close:focus {
-    color: #1e2c4f;
-    text-decoration: none;
-    background-color: #fff;
-    cursor: pointer;
+@keyframes slide-out-top {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-1000px);
+    opacity: 0;
+  }
 }
 
-@keyframes animateTop {
-    from {
-        top: -300px;
-        opacity: 0;
-    }
-    to {
-        top: 20%;
-        opacity: 1;
-    }
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
-.modalBody {
-    padding: 20px 16px;
-    background-color: #fff;
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

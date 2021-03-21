@@ -1,124 +1,86 @@
-.loginPage {
-  display: grid;
+.container {
+  display: flex;
   width: 100vw;
   height: 100vh;
-  position: fixed;
-  z-index: 800;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: 200px;
-  grid-template-areas:
-    ". a a ."
-    ". a a .";
-  background-color: #1e2c4f; /*  #3220ba  */
-  margin: -16px;
+  background-color: #2e287c;
+  justify-content: center;
 }
 
-.form {
-  grid-area: a;
-  align-self: center;
-  justify-self: center;
-  padding: 25px;
-  color: #fff;
-  font-family: "Roboto Thin";
+@media (min-width: 320px) {
+  .loginContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    width: 95vw;
+  }
 }
 
-.form h1 {
-  color: #fff;
-  font-family: "Roboto Thin";
-  text-transform: uppercase;
-  font-weight: 100;
-  font-size: 4rem;
+@media (min-width: 1024px) {
+  .loginContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+  }
+}
+
+.loginTip {
   text-align: center;
-  margin: 0;
-}
-
-.form a {
   color: #fff;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-family: "Roboto Thin";
-  font-size: 0.6rem;
-  display: block;
-  margin: 0 auto;
-  width: 220px;
-  text-align: center;
-}
-
-.inputForm {
-  margin: 0 auto;
-  position: relative;
-}
-
-.inputField {
-  background-color: transparent;
-  color: #fff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  padding: 8px;
-  display: block;
-  font-family: "Roboto Thin";
-  width: 70%;
-  margin: 8px auto;
-}
-
-.inputField:hover, .errorField:hover {
-  border-bottom: 1px solid rgba(255, 255, 255, 1);
-}
-
-.inputField:focus, .errorField:focus {
-  outline: none;
-}
-
-.errorMessage {
-  background-color: #dc143c;
-  padding: 8px;
   border-radius: 8px;
-  text-align: center;
-  animation: scale-in-ver-bottom 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-}
-.errorField {
-  background-color: transparent;
-  color: #fff;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  padding: 8px;
-  display: block;
+  padding: 8px 8px;
   font-family: "Roboto Thin";
-  width: 70%;
-  margin: 8px auto;
-  animation: blinking 1s infinite;
+  font-weight: normal;
+  font-size: 1rem;
+  margin: 16px 0;
+  animation-duration: 1.8s;
+  background: linear-gradient(-45deg, #2e287c, #f91354, #2b5dff, #2e287c);
+  background-size: 600% 600%;
+  animation: gradient 15s ease infinite;
 }
 
-.buttons {
-  display: inline-block;
-  position: absolute;
-  right: 0;
-}
-
-@keyframes blinking {
-  0%,
-  49% {
-    border-bottom: 1px solid #dc143c;
-  }
-  50%,
-  100% {
-    border-bottom: 1px solid #fff;
-  }
-}
-
-@keyframes scale-in-ver-bottom {
+@keyframes gradient {
   0% {
-    transform: scaleY(0);
-    transform-origin: 0% 100%;
-    opacity: 1;
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
   100% {
-    transform: scaleY(1);
-    transform-origin: 0% 100%;
-    opacity: 1;
+    background-position: 0% 50%;
   }
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.loginButtons {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
+}
+
+.loginFooter {
+  text-align: center;
+}
+
+.loginFooter a {
+  color: #fff;
+  font-family: "Roboto Thin";
+  font-size: 0.8rem;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+.loginFooter p {
+  margin: 0;
+  padding: 8px 0;
+  font-family: "Roboto Thin";
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.2);
 }

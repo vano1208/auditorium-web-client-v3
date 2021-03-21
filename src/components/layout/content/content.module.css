@@ -1,0 +1,12 @@
+@media (min-width: 320px) {
+  .content {
+    padding-top: 40px;
+    height: 100vh;
+  }
+}
+@media (min-width: 1024px) {
+  .content {
+    padding-top: 0;
+    height: 100vh;
+  }
+}

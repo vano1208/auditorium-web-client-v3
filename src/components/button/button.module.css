@@ -1,26 +1,98 @@
 .button {
-    background-color: #1e2c4f;
     border-radius: 8px;
-    padding: 8px;
-    margin-top: 8px;
-    margin-left: 8px;
-    color: #fff;
     cursor: pointer;
-    border: none;
-    transition: all .1s linear;
+    transition: color .3s linear;
 }
 
-.button:hover, .button.focus  {
-    border: none;
-    background-color: #006fd6 !important;
+.sizes {
+    height: 2.5rem;
 }
 
 .button:focus {
     outline: none;
 }
 
-.button:disabled,
-.button[disabled]{
+.primary {
     border: none;
-    background-color: #cccccc;
+}
+
+.default {
+    border: 1px solid #fff;
+    background-color: transparent;
+    color: #fff;
+}
+
+.white {
+    border: 1px solid #fff;
+    background-color: #fff;
+    color: #2e287c;
+}
+
+.white:focus {
+    box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.65);
+}
+
+.red {
+    border: 1px solid #f91354;
+    background-color: #f91354;
+    color: #fff;
+}
+
+.red:focus {
+    box-shadow: 0px 0px 10px 0px rgba(249, 19, 84, 0.65);
+}
+
+.red:hover {
+    border: 1px solid #ff718d;
+    background: #f91354;
+    background: linear-gradient(270deg, #970324, #f91354);
+    background-size: 200% 200%;
+    animation: AnimationName 2s ease both;
+}
+
+.blue {
+    border: 1px solid #2b5dff;
+    background-color: #2b5dff;
+    color: #fff;
+}
+
+.blue:focus {
+    box-shadow: 0px 0px 10px 0px rgba(0,60,255,0.65);
+}
+
+.blue:hover {
+    border: 1px solid #00a6ff;
+    background: #2b5dff;
+    background: linear-gradient(270deg, #20028d, #2b5dff);
+    background-size: 200% 200%;
+    animation: AnimationName 2s ease both;
+}
+
+.orange {
+    border: 1px solid #ffc000;
+    background-color: #ffc000;
+    color: #fff;
+}
+
+.orange:focus {
+    box-shadow: 0px 0px 10px 0px rgba(255, 192, 0,0.65);
+}
+
+.orange:hover {
+    border: 1px solid #ffe851;
+    background: #ffc000;
+    background: linear-gradient(270deg, #ff8c00, #ffc000);
+    background-size: 200% 200%;
+    animation: AnimationName 2s ease both;
+}
+
+
+.button:active {
+    background: white;
+    color: #2e287c;
+}
+
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    100%{background-position:100% 50%}
 }

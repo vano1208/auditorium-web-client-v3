@@ -1,0 +1,80 @@
+@media (min-width: 320px) {
+  .flexColumnAndRow {
+    flex-direction: column;
+  }
+
+  .flexColumnAndRow > li {
+    margin-bottom: 8px;
+    margin-right: 0;
+  }
+
+  .flexRow {
+    flex-direction: row;
+  }
+
+  .flexRow > li {
+    margin-right: 8px;
+  }
+
+  .instrumentsList {
+    list-style-type: none;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .flexColumnAndRow {
+    flex-direction: row;
+  }
+
+  .flexColumnAndRow > li {
+    margin-right: 8px;
+  }
+
+  .flexRow {
+    flex-direction: row;
+  }
+
+  .flexRow > li {
+    margin-right: 8px;
+  }
+
+  .instrumentsList {
+    list-style-type: none;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.instrumentIcon {
+  width: 20px;
+  height: 20px;
+  padding: 0 0 0 8px;
+  margin: 0;
+  opacity: 0.5;
+}
+
+.instrumentItem {
+  display: flex;
+  flex-direction: row;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  padding: 4px 8px 4px 0;
+  min-width: 2.4rem;
+  justify-content: center;
+}
+
+.instrumentItem p {
+  padding: 0 0 0 8px;
+  margin: 0;
+}
+
+.star {
+  margin-left: 8px;
+  width: 0.8rem;
+}
