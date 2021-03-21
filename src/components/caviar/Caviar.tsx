@@ -2,12 +2,10 @@ import React from "react";
 import styles from "./caviar.module.css";
 import { ClassroomType } from "../../models/models";
 import { usePopupWindow } from "../popupWindow/PopupWindowProvider";
-import ClassroomInfo from "../ classroomInfo/ClassroomInfo";
 import Tag from "../tag/Tag";
 import Button from "../button/Button";
-import { gridUpdate } from "../../api/client";
-import {useMutation} from "@apollo/client";
-import {FREE_CLASSROOM} from "../../api/operations/mutations/freeClassroom";
+import ClassroomInfo from "../aboutClassroom/ClassroomInfo";
+
 interface PropTypes {
   classrooms: Array<ClassroomType>;
   dispatchNotification: (value: string) => void;

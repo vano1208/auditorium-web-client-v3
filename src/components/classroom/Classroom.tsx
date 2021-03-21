@@ -9,7 +9,7 @@ import {
 import { fullName, typeStyle } from "../../helpers/helpers";
 import Instruments from "../instruments/Instruments";
 import { usePopupWindow } from "../popupWindow/PopupWindowProvider";
-import ClassroomInfo from "../ classroomInfo/ClassroomInfo";
+import ClassroomInfo from "../ aboutClassroom/ClassroomInfo";
 import Tag from "../tag/Tag";
 import Footer from "../footer/Footer";
 
