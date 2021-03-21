@@ -1,0 +1,36 @@
+@media (min-width: 320px) {
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    transition: all .3s ease-in-out;
+  }
+  nav {
+    position: fixed;
+    z-index: 99;
+  }
+  main {
+    height: 100vh;
+    overflow: auto;
+  }
+  .blurred {
+    filter: none;
+  }
+}
+@media (min-width: 1024px) {
+  .layout {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    transition: all .1s ease-in-out;
+  }
+  nav {
+    position: static;
+  }
+  main {
+    height: 100vh;
+    overflow: hidden;
+  }
+  .blurred {
+    filter: blur(5px);
+  }
+}
+

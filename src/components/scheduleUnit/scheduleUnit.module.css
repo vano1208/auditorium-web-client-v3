@@ -1,0 +1,30 @@
+@media (min-width: 320px) {
+    .scheduleRow {
+        display: grid;
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+        grid-gap: 2px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .scheduleRow {
+        display: grid;
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+        grid-gap: 2px;
+    }
+}
+
+.scheduleRow li {
+    color: #fff;
+    border-radius: 5px;
+    padding: 2px 1px;
+    text-align: left;
+}
+
+.scheduleRow li button {
+    text-align: left;
+}

@@ -4,9 +4,12 @@ export const GET_CLASSROOMS = gql`
   query getClassrooms($date: Date!) {
     classrooms {
       id
+      description
       name
       special
-      chair
+      chair {
+          name
+      }
       isWing
       isOperaStudio
       occupied {
@@ -27,52 +30,13 @@ export const GET_CLASSROOMS = gql`
         to
       }
       instruments {
+        name
         type
         rate
       }
       disabled {
         comment
         until
-      }
-    }
-  }
-`;
-
-export const GET_CLASSROOMS_SCHEDULE = gql`
-  query getClassroomsSchedule($date: Date!) {
-    classrooms {
-      name
-      schedule(date: $date) {
-        user {
-          id
-          firstName
-          patronymic
-          lastName
-        }
-        classroom {
-          name
-        }
-        from
-        to
-        activity
-      }
-    }
-  }
-`;
-
-export const GET_CLASSROOM_BY_NAME = gql`
-  query getClassroomByName($name: String!, $date: Date!) {
-    classroom(name: $name) {
-      schedule(date: $date) {
-        user {
-          lastName
-          firstName
-          patronymic
-        }
-        activity
-      }
-      instruments {
-        name
       }
     }
   }

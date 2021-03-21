@@ -1,0 +1,11 @@
+.title {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 8px;
+}
+
+.title p {
+    font-family: "Roboto Light";
+    color: #656565;
+    margin: 16px 0 8px 0;
+    padding: 0;
+}

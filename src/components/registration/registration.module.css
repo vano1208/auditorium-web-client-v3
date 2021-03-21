@@ -1,159 +1,38 @@
-.inputForm input:hover {
-    border: 1px solid rgba(30, 44, 79, 1);
-    outline: none;
+@media (min-width: 320px) {
+  .registration {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 8px;
+  }
 }
 
-.inputForm input:focus {
-    border: 1px solid rgba(30, 44, 79, 1);
-    outline: none;
-    background-color: rgba(30, 44, 79, .06);
+@media (min-width: 1024px) {
+  .registration {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: flex-end;
+    grid-gap: 16px;
+  }
 }
 
-.errorMessage {
-    color: crimson;
-    font-weight: normal;
-    font-family: "Roboto Medium";
-    font-size: .8rem;
-    padding-left: 8px;
+.inputGroup {
+  display: flex;
+  flex-direction: column;
 }
 
-label {
-    padding-bottom: 8px;
-    margin-bottom: 8px;
-}
-
-@media only screen and (min-width: 600px) {
-    .inputForm {
-        display: grid;
-        gap: 8px 16px;
-        grid-auto-columns: min-content;
-        grid-template-columns: none;
-        grid-template-areas: "lastName firstName patronymic" "password passwordConfirm ." "email email email" "phoneNumber phoneNumber phoneNumber" "department department department" "degree degree degree" "startYear startYear startYear" "buttons buttons buttons";
-    }
-
-    .department select, .degree select {
-        border-radius: 8px;
-        padding: 8px;
-        margin-top: 8px;
-        margin-bottom: 8px;
-        width: 150px;
-    }
-
-    .inputForm input {
-        border-radius: 8px;
-        padding: 8px;
-        border: 1px solid rgba(30, 44, 79, .5);
-        margin-top: 8px;
-        width: 150px;
-    }
-}
-
-
-@media only screen and (max-width: 600px) {
-    .inputForm {
-        display: block;
-        padding: 0 16px;
-    }
-
-    .department select, .degree select {
-        border-radius: 8px;
-        padding: 8px;
-        margin-top: 8px;
-        width: 100%;
-    }
-
-    .inputForm input {
-        border-radius: 8px;
-        padding: 8px;
-        border: 1px solid rgba(30, 44, 79, .5);
-        margin-top: 8px;
-        width: 100%;
-    }
-}
-
-.lastName {
-    grid-area: lastName;
-}
-
-.lastName::before,
-.firstName::before,
-.password::before,
-.passwordConfirm::before,
-.email::before,
-.phoneNumber::before,
-.department::before,
-.degree::before,
-.startYear::before {
-    content: '* ';
-}
-
-.firstName {
-    grid-area: firstName;
-}
-
-.patronymic {
-    grid-area: patronymic;
-}
-
-.passwordConfirm {
-    grid-area: passwordConfirm;
-}
-
-.password {
-    grid-area: password;
-}
-
-.email {
-    grid-area: email;
-}
-
-.phoneNumber {
-    grid-area: phoneNumber;
-}
-
-.department {
-    grid-area: department;
-}
-
-.degree {
-    grid-area: degree;
-}
-
-.startYear {
-    grid-area: startYear;
-}
-
-.startYear input {
-    width: 50px;
-}
-
-.buttons {
-    grid-area: buttons;
-    margin: 8px;
-}
-
-.disabledAlert {
-    width: 100%;
-    text-align: center;
-    margin: 0 0 16px 0;
-    padding: 8px;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: crimson;
-    background-color: rgba(220, 20, 60, .1);
-    cursor: pointer;
-}
-
-.disabledAlertHint {
-    border: 1px solid rgba(255, 0, 0, .1);
-    border-radius: 8px;
-    display: inline-block;
-    margin: 0;
-    padding: 8px;
-    font-size: .8rem;
-    transition: all .3s linear;
-}
-
-.disabledAlertHint:hover {
-    background-color: rgba(255, 0, 0, .1);
+.inputError {
+  border: 1px solid #fff;
+  display: flex;
+  align-items: center;
+  height: 2.5rem;
+  padding-left: 16px;
+  border-radius: 8px;
+  background: rgba(249, 19, 84, 0.1);
+  background: linear-gradient(
+    90deg,
+    rgba(249, 19, 84, 0.1) 0%,
+    rgba(0, 212, 255, 0) 100%
+  );
+  color: #f91354;
+  font-family: "Roboto Light";
 }

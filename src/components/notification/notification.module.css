@@ -1,0 +1,165 @@
+@media (min-width: 320px) {
+  .notificationWrapper {
+    position: fixed;
+    width: 100%;
+    z-index: 200;
+    user-select: none;
+  }
+  .notification {
+    background-color: #fff;
+    margin-bottom: 0;
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+    animation: slide-in-right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    position: relative;
+  }
+}
+@media (min-width: 1024px) {
+  .notificationWrapper {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    width: 300px;
+    z-index: 200;
+    user-select: none;
+  }
+  .notification {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 8px;
+    margin: 8px 0;
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+    animation: slide-in-right 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    position: relative;
+  }
+}
+
+.exit {
+  animation: slide-out-right 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+
+.ok::before {
+  display: block;
+  content: url("./../../assets/images/tick.svg");
+  width: 12px;
+  height: 20px;
+  padding: 2px 6px;
+  background-color: #5def0e;
+  border-radius: 24px;
+  position: absolute;
+  left: 8px;
+  top: 6px;
+}
+
+.alert::before {
+  display: block;
+  content: "!";
+  text-align: center;
+  font-weight: bold;
+  line-height: 1rem;
+  color: #fff;
+  width: 16px;
+  height: 16px;
+  padding: 3px;
+  background-color: #f91354;
+  border-radius: 24px;
+  position: absolute;
+  left: 8px;
+  top: 6px;
+}
+
+.default:before {
+  display: block;
+  content: "i";
+  font-family: Georgia;
+  font-style: italic;
+  text-align: center;
+  font-weight: bold;
+  line-height: 1rem;
+  color: #fff;
+  width: 16px;
+  height: 16px;
+  padding: 3px;
+  background-color: #2b5dff;
+  border-radius: 24px;
+  position: absolute;
+  left: 8px;
+  top: 6px;
+}
+
+.notificationBody {
+  margin-top: 8px;
+  padding-left: 32px;
+}
+
+.notificationClose {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 8px;
+  right: 8px;
+  z-index: 202;
+  border-radius: 4px;
+  transition: all 0.1s ease-in-out;
+}
+
+.notificationClose::before {
+  display: flex;
+  justify-content: center;
+  content: "x";
+  font-family: "Roboto Thin";
+  transform: scaleY(0.8);
+  font-size: 1.5rem;
+  line-height: 1rem;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 8px;
+  margin: 0;
+  user-select: none;
+  z-index: 201;
+}
+
+.notificationClose:hover {
+  cursor: pointer;
+  color: #fff;
+  background-color: #f91354;
+}
+
+.notificationClose:active {
+  cursor: pointer;
+  color: #fff;
+  background-color: #ff477a;
+}
+
+.header {
+  font-family: "Roboto Medium";
+  padding: 8px 32px 0 40px;
+  position: relative;
+  margin: 0;
+}
+
+.message {
+  padding: 8px 32px 8px 40px;
+  font-family: "Roboto Light";
+  margin: 0;
+}
+
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(1000px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(1000px);
+  }
+}

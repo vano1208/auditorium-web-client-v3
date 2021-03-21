@@ -1,11 +1,23 @@
+.tagContainer {
+    position: relative;
+}
+
 .tag {
-    border-radius: 4px;
-    padding: 4px 8px;
-    background-color: white;
-    color: #1e2c4f;
+    cursor: pointer;
+    min-width: 1.2rem;
+    display: inline-block;
+    text-align: center;
+    padding: 8px;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 8px;
+    font-family: "Roboto Medium";
     margin-right: 8px;
-    margin-left: 8px;
-    margin-bottom: 16px;
-    font-family: "Roboto Light";
-    font-size: 1rem;
+}
+
+.tagContainer > div {
+    display: none;
+}
+
+.tagContainer:hover > div {
+    display: block;
 }
