@@ -64,7 +64,7 @@ const App: React.FC<PT> = ({
           <Users meType={meCurrentType} />
         </Route>
         <Route path="/schedule/:userId?">
-          <Schedule />
+          <Schedule meType={meCurrentType}/>
         </Route>
         <Route path="/profile">
           <Profile />

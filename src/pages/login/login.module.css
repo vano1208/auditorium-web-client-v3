@@ -10,7 +10,7 @@
   grid-template-areas:
     ". a a ."
     ". a a .";
-  background-color: #1e2c4f;
+  background-color: #1e2c4f; /*  #3220ba  */
   margin: -16px;
 }
 
@@ -51,7 +51,7 @@
 }
 
 .inputField {
-  background-color: #1e2c4f;
+  background-color: transparent;
   color: #fff;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
   border-top: none;
@@ -80,7 +80,7 @@
   animation: scale-in-ver-bottom 0.2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 .errorField {
-  background-color: #1e2c4f;
+  background-color: transparent;
   color: #fff;
   border-top: none;
   border-left: none;

@@ -13,11 +13,16 @@ import Button from "../../components/button/Button";
 import UserPopup from "../../components/user/UserPopup";
 import { NavLink } from "react-router-dom";
 
-const Schedule = () => {
+interface PT {
+  meType: string;
+}
+
+const Schedule: React.FC<PT> = ({ meType }) => {
   const [chosenScheduleUnit, setChooseScheduleUnit] = useState<
     SetStateAction<ScheduleUnit>
   >();
   const [visibility, setVisibility] = useState("none");
+  const [userPopupVisibility, setUserPopupVisibility] = useState("none");
   const [classrooms, setClassrooms] = useState<Array<Classroom>>();
   const [scheduleDate, setScheduleDate] = useState(new Date());
   const timelineMarks = [
@@ -49,6 +54,10 @@ const Schedule = () => {
     setVisibility("none");
   };
 
+  const onUserPopupClose = () => {
+    setUserPopupVisibility("none");
+  };
+
   const getClassrooms = async () => {
     const {
       data: { classrooms },
@@ -77,7 +86,11 @@ const Schedule = () => {
   );
   return (
     <>
-      {/*<UserPopup visibility={} onClose={} meType={}/>*/}
+      <UserPopup
+        visibility={userPopupVisibility}
+        onClose={onUserPopupClose}
+        meType={meType}
+      />
       <PopupWindow
         headerBody="Деталі"
         onClose={onClose}
@@ -96,8 +109,13 @@ const Schedule = () => {
                 <tr>
                   <td>Користувач: </td>
                   <td>
-                    <NavLink to={"/schedule/" + (chosenScheduleUnit as ScheduleUnit)?.user.id}>
-                      <Button onClick={() => null}>
+                    <NavLink
+                      to={
+                        "/schedule/" +
+                        (chosenScheduleUnit as ScheduleUnit)?.user.id
+                      }
+                    >
+                      <Button onClick={() => setUserPopupVisibility("block")}>
                         {[
                           (chosenScheduleUnit as ScheduleUnit)?.user.lastName,
                           (chosenScheduleUnit as ScheduleUnit)?.user.firstName,
