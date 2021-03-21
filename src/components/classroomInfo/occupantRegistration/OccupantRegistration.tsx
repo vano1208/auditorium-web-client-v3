@@ -58,7 +58,7 @@ const OccupantRegistration: React.FC<PropTypes> = ({dispatchNotification}) => {
             menuPortalTarget={document.body}
             onChange={handleChange}
           />
-        <div>
+        <div className={styles.customUser}>
             <input
               type="text"
               value={value}

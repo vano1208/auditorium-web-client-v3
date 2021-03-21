@@ -4,6 +4,12 @@
   grid-gap: 16px;
 }
 
+.customUser {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 16px;
+}
+
 .createUserInput {
   background-color: hsl(0, 0%, 100%);
   border-color: hsl(0, 0%, 80%);
@@ -17,6 +23,12 @@
   width: 100%;
   font-family: "Roboto";
   font-size: 1rem;
+}
+
+.createUserInput:focus {
+  border-color: #2684ff;
+  box-shadow: 0 0 0 1px #2684ff;
+  outline: none;
 }
 
 .usersSearchInput::placeholder {
